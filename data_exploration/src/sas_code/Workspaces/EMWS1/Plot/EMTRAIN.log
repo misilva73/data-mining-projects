@@ -1,0 +1,1253 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "31 March 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "10:48:48 o'clock" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Training Log
+Date:                31 March 2018
+Time:                10:48:48 o'clock
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O1SLUCWJ "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O1SLUCWJ new;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOG "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\EMLOG.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "31 March 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "10:48:48 o'clock" );
+MPRINT(EM_DIAGRAM):   file _LOG;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                misil";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "Site:                70107571";
+MPRINT(EM_DIAGRAM):   put "Platform:            X64_10PRO";
+MPRINT(EM_DIAGRAM):   put "Maintenance Release: 9.04.01M4P110916";
+MPRINT(EM_DIAGRAM):   put "EM Version:          14.2";
+MPRINT(EM_DIAGRAM):   put "* ";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\EMTRAIN.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _LOG MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_LOGIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _LOGIN "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\EMSCORE.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\EMREPORT.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    filename _LOG;
+MPRINT(EM_DIAGRAM):    filename _OUT "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\EMOUTPUT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "31 March 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "10:48:48 o'clock" );
+MPRINT(EM_DIAGRAM):   file _OUT;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                misil";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _OUT MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_OUTIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Report Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\EMREPORT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    filename _OUT;
+MPRINT(EM_DIAGRAM):    filename _emtool_ 'C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\EMRUNSTATUS.xml' encoding="UTF-8" NOBOM;
+22468      proc freq data=EMWS1.Plot_VariableSet noprint;
+MPRINT(EM_DIAGRAM):    proc freq data=EMWS1.Plot_VariableSet noprint;
+22469      table ROLE*LEVEL/out=WORK.PlotMETA;
+MPRINT(EM_DIAGRAM):   table ROLE*LEVEL/out=WORK.PlotMETA;
+22470      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 21 observations read from the data set EMWS1.PLOT_VARIABLESET.
+NOTE: The data set WORK.PLOTMETA has 4 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.01 seconds
+      
+
+22471      proc print data=WORK.PlotMETA label noobs;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.PlotMETA label noobs;
+22472      var ROLE LEVEL COUNT;
+MPRINT(EM_DIAGRAM):   var ROLE LEVEL COUNT;
+22473      label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL = "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label ROLE = "Role" LEVEL = "Measurement Level" COUNT = "Frequency Count";
+22474      title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+22475      title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Variable Summary";
+MPRINT(EM_DIAGRAM):   run;
+22476      run;
+
+NOTE: There were 4 observations read from the data set WORK.PLOTMETA.
+NOTE: The PROCEDURE PRINT printed page 1.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+22477      title10;
+MPRINT(EM_DIAGRAM):   title10;
+MPRINT(EM_DIAGRAM):    data WORK.M10BWCK3;
+MPRINT(EM_DIAGRAM):   set WORK.M10BWCK3;
+MPRINT(EM_DIAGRAM):   if role = 'TARGET' and use in ('Y', 'D') then do;
+MPRINT(EM_DIAGRAM):   role = 'TARGET';
+MPRINT(EM_DIAGRAM):   output;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else if role in('REJECTED' 'PREDICT' 'RESIDUAL' 'GROUP' 'ASSESS') and use = 'Y' then do;
+MPRINT(EM_DIAGRAM):   role = 'INPUT';
+MPRINT(EM_DIAGRAM):   output;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else if role = 'INPUT' and use in ('Y', 'D') then do;
+MPRINT(EM_DIAGRAM):   role = 'INPUT';
+MPRINT(EM_DIAGRAM):   output;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else if role = 'FREQ' and use = 'Y' then do;
+MPRINT(EM_DIAGRAM):   role = 'FREQ';
+MPRINT(EM_DIAGRAM):   output;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else delete;
+MPRINT(EM_DIAGRAM):   run;
+22498      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------* ;
+22499      * Plot: DMDBClass Macro ;
+MPRINT(EM_DIAGRAM):   * Plot: DMDBClass Macro ;
+22500      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+22501      %macro DMDBClass;
+22502          Age(ASC) CatPurchase(ASC) Clothes(ASC) CostPerContact(ASC) CustMonths(ASC)
+22503         DepVar(ASC) Dependents(ASC) Education(ASC) Frq(ASC) Gender(ASC)
+22504         HouseKeeping(ASC) Income(ASC) Kitchen(ASC) Marital_Status(ASC) Mnt(ASC)
+22505         NetPurchase(ASC) Rcn(ASC) Recomendation(ASC) RevenuePerPositiveAnswer(ASC)
+22506         SmallAppliances(ASC) Toys(ASC)
+22507      %mend DMDBClass;
+22508      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+22509      * Plot: Create DMDB;
+MPRINT(EM_DIAGRAM):   * Plot: Create DMDB;
+22510      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+22511      proc dmdb batch data=EMWS1.Trans_TRAIN
+22512      dmdbcat=WORK.Plot_DMDB
+22513      maxlevel = 23
+22514      nonorm
+22515      ;
+MPRINT(EM_DIAGRAM):   proc dmdb batch data=EMWS1.Trans_TRAIN dmdbcat=WORK.Plot_DMDB maxlevel = 23 nonorm ;
+MPRINT(EM_DIAGRAM):   class
+22516      class %DMDBClass;
+MPRINT(DMDBCLASS):   Age(ASC) CatPurchase(ASC) Clothes(ASC) CostPerContact(ASC) CustMonths(ASC) DepVar(ASC) Dependents(ASC) Education(ASC) Frq(ASC) Gender(ASC) HouseKeeping(ASC) Income(ASC) Kitchen(ASC) Marital_Status(ASC) Mnt(ASC) NetPurchase(ASC) 
+Rcn(ASC) Recomendation(ASC) RevenuePerPositiveAnswer(ASC) SmallAppliances(ASC) Toys(ASC)
+MPRINT(EM_DIAGRAM):  ;
+22517      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Records processed = 2500   Memory used = 511K.
+NOTE: There were 2500 observations read from the data set EMWS1.FIMPORT_DATA.
+NOTE: View EMWS1.TRANS_TRAIN.VIEW used (Total process time):
+      real time           0.23 seconds
+      cpu time            0.20 seconds
+      
+NOTE: There were 2500 observations read from the data set EMWS1.FIMPORT_TRAIN.
+NOTE: There were 2500 observations read from the data set EMWS1.TRANS_TRAIN.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.26 seconds
+      cpu time            0.23 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+22518      quit;
+
+22519      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+22520      * Plot: Creating univariate histograms;
+MPRINT(EM_DIAGRAM):   * Plot: Creating univariate histograms;
+22521      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+22522      goptions ftext="SWISS";
+MPRINT(EM_DIAGRAM):   goptions ftext="SWISS";
+22523      goptions nodisplay device=PNG;
+MPRINT(EM_DIAGRAM):   goptions nodisplay device=PNG;
+22524      axis1 width=2 offset=(1,1) label=(rotate=90 angle=270) minor=none;
+MPRINT(EM_DIAGRAM):   axis1 width=2 offset=(1,1) label=(rotate=90 angle=270) minor=none;
+22525      axis2 width=2 minor=none;
+MPRINT(EM_DIAGRAM):   axis2 width=2 minor=none;
+22526      pattern1 value=solid;
+MPRINT(EM_DIAGRAM):   pattern1 value=solid;
+22527      proc gchart
+22528      data=EMWS1.Trans_TRAIN gout=WORK.PlotGRAPH;
+MPRINT(EM_DIAGRAM):   proc gchart data=EMWS1.Trans_TRAIN gout=WORK.PlotGRAPH;
+22529      *;
+MPRINT(EM_DIAGRAM):   *;
+22530      title "Age";
+MPRINT(EM_DIAGRAM):   title "Age";
+22531      vbar Age /
+22532      name = "Age" description = "Age"
+MPRINT(EM_DIAGRAM):   vbar Age / name = "Age" description = "Age" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22533      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22534      type=FREQ
+22535      noframe
+22536      missing
+22537      raxis=axis1 maxis=axis2;
+22538      run;
+
+22539      title "CatPurchase";
+MPRINT(EM_DIAGRAM):   title "CatPurchase";
+22540      vbar CatPurchase /
+22541      name = "CatPurchase" description = "CatPurchase"
+MPRINT(EM_DIAGRAM):   vbar CatPurchase / name = "CatPurchase" description = "CatPurchase" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22542      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22543      type=FREQ
+22544      noframe
+22545      missing
+22546      raxis=axis1 maxis=axis2;
+22547      run;
+
+22548      title "Clothes";
+MPRINT(EM_DIAGRAM):   title "Clothes";
+22549      vbar Clothes /
+22550      name = "Clothes" description = "Clothes"
+MPRINT(EM_DIAGRAM):   vbar Clothes / name = "Clothes" description = "Clothes" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22551      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22552      type=FREQ
+22553      noframe
+22554      missing
+22555      raxis=axis1 maxis=axis2;
+22556      run;
+
+22557      title "CostPerContact";
+MPRINT(EM_DIAGRAM):   title "CostPerContact";
+22558      vbar CostPerContact /
+22559      name = "CostPerContact" description = "CostPerContact"
+22560      FREQ
+MPRINT(EM_DIAGRAM):   vbar CostPerContact / name = "CostPerContact" description = "CostPerContact" FREQ type=FREQ noframe missing discrete raxis=axis1 maxis=axis2;
+22561      type=FREQ
+MPRINT(EM_DIAGRAM):   run;
+22562      noframe
+22563      missing
+22564      discrete
+22565      raxis=axis1 maxis=axis2;
+22566      run;
+
+22567      title "CustMonths";
+MPRINT(EM_DIAGRAM):   title "CustMonths";
+22568      vbar CustMonths /
+22569      name = "CustMonths" description = "CustMonths"
+MPRINT(EM_DIAGRAM):   vbar CustMonths / name = "CustMonths" description = "CustMonths" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22570      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22571      type=FREQ
+22572      noframe
+22573      missing
+22574      raxis=axis1 maxis=axis2;
+22575      run;
+
+22576      title "DepVar";
+MPRINT(EM_DIAGRAM):   title "DepVar";
+22577      vbar DepVar /
+22578      name = "DepVar" description = "DepVar"
+22579      FREQ
+MPRINT(EM_DIAGRAM):   vbar DepVar / name = "DepVar" description = "DepVar" FREQ type=FREQ noframe missing discrete raxis=axis1 maxis=axis2;
+22580      type=FREQ
+MPRINT(EM_DIAGRAM):   run;
+22581      noframe
+22582      missing
+22583      discrete
+22584      raxis=axis1 maxis=axis2;
+22585      run;
+
+22586      title "Dependents";
+MPRINT(EM_DIAGRAM):   title "Dependents";
+22587      vbar Dependents /
+22588      name = "Dependents" description = "Dependents"
+22589      FREQ
+MPRINT(EM_DIAGRAM):   vbar Dependents / name = "Dependents" description = "Dependents" FREQ type=FREQ noframe missing discrete raxis=axis1 maxis=axis2;
+22590      type=FREQ
+MPRINT(EM_DIAGRAM):   run;
+22591      noframe
+22592      missing
+22593      discrete
+22594      raxis=axis1 maxis=axis2;
+22595      run;
+
+22596      title "Education";
+MPRINT(EM_DIAGRAM):   title "Education";
+22597      vbar Education /
+22598      name = "Education" description = "Education"
+MPRINT(EM_DIAGRAM):   vbar Education / name = "Education" description = "Education" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22599      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22600      type=FREQ
+22601      noframe
+22602      missing
+22603      raxis=axis1 maxis=axis2;
+22604      run;
+
+22605      title "Frq";
+MPRINT(EM_DIAGRAM):   title "Frq";
+22606      vbar Frq /
+22607      name = "Frq" description = "Frq"
+MPRINT(EM_DIAGRAM):   vbar Frq / name = "Frq" description = "Frq" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22608      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22609      type=FREQ
+22610      noframe
+22611      missing
+22612      raxis=axis1 maxis=axis2;
+22613      run;
+
+22614      title "Gender";
+MPRINT(EM_DIAGRAM):   title "Gender";
+22615      vbar Gender /
+22616      name = "Gender" description = "Gender"
+MPRINT(EM_DIAGRAM):   vbar Gender / name = "Gender" description = "Gender" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22617      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22618      type=FREQ
+22619      noframe
+22620      missing
+22621      raxis=axis1 maxis=axis2;
+22622      run;
+
+22623      title "HouseKeeping";
+MPRINT(EM_DIAGRAM):   title "HouseKeeping";
+22624      vbar HouseKeeping /
+22625      name = "HouseKeeping" description = "HouseKeeping"
+MPRINT(EM_DIAGRAM):   vbar HouseKeeping / name = "HouseKeeping" description = "HouseKeeping" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22626      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22627      type=FREQ
+22628      noframe
+22629      missing
+22630      raxis=axis1 maxis=axis2;
+22631      run;
+
+22632      title "Income";
+MPRINT(EM_DIAGRAM):   title "Income";
+22633      vbar Income /
+22634      name = "Income" description = "Income"
+MPRINT(EM_DIAGRAM):   vbar Income / name = "Income" description = "Income" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22635      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22636      type=FREQ
+22637      noframe
+22638      missing
+22639      raxis=axis1 maxis=axis2;
+22640      run;
+
+22641      title "Kitchen";
+MPRINT(EM_DIAGRAM):   title "Kitchen";
+22642      vbar Kitchen /
+22643      name = "Kitchen" description = "Kitchen"
+MPRINT(EM_DIAGRAM):   vbar Kitchen / name = "Kitchen" description = "Kitchen" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22644      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22645      type=FREQ
+22646      noframe
+22647      missing
+22648      raxis=axis1 maxis=axis2;
+22649      run;
+
+22650      title "Marital_Status";
+MPRINT(EM_DIAGRAM):   title "Marital_Status";
+22651      vbar Marital_Status /
+22652      name = "Marital_Status" description = "Marital_Status"
+MPRINT(EM_DIAGRAM):   vbar Marital_Status / name = "Marital_Status" description = "Marital_Status" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22653      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22654      type=FREQ
+22655      noframe
+22656      missing
+22657      raxis=axis1 maxis=axis2;
+22658      run;
+
+22659      title "Mnt";
+MPRINT(EM_DIAGRAM):   title "Mnt";
+22660      vbar Mnt /
+22661      name = "Mnt" description = "Mnt"
+MPRINT(EM_DIAGRAM):   vbar Mnt / name = "Mnt" description = "Mnt" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22662      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22663      type=FREQ
+22664      noframe
+22665      missing
+22666      raxis=axis1 maxis=axis2;
+22667      run;
+
+22668      title "NetPurchase";
+MPRINT(EM_DIAGRAM):   title "NetPurchase";
+22669      vbar NetPurchase /
+22670      name = "NetPurchase" description = "NetPurchase"
+MPRINT(EM_DIAGRAM):   vbar NetPurchase / name = "NetPurchase" description = "NetPurchase" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22671      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22672      type=FREQ
+22673      noframe
+22674      missing
+22675      raxis=axis1 maxis=axis2;
+22676      run;
+
+22677      title "Rcn";
+MPRINT(EM_DIAGRAM):   title "Rcn";
+22678      vbar Rcn /
+22679      name = "Rcn" description = "Rcn"
+MPRINT(EM_DIAGRAM):   vbar Rcn / name = "Rcn" description = "Rcn" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22680      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22681      type=FREQ
+22682      noframe
+22683      missing
+22684      raxis=axis1 maxis=axis2;
+22685      run;
+
+22686      title "Recomendation";
+MPRINT(EM_DIAGRAM):   title "Recomendation";
+22687      vbar Recomendation /
+22688      name = "Recomendation" description = "Recomendation"
+22689      FREQ
+MPRINT(EM_DIAGRAM):   vbar Recomendation / name = "Recomendation" description = "Recomendation" FREQ type=FREQ noframe missing discrete raxis=axis1 maxis=axis2;
+22690      type=FREQ
+MPRINT(EM_DIAGRAM):   run;
+22691      noframe
+22692      missing
+22693      discrete
+22694      raxis=axis1 maxis=axis2;
+22695      run;
+
+22696      title "RevenuePerPositiveAnswer";
+MPRINT(EM_DIAGRAM):   title "RevenuePerPositiveAnswer";
+22697      vbar RevenuePerPositiveAnswer /
+22698      name = "RevenuePerPositiveAnswer" description = "RevenuePerPositiveAnswer"
+22699      FREQ
+MPRINT(EM_DIAGRAM):   vbar RevenuePerPositiveAnswer / name = "RevenuePerPositiveAnswer" description = "RevenuePerPositiveAnswer" FREQ type=FREQ noframe missing discrete raxis=axis1 maxis=axis2;
+22700      type=FREQ
+MPRINT(EM_DIAGRAM):   run;
+22701      noframe
+22702      missing
+22703      discrete
+22704      raxis=axis1 maxis=axis2;
+22705      run;
+
+22706      title "SmallAppliances";
+MPRINT(EM_DIAGRAM):   title "SmallAppliances";
+22707      vbar SmallAppliances /
+22708      name = "SmallAppliances" description = "SmallAppliances"
+MPRINT(EM_DIAGRAM):   vbar SmallAppliances / name = "SmallAppliances" description = "SmallAppliances" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22709      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22710      type=FREQ
+22711      noframe
+22712      missing
+22713      raxis=axis1 maxis=axis2;
+22714      run;
+
+22715      title "Toys";
+MPRINT(EM_DIAGRAM):   title "Toys";
+22716      vbar Toys /
+22717      name = "Toys" description = "Toys"
+MPRINT(EM_DIAGRAM):   vbar Toys / name = "Toys" description = "Toys" FREQ type=FREQ noframe missing raxis=axis1 maxis=axis2;
+22718      FREQ
+MPRINT(EM_DIAGRAM):   run;
+22719      type=FREQ
+22720      noframe
+22721      missing
+22722      raxis=axis1 maxis=axis2;
+22723      run;
+
+22724      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: There were 2500 observations read from the data set EMWS1.FIMPORT_DATA.
+NOTE: View EMWS1.TRANS_TRAIN.VIEW used (Total process time):
+      real time           1.79 seconds
+      cpu time            1.17 seconds
+      
+NOTE: There were 2500 observations read from the data set EMWS1.FIMPORT_TRAIN.
+NOTE: There were 2500 observations read from the data set EMWS1.TRANS_TRAIN.
+NOTE: PROCEDURE GCHART used (Total process time):
+      real time           1.79 seconds
+      cpu time            1.17 seconds
+      
+
+22725      title;
+MPRINT(EM_DIAGRAM):   title;
+22726      goptions display;
+MPRINT(EM_DIAGRAM):   goptions display;
+22727      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+22728      * Plot: Creating variable by interval target charts;
+MPRINT(EM_DIAGRAM):   * Plot: Creating variable by interval target charts;
+22729      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+22730      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+22731      * Plot: DMDBClass Macro ;
+MPRINT(EM_DIAGRAM):   * Plot: DMDBClass Macro ;
+22732      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+22733      %macro DMDBClass;
+22734          DepVar(ASC) Dependents(ASC) Education(ASC) Gender(ASC) Marital_Status(ASC)
+22735         Recomendation(ASC)
+22736      %mend DMDBClass;
+22737      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+22738      * Plot: DMDBVar Macro ;
+MPRINT(EM_DIAGRAM):   * Plot: DMDBVar Macro ;
+22739      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+22740      %macro DMDBVar;
+22741          Age CatPurchase Clothes CostPerContact CustMonths Frq HouseKeeping Income
+22742         Kitchen Mnt NetPurchase Rcn RevenuePerPositiveAnswer SmallAppliances Toys
+22743      %mend DMDBVar;
+22744      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+22745      * Plot: Create DMDB;
+MPRINT(EM_DIAGRAM):   * Plot: Create DMDB;
+22746      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+22747      proc dmdb batch data=EMWS1.Trans_TRAIN
+22748      dmdbcat=WORK.Plot_DMDB
+22749      classout=work.classoutDs
+22750      varout=work.varoutDs
+22751      maxlevel = 513
+22752      ;
+MPRINT(EM_DIAGRAM):   proc dmdb batch data=EMWS1.Trans_TRAIN dmdbcat=WORK.Plot_DMDB classout=work.classoutDs varout=work.varoutDs maxlevel = 513 ;
+MPRINT(EM_DIAGRAM):   class
+22753      class %DMDBClass;
+MPRINT(DMDBCLASS):   DepVar(ASC) Dependents(ASC) Education(ASC) Gender(ASC) Marital_Status(ASC) Recomendation(ASC)
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   var
+22754      var %DMDBVar;
+MPRINT(DMDBVAR):   Age CatPurchase Clothes CostPerContact CustMonths Frq HouseKeeping Income Kitchen Mnt NetPurchase Rcn RevenuePerPositiveAnswer SmallAppliances Toys
+MPRINT(EM_DIAGRAM):  ;
+22755      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Records processed = 2500   Memory used = 511K.
+NOTE: There were 2500 observations read from the data set EMWS1.FIMPORT_DATA.
+NOTE: View EMWS1.TRANS_TRAIN.VIEW used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.04 seconds
+      
+NOTE: There were 2500 observations read from the data set EMWS1.FIMPORT_TRAIN.
+NOTE: There were 2500 observations read from the data set EMWS1.TRANS_TRAIN.
+NOTE: The data set WORK.CLASSOUTDS has 27 observations and 9 variables.
+NOTE: The data set WORK.VAROUTDS has 15 observations and 9 variables.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.06 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+MPRINT(EM_DIAGRAM):   *--- end code ---*;
+22756      quit;
+22757      *--- end code ---*;
+
+22758      title8;
+MPRINT(EM_DIAGRAM):    title8;
+22759      title8 "%sysfunc(sasmsg(sashelp.dmine, rpt_classvars_title, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title8 "Class Variables";
+22760      proc print data=work.classoutDs;
+MPRINT(EM_DIAGRAM):   proc print data=work.classoutDs;
+22761      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 27 observations read from the data set WORK.CLASSOUTDS.
+NOTE: The PROCEDURE PRINT printed page 2.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+22762      proc datasets lib=work nolist;
+MPRINT(EM_DIAGRAM):   proc datasets lib=work nolist;
+22763      delete classoutDs;
+MPRINT(EM_DIAGRAM):   delete classoutDs;
+22764      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Deleting WORK.CLASSOUTDS (memtype=DATA).
+22765      title8;
+MPRINT(EM_DIAGRAM):   title8;
+22766      title8;
+MPRINT(EM_DIAGRAM):   title8;
+22767      title8 "%sysfunc(sasmsg(sashelp.dmine, rpt_intvars_title, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title8 "Interval Variables";
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+22768      proc print data=work.varoutDs;
+MPRINT(EM_DIAGRAM):   proc print data=work.varoutDs;
+22769      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 15 observations read from the data set WORK.VAROUTDS.
+NOTE: The PROCEDURE PRINT printed page 3.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+22770      proc datasets lib=work nolist;
+MPRINT(EM_DIAGRAM):   proc datasets lib=work nolist;
+22771      delete varoutDs;
+MPRINT(EM_DIAGRAM):   delete varoutDs;
+22772      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Deleting WORK.VAROUTDS (memtype=DATA).
+22773      title8;
+MPRINT(EM_DIAGRAM):   title8;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+22774      proc datasets lib=WORK nolist;
+MPRINT(EM_DIAGRAM):   proc datasets lib=WORK nolist;
+22775      delete Plot_DMDB;
+MPRINT(EM_DIAGRAM):   delete Plot_DMDB;
+22776      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file WORK.PLOT_DMDB (memtype=DATA) was not found, but appears on a DELETE statement.
+22777      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+22778      proc datasets lib=WORK nolist;
+MPRINT(EM_DIAGRAM):    proc datasets lib=WORK nolist;
+22779      delete Plot_DMDB / memtype=catalog;
+MPRINT(EM_DIAGRAM):   delete Plot_DMDB / memtype=catalog;
+22780      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Deleting WORK.PLOT_DMDB (memtype=CATALOG).
+22781      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+22782      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+22783      * Plot: Copying graphs to node folder;
+MPRINT(EM_DIAGRAM):   * Plot: Copying graphs to node folder;
+22784      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+22785      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Age.png";
+MPRINT(EM_DIAGRAM):   filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Age.png";
+22786      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22787      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22788      replay AGE;
+MPRINT(EM_DIAGRAM):   replay AGE;
+NOTE: This SAS session is using a registry in WORK.  All changes will be lost at the end of this session.
+NOTE: 8404 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Age.png.
+22789      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.11 seconds
+      
+
+22790      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22791      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22792      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\CatPurchase.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\CatPurchase.png";
+22793      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22794      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22795      replay CATPURCH;
+MPRINT(EM_DIAGRAM):   replay CATPURCH;
+NOTE: 7861 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\CatPurchase.png.
+22796      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.10 seconds
+      
+
+22797      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22798      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22799      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Clothes.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Clothes.png";
+22800      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22801      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22802      replay CLOTHES;
+MPRINT(EM_DIAGRAM):   replay CLOTHES;
+NOTE: 9637 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Clothes.png.
+22803      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.13 seconds
+      cpu time            0.12 seconds
+      
+
+22804      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22805      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22806      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\CostPerContact.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\CostPerContact.png";
+22807      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22808      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22809      replay COSTPERC;
+MPRINT(EM_DIAGRAM):   replay COSTPERC;
+NOTE: 5059 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\CostPerContact.png.
+22810      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.18 seconds
+      cpu time            0.15 seconds
+      
+
+22811      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22812      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22813      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\CustMonths.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\CustMonths.png";
+22814      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22815      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22816      replay CUSTMONT;
+MPRINT(EM_DIAGRAM):   replay CUSTMONT;
+NOTE: 8841 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\CustMonths.png.
+22817      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.10 seconds
+      
+
+22818      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22819      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22820      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Dependents.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Dependents.png";
+22821      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22822      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22823      replay DEPENDEN;
+MPRINT(EM_DIAGRAM):   replay DEPENDEN;
+NOTE: 6425 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Dependents.png.
+22824      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.09 seconds
+      
+
+22825      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22826      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22827      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\DepVar.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\DepVar.png";
+22828      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22829      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22830      replay DEPVAR;
+MPRINT(EM_DIAGRAM):   replay DEPVAR;
+NOTE: 4872 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\DepVar.png.
+22831      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.09 seconds
+      
+
+22832      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22833      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22834      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Education.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Education.png";
+22835      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22836      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22837      replay EDUCATIO;
+MPRINT(EM_DIAGRAM):   replay EDUCATIO;
+NOTE: 7217 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Education.png.
+22838      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.18 seconds
+      cpu time            0.15 seconds
+      
+
+22839      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22840      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22841      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Frq.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Frq.png";
+22842      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22843      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22844      replay FRQ;
+MPRINT(EM_DIAGRAM):   replay FRQ;
+NOTE: 7377 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Frq.png.
+22845      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.15 seconds
+      cpu time            0.14 seconds
+      
+
+22846      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22847      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22848      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Gender.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Gender.png";
+22849      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22850      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22851      replay GENDER;
+MPRINT(EM_DIAGRAM):   replay GENDER;
+NOTE: 6617 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Gender.png.
+22852      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.10 seconds
+      
+
+22853      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22854      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22855      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\HouseKeeping.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\HouseKeeping.png";
+22856      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22857      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22858      replay HOUSEKEE;
+MPRINT(EM_DIAGRAM):   replay HOUSEKEE;
+NOTE: 7679 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\HouseKeeping.png.
+22859      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.09 seconds
+      
+
+22860      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22861      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22862      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Income.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Income.png";
+22863      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22864      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22865      replay INCOME;
+MPRINT(EM_DIAGRAM):   replay INCOME;
+NOTE: 9498 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Income.png.
+22866      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.10 seconds
+      
+
+22867      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22868      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22869      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Kitchen.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Kitchen.png";
+22870      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22871      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22872      replay KITCHEN;
+MPRINT(EM_DIAGRAM):   replay KITCHEN;
+NOTE: 7981 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Kitchen.png.
+22873      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.11 seconds
+      cpu time            0.10 seconds
+      
+
+22874      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22875      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22876      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Marital_Status.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Marital_Status.png";
+22877      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22878      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22879      replay MARITAL_;
+MPRINT(EM_DIAGRAM):   replay MARITAL_;
+NOTE: 7110 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Marital_Status.png.
+22880      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.17 seconds
+      cpu time            0.15 seconds
+      
+
+22881      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22882      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22883      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Mnt.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Mnt.png";
+22884      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22885      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22886      replay MNT;
+MPRINT(EM_DIAGRAM):   replay MNT;
+NOTE: 7951 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Mnt.png.
+22887      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.10 seconds
+      
+
+22888      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22889      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22890      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\NetPurchase.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\NetPurchase.png";
+22891      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22892      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22893      replay NETPURCH;
+MPRINT(EM_DIAGRAM):   replay NETPURCH;
+NOTE: 7720 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\NetPurchase.png.
+22894      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.09 seconds
+      
+
+22895      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22896      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22897      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Rcn.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Rcn.png";
+22898      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22899      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22900      replay RCN;
+MPRINT(EM_DIAGRAM):   replay RCN;
+NOTE: 7110 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Rcn.png.
+22901      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.09 seconds
+      
+
+22902      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22903      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22904      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Recomendation.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Recomendation.png";
+22905      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22906      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22907      replay RECOMEND;
+MPRINT(EM_DIAGRAM):   replay RECOMEND;
+NOTE: 6233 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Recomendation.png.
+22908      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.11 seconds
+      cpu time            0.09 seconds
+      
+
+22909      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22910      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22911      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\RevenuePerPositiveAnswer.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\RevenuePerPositiveAnswer.png";
+22912      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22913      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22914      replay REVENUEP;
+MPRINT(EM_DIAGRAM):   replay REVENUEP;
+NOTE: 5370 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\RevenuePerPositiveAnswer.png.
+22915      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.12 seconds
+      
+
+22916      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22917      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22918      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\SmallAppliances.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\SmallAppliances.png";
+22919      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22920      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22921      replay SMALLAPP;
+MPRINT(EM_DIAGRAM):   replay SMALLAPP;
+NOTE: 7933 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\SmallAppliances.png.
+22922      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.09 seconds
+      
+
+22923      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22924      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+22925      filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Toys.png";
+MPRINT(EM_DIAGRAM):    filename gsasfile "C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Toys.png";
+22926      goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+MPRINT(EM_DIAGRAM):   goptions device= PNG display gaccess= gsasfile gsfmode= replace cback= white;
+22927      proc greplay igout=WORK.PLOTGRAPH nofs;
+MPRINT(EM_DIAGRAM):   proc greplay igout=WORK.PLOTGRAPH nofs;
+NOTE: Building list of graphs from the catalog.
+
+NOTE: Enter greplay commands or statements.
+22928      replay TOYS;
+MPRINT(EM_DIAGRAM):   replay TOYS;
+NOTE: 7426 bytes written to C:\Users\misil\Desktop\DM 2\Handout\Tugas Explore\Workspaces\EMWS1\Plot\GRAPH\Toys.png.
+22929      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE GREPLAY used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.07 seconds
+      
+
+22930      goptions device=win;
+MPRINT(EM_DIAGRAM):   goptions device=win;
+22931      filename gsasfile;
+MPRINT(EM_DIAGRAM):   filename gsasfile;
+NOTE: Fileref GSASFILE has been deassigned.
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

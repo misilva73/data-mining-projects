@@ -1,0 +1,1011 @@
+---
+title: "Data Mining I project - Draft report"
+author: "Maria Ines Silva"
+date: "4th January 2018"
+output: 
+  html_document: 
+    theme: cosmo
+    toc: yes
+---
+
+<style>
+
+table, td, th {
+  border: none;
+  padding-left: 1em;
+  padding-right: 1em;
+  min-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+</style>
+
+```{r libraries, warning=FALSE, message=FALSE, echo=FALSE} 
+
+## Clearing and environment
+rm(list = ls())
+
+knitr::opts_chunk$set(warning=FALSE,
+                      message=FALSE,
+                      echo=FALSE,
+                      fig.align="center",
+                      fig.path = "./Figures/")
+
+## Importing packadges
+library(tidyverse)
+library(ggthemes)
+library(RColorBrewer)
+library(xlsx)
+library(kableExtra)
+library(corrplot)
+
+## Loading functiond
+source("functions.R")
+```
+
+## Problem and data description
+
+For this project, we received data from a fictional insurer in Portugal. We were asked to develop a Customer Segmentation in such a way that it will be possible for the Marketing Department to better understand all the different Customers' Profiles.
+
+For each customer, the following variables are available:
+
+![](./Figures/data_specs.png)
+
+```{r raw data import}
+raw_data <- read.csv2("./A2Z Insurance.csv") %>% 
+        mutate(Area=as.factor(Area),
+               Children=as.factor(Children),
+               Education=factor(Education,labels=c("NA","1","2","3","4")))
+
+n <- nrow(raw_data)
+
+cat_features <- raw_data %>% 
+        select_if(is.factor)
+
+num_features <- raw_data %>% 
+        select_if(is.numeric)
+```
+
+
+```{r product data import}
+
+## Clustered data
+product_cluster2 <- import_product_data(2)
+product_cluster3 <- import_product_data(3)
+product_cluster4 <- import_product_data(4)
+
+## Centrois
+product_centroids2 <- import_product_centroids(2)
+product_centroids3 <- import_product_centroids(3)
+product_centroids4 <- import_product_centroids(4)
+
+```
+
+
+```{r value data import}
+
+## Clustered data
+value_cluster4 <- import_value_data(4) %>% 
+        mutate(Education=factor(Education,labels=c("1","2","3","4")))
+value_cluster5 <- import_value_data(5) %>% 
+        mutate(Education=factor(Education,labels=c("1","2","3","4")))
+value_cluster3 <- import_value_data(3) %>% 
+        mutate(Education=factor(Education,labels=c("1","2","3","4")))
+
+## Centrois
+value_centroids4 <- import_value_centroids(4)
+value_centroids5 <- import_value_centroids(5)
+value_centroids3 <- import_value_centroids(3)
+
+```
+
+
+```{r elbow import}
+
+elbow_data <- read.csv("./Results/Elbow_plot.csv")
+
+```
+
+
+```{r number of outliers}
+n_outliers <- full_join(value_cluster4, product_cluster3, by="ID") %>% 
+        filter((role.x=="outliers") | (role.y=="outliers")) %>% 
+        nrow()
+```
+
+
+<br>
+
+
+## Data exploration (EXPLORE)
+
+In the data set received there are `r n` customers and `r ncol(raw_data)-1` features. In particular, there are `r ncol(cat_features)` categorical features and `r ncol(num_features)-1` numeric features.
+
+
+### Categorical features
+
+```{r explore - categorical, fig.height=1.5, fig.width=3}
+cat_missing <- cat_features %>% 
+        filter((Education=="NA")|(is.na(Area))|(is.na(Children)))
+cat_features %>% 
+        gather(key=variable,value=level,Education:Children) %>% 
+        ggplot(mapping = aes(x=level)) +
+        geom_bar()+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank())+
+        facet_wrap(~variable,ncol=3, scales = "free_x")
+```
+
+For all 3 features, there are a total `r nrow(cat_missing)` observations with missing values.
+
+
+### Numeric features
+
+```{r explore - numeric}
+num_stats <- num_features %>% 
+        gather(key=variable,value=value,FirstPolicy:Work) %>% 
+        group_by(variable) %>% 
+        summarise(mean=round(mean(value,na.rm=TRUE),1),
+                  standard_dev=round(sd(value,na.rm=TRUE),1),
+                  median=round(quantile(value,probs=0.5,na.rm=TRUE),1),
+                  missing_values_p=round(sum(is.na(value))/n,3),
+                  min=round(min(value,na.rm=TRUE),1),
+                  max=round(max(value,na.rm=TRUE),1)) %>% 
+        ungroup() %>% 
+        mutate(left_outlier_threshold=round(mean-3*standard_dev,0),
+               right_outlier_threshold=round(mean+3*standard_dev,0))
+        
+write.xlsx(num_stats,"./Figures/explore - stats.xlsx")
+
+knitr::kable(num_stats,
+             format="html",
+             align="c",
+             col.names = c("Product","Mean","Standar deviation","Median",
+                           "% missing values",  "Minimum","Maximum",
+                           "left threshold", "right threshold")) %>%
+        kable_styling(bootstrap_options = "striped",
+                      full_width = F)
+```
+
+
+```{r explore - numeric 1, fig.height=2, fig.width=3.5}
+num_features %>% 
+        gather(key=variable,value=value,Salary:Work) %>%
+        ggplot(mapping = aes(x=variable, y=value)) +
+        geom_boxplot(outlier.size = 0.5) + 
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank())+
+        coord_flip(ylim = c(-500,5000))
+```
+
+
+```{r explore - numeric 2, fig.height=2, fig.width=2.5}
+
+num_features %>% 
+        gather(key=variable,value=value,FirstPolicy:Birthday) %>%
+        ggplot(mapping = aes(x=value)) +
+        geom_bar()+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank())+
+        coord_cartesian(xlim=c(1930,2005))+
+        facet_wrap(~variable,ncol=1, scales = "free_y")
+
+```
+
+
+## Data preparation (MODIFY)
+
+### Feature transformation
+
+The fist step in our data preparation was to clean the data and make some meaningful transformations. In particular, we preformed the following transformations:
+
+1. **Teatment of missing values** - categoricals were filled with the most frequent class and numericals were filled with the median. The idea here is to avoid excluding customers and /or important information. For this purpose, we used the median to control to the outliers' bias.
+2. **Treatment of Reversals** - since negative premiums represent reversals, we'll change all negative premiums to zero and we'll add a new ordinal variable to indicate how many reversals which costumer experienced in 2016.
+3. **Treatment of Dates** - the features FirstPolicy and Birthday correspond to calendar years and thus do not belong to the interval variable type. To  transform them into a interval type and to help interpret the clusters, these features will be substituted by the Fidelity and Age, respectively. (Fidelity = 2016 - FirstPolicy &  Age = 2016 - Birthday).
+4. **Treatment of outliers** - numeric features' outliers will be identified via the Gaussian assumption, i.e., any observations lying outside the interval defined by the mean +/- 3 times the standard deviation will be considered outliers. Note that in the entire sample, there are `r n_outliers` outliers, which corresponds to `r round(100*n_outliers/n,1)`% of the initial set of customers. (We recognize that not all features have a Gaussian distribution, however, for simplicity, we'll use this criteria)
+
+After these transformations, the features showed the following distributions:
+
+```{r prep - distribuition plots 1, fig.height=1.5, fig.width=6}
+value_cluster4 %>% 
+        filter(role=="train") %>% 
+        gather(key=variable, value=amount, CMV, Claims, Salary, Fidelity) %>% 
+        ggplot(mapping=aes(x=amount)) +
+        geom_density(fill="grey30") +
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank())+
+        facet_wrap(~variable,ncol=2, scales = "free", strip.position = "left")
+```
+
+
+```{r prep - distribution plots 2, fig.height=2, fig.width=6}
+product_cluster2 %>% 
+        left_join(select(value_cluster3,ID, Age),by="ID") %>% 
+        filter(role=="train", Age<100) %>% 
+        gather(key=variable, value=amount, Age, Household:Work) %>% 
+        ggplot(mapping=aes(x=amount)) +
+        geom_density(fill="grey30") +
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank())+
+        facet_wrap(~variable,ncol=2, scales = "free", strip.position = "left")
+```
+
+
+```{r prep - distribuition plots 2.5, fig.height=2.5, fig.width=4}
+value_cluster4 %>% 
+        filter(role=="train") %>% 
+        gather(key=variable, value=amount, Children:Area,Reversals) %>% 
+        ggplot(mapping = aes(x=amount)) +
+        geom_bar()+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank())+
+        facet_wrap(~variable,ncol=2, scales = "free")
+```
+
+
+Given the data, our proposal is to build two segmentations - value and product. The product segmentation will consider the columns related with the annual premiums per type of product and will aim to group together customers with similar insurance policies. The value segmentation will considered the remaining features and will aim to characterize the costumers in relation with their value to the company.
+
+The next step is to select which variables should be considered in each segmentation.
+
+### Feature selection - Value segmentation
+
+Firstly, it's important to note that since the usual clustering algorithms rely on distances, they don't work well with categorical features. Therefore, the features Education, Area, Children and Reversals were excluded from the training phase, i.e.e,  be the computation of the clusters. However, they can and were used in the profiling phase.
+
+The second point to note is the study of redundancy. In other words, we should only consider variables in the training phase that bring new information, which implies that we should avoid including variables with high correlation (either positive or negative). The following plot illustrates the correlation of the numeric variables related with the value segmentation:
+
+```{r prep - value correlation, fig.height=3, fig.width=3}
+value_cluster4 %>% 
+        filter(role=="train") %>% 
+        select(CMV,Claims,Salary:Fidelity) %>% 
+        cor() %>% 
+        corrplot(method = "color",
+                 type="upper",
+                 addCoef.col = "black",
+                 tl.col = "black",
+                 #col = brewer.pal(n = 5, name = "RdBu"),
+                 cl.pos = "n",
+                 diag=FALSE)
+```
+
+The pairs of features Salary-Age and CMV-Claims show string correlations and thus for the training phase we excluded the Age and the Claims.
+
+### Feature selection - product segmentation
+
+Considering now the variables related with the product segmentation, the following plot shows their correlation matrix:
+
+```{r prep - product correlation, fig.height=3, fig.width=3}
+product_cluster2 %>% 
+        filter(role=="train") %>% 
+        select(Household:Work) %>% 
+        cor() %>% 
+        corrplot(method = "color",
+                 type="upper",
+                 addCoef.col = "black",
+                 tl.col = "black",
+                 #col = brewer.pal(n = 5, name = "RdBu"),
+                 cl.pos = "n",
+                 diag=FALSE)
+```
+
+There are no strong correlations between the features and thus we kept them all for the training phase.
+
+## Clustering (MODEL)
+
+For both value and product segmentations, the model used is was the k-means. It is a widely used and easy to understand clustering algorithm. **[Main disadvanges? Why can we still use it? Options chosen in SAS?]**
+
+
+### Value segmentation
+
+```{r cluster - value elbow plot, fig.height=1.3, fig.width=3}
+elbow_data %>% 
+        filter(segmentation=="Value") %>% 
+        ggplot(aes(x=k, y=sd)) +
+        geom_line(color="grey40", size=1) +
+        geom_point(color="grey40", size=2) +
+        theme_minimal(base_size = 12) +
+        labs(y="Value's WSD")+
+        scale_x_continuous(breaks=c(2:9))+
+        theme(panel.grid=element_blank(),
+              axis.title.x = element_blank(),
+              axis.title.y = element_text(size = 11))
+```
+
+
+Based on the elbow criteria, we decided to further investigate solutions with 3, 4 and 5 clusters for the value segmentation. Next, for each solution, we'll present 3 types of plots:
+
+* A pie chart with the distribution of all customers between the different clusters;
+* The input mean plot, which shows, for each variable used in the training phase, ....
+* Distributions of all relevant features (density for numericals and frequency for categoricals) among each cluster, excluding the outliers.
+
+
+#### 3 Clusters
+
+```{r cluster - value_3 pie chart, fig.height=2.8, fig.width=2.5}
+value_centroids3 %>% 
+        ggplot(aes(x=factor(1), y=freq, fill=value_cluster)) +
+        geom_bar(stat = "identity", alpha=0.8) +
+        coord_polar("y", start=0) +
+        labs(fill="Cluster") +
+        theme_minimal(base_size = 12) +
+        theme(axis.title = element_blank(),
+              axis.text = element_blank(),
+              panel.border = element_blank(),
+              panel.grid=element_blank(),
+              axis.ticks = element_blank()) +
+        scale_fill_tableau()
+```
+
+
+```{r cluster - value_3 means plot, fig.height=1.5, fig.width=3.5}
+value_centroids3 %>% 
+        gather(key=variable, value=amount, CMV:Fidelity) %>%
+        group_by(variable) %>% 
+        mutate(min=min(amount),max=max(amount)) %>% 
+        ungroup() %>% 
+        mutate(amount=(amount-min)/(max-min)) %>% 
+        ggplot(aes(x=amount,y=variable,color=value_cluster)) +
+        geom_point(size=3)+
+        guides(color=FALSE)+
+        scale_y_discrete(limits = c("Salary", "Fidelity","CMV"))+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank())+
+        scale_color_tableau()
+```
+
+<br>
+
+```{r cluster - value_3 density, fig.height=2.5, fig.width=4.5}
+value_cluster3 %>%
+        filter(role=="train",Claims<1) %>% 
+        gather(key=variable, value=amount, CMV, Salary, Fidelity, Claims, Age) %>% 
+        ggplot(aes(x=amount,fill=value_cluster)) +
+        geom_density(position = "stack", alpha=0.8) +
+        guides(fill=FALSE)+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text = element_blank(),
+              axis.ticks.y = element_blank())+
+        scale_fill_tableau()+
+        facet_wrap(~variable,ncol=3, scales = "free")
+```
+
+<br>
+
+```{r cluster - value_3 distribution cat, fig.height=2.5, fig.width=2}
+value_cluster3 %>%
+        gather(key=variable, value=amount, Children:Area,Reversals) %>% 
+        ggplot(aes(x=amount,fill=value_cluster)) +
+        geom_bar(position = "fill", alpha=0.8) +
+        guides(fill=FALSE)+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank())+
+        scale_fill_tableau()+
+        facet_wrap(~variable,ncol=2,scales = "free")
+```
+
+
+#### 4 Clusters
+
+```{r cluster - value_4 pie chart, fig.height=2.8, fig.width=2.5}
+value_centroids4 %>% 
+        ggplot(aes(x=factor(1), y=freq, fill=value_cluster)) +
+        geom_bar(stat = "identity", alpha=0.8) +
+        coord_polar("y", start=0) +
+        labs(fill="Cluster") +
+        theme_minimal(base_size = 12) +
+        theme(axis.title = element_blank(),
+              axis.text = element_blank(),
+              panel.border = element_blank(),
+              panel.grid=element_blank(),
+              axis.ticks = element_blank()) +
+        scale_fill_tableau()
+```
+
+
+```{r cluster - value_4 means plot, fig.height=1.5, fig.width=3.5}
+value_centroids4 %>% 
+        gather(key=variable, value=amount, CMV:Fidelity) %>%
+        group_by(variable) %>% 
+        mutate(min=min(amount),max=max(amount)) %>% 
+        ungroup() %>% 
+        mutate(amount=(amount-min)/(max-min)) %>% 
+        ggplot(aes(x=amount,y=variable,color=value_cluster)) +
+        geom_point(size=3)+
+        guides(color=FALSE)+
+        scale_y_discrete(limits = c("Salary", "Fidelity","CMV"))+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank())+
+        scale_color_tableau()
+```
+
+<br>
+
+```{r cluster - value_4 density, fig.height=2.5, fig.width=4.5}
+value_cluster4 %>%
+        filter(role=="train",Claims<1) %>% 
+        gather(key=variable, value=amount, CMV, Salary, Fidelity, Claims, Age) %>% 
+        ggplot(aes(x=amount,fill=value_cluster)) +
+        geom_density(position = "stack", alpha=0.8) +
+        guides(fill=FALSE)+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text = element_blank(),
+              axis.ticks.y = element_blank())+
+        scale_fill_tableau()+
+        facet_wrap(~variable,ncol=3, scales = "free")
+```
+
+<br>
+
+```{r cluster - value_4 distribution cat, fig.height=2.5, fig.width=2}
+value_cluster4 %>%
+        gather(key=variable, value=amount, Children:Area,Reversals) %>% 
+        ggplot(aes(x=amount,fill=value_cluster)) +
+        geom_bar(position = "fill", alpha=0.8) +
+        guides(fill=FALSE)+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank())+
+        scale_fill_tableau()+
+        facet_wrap(~variable,ncol=2,scales = "free")
+```
+
+
+#### 5 Clusters
+
+```{r cluster - value_5 pie chart, fig.height=2.8, fig.width=2.5}
+value_centroids5 %>% 
+        ggplot(aes(x=factor(1), y=freq, fill=value_cluster)) +
+        geom_bar(stat = "identity", alpha=0.8) +
+        coord_polar("y", start=0) +
+        labs(fill="Cluster") +
+        theme_minimal(base_size = 12) +
+        theme(axis.title = element_blank(),
+              axis.text = element_blank(),
+              panel.border = element_blank(),
+              panel.grid=element_blank(),
+              axis.ticks = element_blank()) +
+        scale_fill_tableau()
+```
+
+
+```{r cluster - value_5 means plot, fig.height=1.5, fig.width=3.5}
+value_centroids5 %>% 
+        gather(key=variable, value=amount, CMV:Fidelity) %>%
+        group_by(variable) %>% 
+        mutate(min=min(amount),max=max(amount)) %>% 
+        ungroup() %>% 
+        mutate(amount=(amount-min)/(max-min)) %>% 
+        ggplot(aes(x=amount,y=variable,color=value_cluster)) +
+        geom_point(size=3)+
+        guides(color=FALSE)+
+        scale_y_discrete(limits = c("Salary", "Fidelity","CMV"))+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank())+
+        scale_color_tableau()
+```
+
+<br>
+
+```{r cluster - value_5 density, fig.height=2.5, fig.width=4.5}
+value_cluster5 %>%
+        filter(role=="train",Claims<1) %>% 
+        gather(key=variable, value=amount, CMV, Salary, Fidelity, Claims, Age) %>% 
+        ggplot(aes(x=amount,fill=value_cluster)) +
+        geom_density(position = "stack", alpha=0.8) +
+        guides(fill=FALSE)+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text = element_blank(),
+              axis.ticks.y = element_blank())+
+        scale_fill_tableau()+
+        facet_wrap(~variable,ncol=3, scales = "free")
+```
+
+<br>
+
+```{r cluster - value_5 distribution cat, fig.height=2.5, fig.width=2}
+value_cluster5 %>%
+        gather(key=variable, value=amount, Children:Area,Reversals) %>% 
+        ggplot(aes(x=amount,fill=value_cluster)) +
+        geom_bar(position = "fill", alpha=0.8) +
+        guides(fill=FALSE)+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank())+
+        scale_fill_tableau()+
+        facet_wrap(~variable,ncol=2,scales = "free")
+```
+
+In the end we chose the solution with 4 clusters. If we chose 3 clusters, then the feature Fidelity would have the same distribution on all the clusters.
+
+### Product segmentation
+
+```{r cluster - product elbow plot, fig.height=1.3, fig.width=3}
+elbow_data %>% 
+        filter(segmentation=="Product") %>% 
+        ggplot(aes(x=k, y=sd)) +
+        geom_line(color="grey40", size=1) +
+        geom_point(color="grey40", size=2) +
+        theme_minimal(base_size = 12) +
+        labs(y="Product's WSD")+
+        scale_x_continuous(breaks=c(2:9))+
+        theme(panel.grid=element_blank(),
+              axis.title.x = element_blank(),
+              axis.title.y = element_text(size = 11))
+```
+
+Based on the elbow criteria, we decided to further investigate solutions with 2, 3 and 4 clusters for the product segmentation.
+
+The same plots showed for the value segmentation are now presented for the 3 solutions of the product segmentation.
+
+#### 2 Clusters
+
+```{r cluster - product_2 pie chart, fig.height=2.8, fig.width=2.5}
+product_centroids2 %>% 
+        ggplot(aes(x=factor(1), y=freq, fill=product_cluster)) +
+        geom_bar(stat = "identity", alpha=0.85) +
+        coord_polar("y", start=0) +
+        labs(y="", x="", fill="Cluster")+
+        theme_minimal(base_size = 12) +
+        theme(axis.title = element_blank(),
+              axis.text = element_blank(),
+              panel.border = element_blank(),
+              panel.grid=element_blank(),
+              axis.ticks = element_blank())+
+        scale_fill_tableau()
+```
+
+
+```{r cluster - product_2 means plot, fig.height=1.5, fig.width=3.5}
+product_centroids2 %>% 
+        gather(key=variable, value=amount, Household:Work) %>%
+        group_by(variable) %>% 
+        mutate(min=min(amount),max=max(amount)) %>% 
+        ungroup() %>% 
+        mutate(amount=(amount-min)/(max-min)) %>% 
+        ggplot(aes(x=amount,y=variable,color=product_cluster)) +
+        geom_point(size=3)+
+        guides(color=FALSE)+
+        scale_y_discrete(limits = c("Work", "Motor","Life", "Household","Health"))+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank())+
+        scale_color_tableau()
+```
+
+<br>
+
+```{r cluster - product_2 density, fig.height=2.5, fig.width=6}
+product_cluster2 %>%
+        filter(role=="train") %>% 
+        gather(key=variable, value=amount, Household:Work) %>% 
+        ggplot(aes(x=amount,fill=product_cluster)) +
+        geom_density(position="stack", alpha=0.8) +
+        guides(fill=FALSE)+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank())+
+        scale_fill_tableau()+
+        facet_wrap(~variable, ncol=3, scales = "free")
+```
+
+
+#### 3 Clusters
+
+```{r cluster - product_3 pie chart, fig.height=2.8, fig.width=2.5}
+product_centroids3 %>% 
+        ggplot(aes(x=factor(1), y=freq, fill=product_cluster)) +
+        geom_bar(stat = "identity", alpha=0.85) +
+        coord_polar("y", start=0) +
+        labs(y="", x="", fill="Cluster")+
+        theme_minimal(base_size = 12) +
+        theme(axis.title = element_blank(),
+              axis.text = element_blank(),
+              panel.border = element_blank(),
+              panel.grid=element_blank(),
+              axis.ticks = element_blank())+
+        scale_fill_tableau()
+```
+
+
+```{r cluster - product_3 means plot, fig.height=1.5, fig.width=3.5}
+product_centroids3 %>% 
+        gather(key=variable, value=amount, Household:Work) %>%
+        group_by(variable) %>% 
+        mutate(min=min(amount),max=max(amount)) %>% 
+        ungroup() %>% 
+        mutate(amount=(amount-min)/(max-min)) %>% 
+        ggplot(aes(x=amount,y=variable,color=product_cluster)) +
+        geom_point(size=3)+
+        guides(color=FALSE)+
+        scale_y_discrete(limits = c("Work", "Motor","Life", "Household","Health"))+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank())+
+        scale_color_tableau()
+```
+
+<br>
+
+```{r cluster - product_3 density, fig.height=2.5, fig.width=6}
+product_cluster3 %>%
+        filter(role=="train") %>% 
+        gather(key=variable, value=amount, Household:Work) %>% 
+        ggplot(aes(x=amount,fill=product_cluster)) +
+        geom_density(position="stack", alpha=0.8) +
+        guides(fill=FALSE)+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank())+
+        scale_fill_tableau()+
+        facet_wrap(~variable, ncol=3, scales = "free")
+```
+
+
+#### 4 Clusters
+
+```{r cluster - product_4 pie chart, fig.height=2.8, fig.width=2.5}
+product_centroids4 %>% 
+        ggplot(aes(x=factor(1), y=freq, fill=product_cluster)) +
+        geom_bar(stat = "identity", alpha=0.85) +
+        coord_polar("y", start=0) +
+        labs(y="", x="", fill="Cluster")+
+        theme_minimal(base_size = 12) +
+        theme(axis.title = element_blank(),
+              axis.text = element_blank(),
+              panel.border = element_blank(),
+              panel.grid=element_blank(),
+              axis.ticks = element_blank())+
+        scale_fill_tableau()
+```
+
+
+```{r cluster - product_4 means plot, fig.height=1.5, fig.width=3.5}
+product_centroids4 %>% 
+        gather(key=variable, value=amount, Household:Work) %>%
+        group_by(variable) %>% 
+        mutate(min=min(amount),max=max(amount)) %>% 
+        ungroup() %>% 
+        mutate(amount=(amount-min)/(max-min)) %>% 
+        ggplot(aes(x=amount,y=variable,color=product_cluster)) +
+        geom_point(size=3)+
+        guides(color=FALSE)+
+        scale_y_discrete(limits = c("Work", "Motor","Life", "Household","Health"))+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank())+
+        scale_color_tableau()
+```
+
+<br>
+
+```{r cluster - product_4 density, fig.height=2.5, fig.width=6}
+product_cluster4 %>%
+        filter(role=="train") %>% 
+        gather(key=variable, value=amount, Household:Work) %>% 
+        ggplot(aes(x=amount,fill=product_cluster)) +
+        geom_density(position="stack", alpha=0.8) +
+        guides(fill=FALSE)+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank())+
+        scale_fill_tableau()+
+        facet_wrap(~variable, ncol=3, scales = "free")
+```
+
+In the end, we chose the solution with 2 clusters because it gives a good enough differentiation for the features Health and Motor. Note that increasing the number of clusters does not increase the differentiation for the other variables.
+
+## Profiling (ASSESS)
+
+The profiling will encompass two main steps. Firstly, we'll profile the two segmentations separately. Secondly, we'll consolidate both segmentations to have a global view of the customers and decide on the Marketing strategy.
+
+### Value segmentation
+
+```{r profile - value names}
+value_cluster4 <- value_cluster4 %>% 
+        mutate(value_cluster=factor(value_cluster,
+                                    labels=c("Billionaire",
+                                             "Faithful",
+                                             "Dwarves",
+                                             "Nursery")))
+value_centroids4 <- value_centroids4 %>% 
+        mutate(value_cluster=factor(value_cluster,
+                                    labels=c("Billionaire",
+                                             "Faithful",
+                                             "Dwarves",
+                                             "Nursery")))
+```
+
+
+```{r profile - value_4 pie chart, fig.height=3, fig.width=3}
+value_centroids4 %>% 
+        ggplot(aes(x=factor(1), y=freq, fill=value_cluster)) +
+        geom_bar(stat = "identity", alpha=0.8) +
+        coord_polar("y", start=0) +
+        labs(fill="Cluster") +
+        theme_minimal(base_size = 12) +
+        theme(axis.title = element_blank(),
+              axis.text = element_blank(),
+              panel.border = element_blank(),
+              panel.grid=element_blank(),
+              axis.ticks = element_blank()) +
+        scale_fill_tableau()
+```
+
+<br>
+
+```{r profile - value_4 means plot, fig.height=1.5, fig.width=4.5}
+value_centroids4 %>% 
+        gather(key=variable, value=amount, CMV:Fidelity) %>%
+        group_by(variable) %>% 
+        mutate(min=min(amount),max=max(amount)) %>% 
+        ungroup() %>% 
+        mutate(amount=(amount-min)/(max-min)) %>% 
+        ggplot(aes(x=amount,y=variable,color=value_cluster)) +
+        geom_point(size=3)+
+        labs(color="Cluster")+
+        scale_y_discrete(limits = c("Salary", "Fidelity","CMV"))+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank())+
+        scale_color_tableau()
+```
+
+<br>
+
+```{r profile - value_4 distribution cat, fig.height=2, fig.width=3.5}
+value_cluster4 %>%
+        gather(key=variable, value=amount, Children:Area,Reversals) %>% 
+        ggplot(aes(x=amount,fill=value_cluster)) +
+        geom_bar(position = "fill", alpha=0.8) +
+        labs(fill="Cluster")+
+        theme_minimal(base_size = 11) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank())+
+        scale_fill_tableau()+
+        guides(fill=FALSE)+
+        facet_wrap(~variable,ncol=2,scales = "free")
+```
+
+
+```{r profile - value_4 density, fig.height=2.5, fig.width=5}
+value_cluster4 %>%
+        filter(role=="train",Claims<1) %>% 
+        gather(key=variable, value=amount, CMV, Salary, Fidelity, Claims, Age) %>% 
+        ggplot(aes(x=amount,fill=value_cluster)) +
+        geom_density(position = "stack", alpha=0.8) +
+        labs(fill="Cluster: ")+
+        theme_minimal(base_size = 11) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank(),
+              legend.position = "bottom")+
+        scale_fill_tableau()+
+        facet_wrap(~variable,ncol=3, scales = "free")
+```
+
+
+
+### Product segmentation
+
+```{r profile - product names}
+product_cluster2 <- product_cluster2 %>% 
+        mutate(product_cluster=factor(product_cluster,
+                                    labels=c("Schumachers",
+                                             "Muggles")))
+product_centroids2 <- product_centroids2 %>% 
+        mutate(product_cluster=factor(product_cluster,
+                                    labels=c("Schumachers",
+                                             "Muggles")))
+```
+
+
+```{r profile - product_2 pie chart, fig.height=3, fig.width=3}
+product_centroids2 %>% 
+        ggplot(aes(x=factor(1), y=freq, fill=product_cluster)) +
+        geom_bar(stat = "identity", alpha=0.85) +
+        coord_polar("y", start=0) +
+        labs(y="", x="", fill="Cluster")+
+        theme_minimal(base_size = 12) +
+        theme(axis.title = element_blank(),
+              axis.text = element_blank(),
+              panel.border = element_blank(),
+              panel.grid=element_blank(),
+              axis.ticks = element_blank())+
+        scale_fill_tableau()
+```
+
+<br>
+
+```{r profile - product_2 means plot, fig.height=1.5, fig.width=4.5}
+product_centroids2 %>% 
+        gather(key=variable, value=amount, Household:Work) %>%
+        group_by(variable) %>% 
+        mutate(min=min(amount),max=max(amount)) %>% 
+        ungroup() %>% 
+        mutate(amount=(amount-min)/(max-min)) %>% 
+        ggplot(aes(x=amount,y=variable,color=product_cluster)) +
+        geom_point(size=3)+
+        labs(color="Cluster")+
+        scale_y_discrete(limits = c("Work", "Motor","Life", "Household","Health"))+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank())+
+        scale_color_tableau()
+```
+
+<br>
+
+```{r profile - product_2 density, fig.height=2.5, fig.width=5}
+product_cluster2 %>%
+        filter(role=="train") %>% 
+        gather(key=variable, value=amount, Household:Work) %>% 
+        ggplot(aes(x=amount,fill=product_cluster)) +
+        geom_density(position="stack", alpha=0.8) +
+        labs(fill="Cluster: ")+
+        theme_minimal(base_size = 11) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank(),
+              legend.position = "bottom")+
+        scale_fill_tableau()+
+        facet_wrap(~variable, ncol=3, scales = "free")
+```
+
+
+
+
+### Consolidated segmentation
+
+```{r profile - choose solutions and consolidate}
+full_cluster <- full_join(value_cluster4, product_cluster2, by="ID") %>% 
+        mutate(full_cluster=paste(value_cluster,product_cluster,sep=" "))
+
+full_centroids <- full_cluster %>% 
+        group_by(value_cluster,product_cluster) %>% 
+        summarise(number=n()) %>% 
+        mutate(freq=number/n,
+               full_cluster=paste(value_cluster,product_cluster,sep=" ")) %>% 
+        ungroup() %>% 
+        left_join(select(value_centroids4,value_cluster,CMV:Fidelity), by="value_cluster") %>% 
+        left_join(select(product_centroids2,product_cluster,Household:Work), by="product_cluster") %>%
+        arrange(freq)
+```
+
+When we consolidate the two segmentation, we get 8 clusters:
+
+```{r profile - consolidate stats}
+
+write.xlsx(full_centroids,"./Figures/profile - consolidated centroids.xlsx")
+
+knitr::kable(full_centroids,
+             format="html",
+             align="c") %>%
+        kable_styling(bootstrap_options = "striped",
+                      full_width = F)
+```
+
+Although customers are almost uniformly distributed among all clusters, we considered that 8 is too large a number of clusters for creating different Marketing strategies. Therefore, we will aggregate the 2 clusters with the lowest number of customers in order to have only 6 clusters.
+
+To do it, we chose the value sgmentation as the main one and thus we change the product segmentation when we need to reduce the number of cluster.
+
+
+```{r profile - final consolidation}
+
+final_clusters <- full_cluster %>% 
+        mutate(full_cluster=ifelse(value_cluster=="Nursery","Nursery",
+                                   ifelse(value_cluster=="Dwarves", "Dwarves", full_cluster)))
+
+```
+
+After applying these changes, the final clusters have the following ditributions and pie chart:
+
+```{r profile - consolidated pie chart, fig.height=3, fig.width=3.5}
+final_clusters %>% 
+        group_by(full_cluster) %>% 
+        summarise(freq=n()/n) %>% 
+        ggplot(aes(x=factor(1), y=freq, fill=full_cluster)) +
+        geom_bar(stat = "identity", alpha=0.8) +
+        coord_polar("y", start=0) +
+        labs(fill="Cluster") +
+        theme_minimal(base_size = 12) +
+        theme(axis.title = element_blank(),
+              axis.text = element_blank(),
+              panel.border = element_blank(),
+              panel.grid=element_blank(),
+              axis.ticks = element_blank()) +
+        scale_fill_tableau()
+```
+
+<br>
+
+```{r profile - consolidated density - 1, fig.height=2.5, fig.width=6}
+final_clusters %>%
+        filter(role.x=="train",role.y=="train", Claims<1) %>% 
+        gather(key=variable, value=amount, CMV, Salary, Fidelity, Claims, Age) %>% 
+        ggplot(aes(x=amount,fill=full_cluster)) +
+        geom_density(position="stack", alpha=0.8) +
+        labs(fill="Cluster")+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank())+
+        guides(fill=FALSE)+
+        scale_fill_tableau()+
+        facet_wrap(~variable, ncol=3, scales = "free")
+```
+
+
+```{r profile - consolidated density - 2, fig.height=3, fig.width=6}
+final_clusters %>%
+        filter(role.x=="train",role.y=="train", Claims<1) %>% 
+        gather(key=variable, value=amount, Household:Work) %>% 
+        ggplot(aes(x=amount,fill=full_cluster)) +
+        geom_density(position="stack", alpha=0.8) +
+        guides(fill=FALSE)+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank(),
+              legend.position = "bottom")+
+        scale_fill_tableau()+
+        facet_wrap(~variable, ncol=3, scales = "free")
+```
+
+<br>
+
+```{r profile - consolidated distribution cat, fig.height=2.5, fig.width=5}
+final_clusters %>%
+        gather(key=variable, value=amount, Children:Area,Reversals) %>% 
+        ggplot(aes(x=amount,fill=full_cluster)) +
+        geom_bar(position = "fill", alpha=0.8) +
+        labs(fill="Cluster")+
+        theme_minimal(base_size = 12) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank())+
+        scale_fill_tableau()+
+        facet_wrap(~variable,ncol=2,scales = "free")
+```
+

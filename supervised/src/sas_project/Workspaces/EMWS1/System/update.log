@@ -1,0 +1,5622 @@
+NOTE: PROCEDURE PRINTTO used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1 
+Traverser: Traverser invoked.  MPCONNECT command is sas. 
+Traverser: Beginning flow traversal 
+*------------------------------------------------------------* 
+* 
+* FIMPORT : Beginning Update 
+* datetime : 02JUN2018:15:12:29 
+* 
+*------------------------------------------------------------* 
+118775     %let emexceptionString =;
+118776     %let EMEXCEPTIONSTRING=;
+118777     *------------------------------------------------------------*;
+118778     * UPDATE: FIMPORT;
+118779     *------------------------------------------------------------*;
+118780     %let EM_ACTION = UPDATE;
+118781     %let syscc = 0;
+118782     /* Fimport.source */
+118783     %macro main;
+118784           %if %upcase(&EM_ACTION) = CREATE %then %do;
+118785              filename temp catalog 'sashelp.emsamp.Fimport_create.source';
+118786              %include temp;
+118787              filename temp;
+118788              %create;
+118789           %end;
+118790           %else
+118791           %if %upcase(&EM_ACTION) = TRAIN %then %do;
+118792              filename temp catalog 'sashelp.emsamp.Fimport_train.source';
+118793              %include temp;
+118794              filename temp;
+118795              %train;
+118796           %end;
+118797           %else
+118798           %if %upcase(&EM_ACTION) = UPDATE %then %do;
+118799              filename temp catalog 'sashelp.emsamp.Fimport_update.source';
+118800              %include temp;
+118801              filename temp;
+118802              %update;
+118803           %end;
+118804           %else
+118805           %if %upcase(&EM_ACTION) = PROPERTY %then %do;
+118806              filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+118807              %include temp;
+118808              filename temp;
+118809              %property;
+118810           %end;
+118811            %else
+118812           %if %upcase(&EM_ACTION) = SCORE %then %do;
+118813              filename temp catalog 'sashelp.emsamp.Fimport_score.source';
+118814              %include temp;
+118815              filename temp;
+118816              %score;
+118817           %end;
+118818           %else
+118819           %if %upcase(&EM_ACTION) = REPORT %then %do;
+118820              filename temp catalog 'sashelp.emsamp.Fimport_report.source';
+118821              %include temp;
+118822              filename temp;
+118823              %report;
+118824           %end;
+118825           %else
+118826           %if %upcase(&EM_ACTION) = OPENVARIABLESET %then %do;
+118827              filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+118828              %include temp;
+118829              filename temp;
+118830              %openvariableset;
+118831           %end;
+118832           %else
+118833           %if %upcase(&EM_ACTION) = CLOSEVARIABLESET %then %do;
+118834              filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+118835              %include temp;
+118836              filename temp;
+118837              %closevariableset;
+118838           %end;
+118839     %mend main;
+118840     %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMSAMP.FIMPORT_UPDATE.SOURCE.
+118841    +%macro update;
+118842    +    %let oldrole = %str();
+118843    +    data _null_;
+118844    +       set &em_data_exportset;
+118845    +       where NODEPORT='TRAIN';
+118846    +       call symput('oldrole', ROLE);
+118847    +    run;
+118848    +    %if &oldrole ne &em_property_role %then %do;
+118849    +        data &em_data_exportset;
+118850    +           set &em_data_exportset;
+118851    +           if NODEPORT='TRAIN' then do;
+118852    +              ROLE="&em_property_role";
+118853    +              NEEDUPDATE='Y';
+118854    +              EXPORT='Y';
+118855    +           end;
+118856    +        run;
+118857    +        filename x "&EM_NODEDIR.&EM_DSEP._updatePath.st";
+118858    +        data _null_;
+118859    +           file x;
+118860    +           put ' ';
+118861    +        run;
+118862    +        filename x;
+118863    +    %end;
+118864    +    %else %do;
+118865    +        data &em_data_exportset;
+118866    +           set &em_data_exportset;
+118867    +           if NODEPORT='TRAIN' then do;
+118868    +              ROLE="&em_property_role";
+118869    +              NEEDUPDATE='Y';
+118870    +              EXPORT='Y';
+118871    +           end;
+118872    +        run;
+118873    +    %end;
+118874    +
+118875    +    %em_getname(key=EMCMETADEFAULT, type=DATA);
+118876    +    %if %sysfunc(exist(&em_user_emcmetadefault)) and ^%sysfunc(exist(&em_lib..&em_nodeid._CMETA_TRAIN)) %then %do;
+118877    +        data &em_lib..&em_nodeid._CMETA_TRAIN;
+118878    +           set &em_user_emcmetadefault;
+118879    +           drop DROP;
+118880    +           where DROP='N';
+118881    +        run;
+118882    +    %end;
+118883    +
+118884    +%mend update;
+118885    +
+118886    +
+118887    +
+118888    +
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+
+NOTE: There were 1 observations read from the data set EMWS1.FIMPORT_EXPORTSET.
+      WHERE NODEPORT='TRAIN';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 6 observations read from the data set EMWS1.FIMPORT_EXPORTSET.
+NOTE: The data set EMWS1.FIMPORT_EXPORTSET has 6 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+118889     *------------------------------------------------------------*;
+118890     * End UPDATE: FIMPORT;
+118891     *------------------------------------------------------------*;
+
+118892     %em_delMacro;
+
+118894     %let _HPDMGRIDHOST=;
+118895     %let _HPDMGRIDINSTALLLOC=;
+118896     %let _HPDMGRIDDATASERVER=;
+118897     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* FIMPORT : End Update 
+* datetime : 02JUN2018:15:12:29 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "GRP" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "GRP2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "GRP3" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "GRP5" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "GRP8" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "GRP7" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "GRP9" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "GRP11" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "GRP12" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "GRP13" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "IMPT" 
+Traverser: WaitingNode "EMCODE2" 
+Traverser: WaitingNode "META2" 
+Traverser: WaitingNode "EMCODE3" 
+Traverser: WaitingNode "TRANS" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "TRANS2" 
+Traverser: WaitingNode "GRP10" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Filter : Beginning Update 
+* datetime : 02JUN2018:15:12:30 
+* 
+*------------------------------------------------------------* 
+118917     %let _HPDMGRIDHOST=;
+118918     %let _HPDMGRIDINSTALLLOC=;
+118919     %let _HPDMGRIDDATASERVER=;
+118920     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Filter : End Update 
+* datetime : 02JUN2018:15:12:30 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "GRP" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "GRP2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "GRP3" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "GRP5" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "GRP8" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "GRP7" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "GRP9" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "GRP11" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "GRP12" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "GRP13" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "EMCODE2" 
+Traverser: WaitingNode "META2" 
+Traverser: WaitingNode "EMCODE3" 
+Traverser: WaitingNode "TRANS" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "TRANS2" 
+Traverser: WaitingNode "GRP10" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Impt : Beginning Update 
+* datetime : 02JUN2018:15:12:30 
+* 
+*------------------------------------------------------------* 
+118940     %let _HPDMGRIDHOST=;
+118941     %let _HPDMGRIDINSTALLLOC=;
+118942     %let _HPDMGRIDDATASERVER=;
+118943     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Impt : End Update 
+* datetime : 02JUN2018:15:12:30 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "GRP" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "GRP2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "GRP3" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "GRP5" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "GRP8" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "GRP7" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "GRP9" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "GRP11" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "GRP12" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "GRP13" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "META2" 
+Traverser: WaitingNode "EMCODE3" 
+Traverser: WaitingNode "TRANS" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "TRANS2" 
+Traverser: WaitingNode "GRP10" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EMCODE2 : Beginning Update 
+* datetime : 02JUN2018:15:12:31 
+* 
+*------------------------------------------------------------* 
+118975     %let _HPDMGRIDHOST=;
+118976     %let _HPDMGRIDINSTALLLOC=;
+118977     %let _HPDMGRIDDATASERVER=;
+118978     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* EMCODE2 : End Update 
+* datetime : 02JUN2018:15:12:31 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "GRP" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "GRP2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "GRP3" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "GRP5" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "GRP8" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "GRP7" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "GRP9" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "GRP11" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "GRP12" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "GRP13" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "EMCODE3" 
+Traverser: WaitingNode "TRANS" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "TRANS2" 
+Traverser: WaitingNode "GRP10" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Meta2 : Beginning Update 
+* datetime : 02JUN2018:15:12:32 
+* 
+*------------------------------------------------------------* 
+119011     %let _HPDMGRIDHOST=;
+119012     %let _HPDMGRIDINSTALLLOC=;
+119013     %let _HPDMGRIDDATASERVER=;
+119014     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Meta2 : End Update 
+* datetime : 02JUN2018:15:12:32 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "GRP" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "GRP2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "GRP3" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "GRP5" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "GRP8" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "GRP7" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "GRP9" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "GRP11" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "GRP12" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "GRP13" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "TRANS" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "TRANS2" 
+Traverser: WaitingNode "GRP10" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EMCODE3 : Beginning Update 
+* datetime : 02JUN2018:15:12:32 
+* 
+*------------------------------------------------------------* 
+119046     %let _HPDMGRIDHOST=;
+119047     %let _HPDMGRIDINSTALLLOC=;
+119048     %let _HPDMGRIDDATASERVER=;
+119049     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* EMCODE3 : End Update 
+* datetime : 02JUN2018:15:12:32 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "GRP" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "GRP2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "GRP3" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "GRP5" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "GRP8" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "GRP7" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "GRP9" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "GRP11" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "GRP12" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "GRP13" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "TRANS2" 
+Traverser: WaitingNode "GRP10" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Trans : Beginning Update 
+* datetime : 02JUN2018:15:12:33 
+* 
+*------------------------------------------------------------* 
+119069     %let _HPDMGRIDHOST=;
+119070     %let _HPDMGRIDINSTALLLOC=;
+119071     %let _HPDMGRIDDATASERVER=;
+119072     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Trans : End Update 
+* datetime : 02JUN2018:15:12:33 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "GRP" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "GRP2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "GRP3" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "GRP5" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "GRP8" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "GRP7" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "GRP9" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "GRP11" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "GRP12" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "GRP13" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "TRANS2" 
+Traverser: WaitingNode "GRP10" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Meta : Beginning Update 
+* datetime : 02JUN2018:15:12:34 
+* 
+*------------------------------------------------------------* 
+119105     %let _HPDMGRIDHOST=;
+119106     %let _HPDMGRIDINSTALLLOC=;
+119107     %let _HPDMGRIDDATASERVER=;
+119108     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Meta : End Update 
+* datetime : 02JUN2018:15:12:34 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "GRP" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "GRP2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "GRP3" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "GRP5" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "GRP8" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "GRP7" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "GRP9" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "GRP11" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "GRP12" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "GRP13" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "GRP10" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Trans2 : Beginning Update 
+* datetime : 02JUN2018:15:12:34 
+* 
+*------------------------------------------------------------* 
+119128     %let _HPDMGRIDHOST=;
+119129     %let _HPDMGRIDINSTALLLOC=;
+119130     %let _HPDMGRIDDATASERVER=;
+119131     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Trans2 : End Update 
+* datetime : 02JUN2018:15:12:34 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Grp10 : Beginning Update 
+* datetime : 02JUN2018:15:12:35 
+* 
+*------------------------------------------------------------* 
+119354     %let emexceptionString =;
+119355     %let EMEXCEPTIONSTRING=;
+119356     *------------------------------------------------------------*;
+119357     * UPDATE: Grp10;
+119358     *------------------------------------------------------------*;
+119359     %let EM_ACTION = UPDATE;
+119360     %let syscc = 0;
+119361     %macro main;
+119362     
+119363        filename temp catalog 'sashelp.emutil.gp_macros.source';
+119364        %include temp;
+119365        filename temp;
+119366     
+119367        %SetProperties;
+119368     
+119369        %if %upcase(&EM_ACTION) = CREATE %then %do;
+119370     
+119371            filename temp catalog 'sashelp.emutil.gp_create.source';
+119372            %include temp;
+119373            filename temp;
+119374     
+119375            %create;
+119376        %end;
+119377        %else
+119378        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+119379     
+119380            filename temp catalog 'sashelp.emutil.gp_train.source';
+119381            %include temp;
+119382            filename temp;
+119383     
+119384            %train;
+119385        %end;
+119386        %else
+119387        %if %upcase(&EM_ACTION) = SCORE %then %do;
+119388     
+119389            filename temp catalog 'sashelp.emutil.gp_score.source';
+119390            %include temp;
+119391            filename temp;
+119392     
+119393            %score;
+119394        %end;
+119395        %else
+119396        %if %upcase(&EM_ACTION) = REPORT %then %do;
+119397     
+119398            filename temp catalog 'sashelp.emutil.gp_report.source';
+119399            %include temp;
+119400            filename temp;
+119401     
+119402            %report;
+119403     
+119404        %end;
+119405        %else
+119406        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+119407     
+119408            filename temp catalog 'sashelp.emutil.gp_postloop.source';
+119409            %include temp;
+119410            filename temp;
+119411     
+119412            %postloop;
+119413     
+119414        %end;
+119415     
+119416        %doendm:
+119417     %mend main;
+119418     
+119419     %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_MACROS.SOURCE.
+119420    +%macro SetProperties;
+119421    +   %em_checkmacro(name=EM_PROPERTY_MODE,            global=Y, value=STRATIFY);
+119422    +   %em_checkmacro(name=EM_PROPERTY_TARGETGROUP,     global=Y, value=Y);
+119423    +   %em_checkmacro(name=EM_PROPERTY_INDEXCOUNT,      global=Y, value=10);
+119424    +   %em_checkmacro(name=EM_PROPERTY_MINIMUMOBS,      global=Y, value=10);
+119425    +   %em_checkmacro(name=EM_PROPERTY_SIZETYPE,        global=Y, value=PERCENT);
+119426    +   %em_checkmacro(name=EM_PROPERTY_SIZEOBS,         global=Y, value=.);
+119427    +   %em_checkmacro(name=EM_PROPERTY_SIZEPERCENT,     global=Y, value=10);
+119428    +%mend SetProperties;
+119429    +
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+119430     *------------------------------------------------------------*;
+119431     * End UPDATE: Grp10;
+119432     *------------------------------------------------------------*;
+119433     
+
+119434     %em_delMacro;
+
+119436     %let _HPDMGRIDHOST=;
+119437     %let _HPDMGRIDINSTALLLOC=;
+119438     %let _HPDMGRIDDATASERVER=;
+119439     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Grp10 : End Update 
+* datetime : 02JUN2018:15:12:35 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Grp13 : Beginning Update 
+* datetime : 02JUN2018:15:12:36 
+* 
+*------------------------------------------------------------* 
+119662     %let emexceptionString =;
+119663     %let EMEXCEPTIONSTRING=;
+119664     *------------------------------------------------------------*;
+119665     * UPDATE: Grp13;
+119666     *------------------------------------------------------------*;
+119667     %let EM_ACTION = UPDATE;
+119668     %let syscc = 0;
+119669     %macro main;
+119670     
+119671        filename temp catalog 'sashelp.emutil.gp_macros.source';
+119672        %include temp;
+119673        filename temp;
+119674     
+119675        %SetProperties;
+119676     
+119677        %if %upcase(&EM_ACTION) = CREATE %then %do;
+119678     
+119679            filename temp catalog 'sashelp.emutil.gp_create.source';
+119680            %include temp;
+119681            filename temp;
+119682     
+119683            %create;
+119684        %end;
+119685        %else
+119686        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+119687     
+119688            filename temp catalog 'sashelp.emutil.gp_train.source';
+119689            %include temp;
+119690            filename temp;
+119691     
+119692            %train;
+119693        %end;
+119694        %else
+119695        %if %upcase(&EM_ACTION) = SCORE %then %do;
+119696     
+119697            filename temp catalog 'sashelp.emutil.gp_score.source';
+119698            %include temp;
+119699            filename temp;
+119700     
+119701            %score;
+119702        %end;
+119703        %else
+119704        %if %upcase(&EM_ACTION) = REPORT %then %do;
+119705     
+119706            filename temp catalog 'sashelp.emutil.gp_report.source';
+119707            %include temp;
+119708            filename temp;
+119709     
+119710            %report;
+119711     
+119712        %end;
+119713        %else
+119714        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+119715     
+119716            filename temp catalog 'sashelp.emutil.gp_postloop.source';
+119717            %include temp;
+119718            filename temp;
+119719     
+119720            %postloop;
+119721     
+119722        %end;
+119723     
+119724        %doendm:
+119725     %mend main;
+119726     
+119727     %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_MACROS.SOURCE.
+119728    +%macro SetProperties;
+119729    +   %em_checkmacro(name=EM_PROPERTY_MODE,            global=Y, value=STRATIFY);
+119730    +   %em_checkmacro(name=EM_PROPERTY_TARGETGROUP,     global=Y, value=Y);
+119731    +   %em_checkmacro(name=EM_PROPERTY_INDEXCOUNT,      global=Y, value=10);
+119732    +   %em_checkmacro(name=EM_PROPERTY_MINIMUMOBS,      global=Y, value=10);
+119733    +   %em_checkmacro(name=EM_PROPERTY_SIZETYPE,        global=Y, value=PERCENT);
+119734    +   %em_checkmacro(name=EM_PROPERTY_SIZEOBS,         global=Y, value=.);
+119735    +   %em_checkmacro(name=EM_PROPERTY_SIZEPERCENT,     global=Y, value=10);
+119736    +%mend SetProperties;
+119737    +
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+119738     *------------------------------------------------------------*;
+119739     * End UPDATE: Grp13;
+119740     *------------------------------------------------------------*;
+119741     
+
+119742     %em_delMacro;
+
+119744     %let _HPDMGRIDHOST=;
+119745     %let _HPDMGRIDINSTALLLOC=;
+119746     %let _HPDMGRIDDATASERVER=;
+119747     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Grp13 : End Update 
+* datetime : 02JUN2018:15:12:36 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Grp12 : Beginning Update 
+* datetime : 02JUN2018:15:12:36 
+* 
+*------------------------------------------------------------* 
+119970     %let emexceptionString =;
+119971     %let EMEXCEPTIONSTRING=;
+119972     *------------------------------------------------------------*;
+119973     * UPDATE: Grp12;
+119974     *------------------------------------------------------------*;
+119975     %let EM_ACTION = UPDATE;
+119976     %let syscc = 0;
+119977     %macro main;
+119978     
+119979        filename temp catalog 'sashelp.emutil.gp_macros.source';
+119980        %include temp;
+119981        filename temp;
+119982     
+119983        %SetProperties;
+119984     
+119985        %if %upcase(&EM_ACTION) = CREATE %then %do;
+119986     
+119987            filename temp catalog 'sashelp.emutil.gp_create.source';
+119988            %include temp;
+119989            filename temp;
+119990     
+119991            %create;
+119992        %end;
+119993        %else
+119994        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+119995     
+119996            filename temp catalog 'sashelp.emutil.gp_train.source';
+119997            %include temp;
+119998            filename temp;
+119999     
+120000            %train;
+120001        %end;
+120002        %else
+120003        %if %upcase(&EM_ACTION) = SCORE %then %do;
+120004     
+120005            filename temp catalog 'sashelp.emutil.gp_score.source';
+120006            %include temp;
+120007            filename temp;
+120008     
+120009            %score;
+120010        %end;
+120011        %else
+120012        %if %upcase(&EM_ACTION) = REPORT %then %do;
+120013     
+120014            filename temp catalog 'sashelp.emutil.gp_report.source';
+120015            %include temp;
+120016            filename temp;
+120017     
+120018            %report;
+120019     
+120020        %end;
+120021        %else
+120022        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+120023     
+120024            filename temp catalog 'sashelp.emutil.gp_postloop.source';
+120025            %include temp;
+120026            filename temp;
+120027     
+120028            %postloop;
+120029     
+120030        %end;
+120031     
+120032        %doendm:
+120033     %mend main;
+120034     
+120035     %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_MACROS.SOURCE.
+120036    +%macro SetProperties;
+120037    +   %em_checkmacro(name=EM_PROPERTY_MODE,            global=Y, value=STRATIFY);
+120038    +   %em_checkmacro(name=EM_PROPERTY_TARGETGROUP,     global=Y, value=Y);
+120039    +   %em_checkmacro(name=EM_PROPERTY_INDEXCOUNT,      global=Y, value=10);
+120040    +   %em_checkmacro(name=EM_PROPERTY_MINIMUMOBS,      global=Y, value=10);
+120041    +   %em_checkmacro(name=EM_PROPERTY_SIZETYPE,        global=Y, value=PERCENT);
+120042    +   %em_checkmacro(name=EM_PROPERTY_SIZEOBS,         global=Y, value=.);
+120043    +   %em_checkmacro(name=EM_PROPERTY_SIZEPERCENT,     global=Y, value=10);
+120044    +%mend SetProperties;
+120045    +
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+120046     *------------------------------------------------------------*;
+120047     * End UPDATE: Grp12;
+120048     *------------------------------------------------------------*;
+120049     
+
+120050     %em_delMacro;
+
+120052     %let _HPDMGRIDHOST=;
+120053     %let _HPDMGRIDINSTALLLOC=;
+120054     %let _HPDMGRIDDATASERVER=;
+120055     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Grp12 : End Update 
+* datetime : 02JUN2018:15:12:36 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Grp11 : Beginning Update 
+* datetime : 02JUN2018:15:12:37 
+* 
+*------------------------------------------------------------* 
+120278     %let emexceptionString =;
+120279     %let EMEXCEPTIONSTRING=;
+120280     *------------------------------------------------------------*;
+120281     * UPDATE: Grp11;
+120282     *------------------------------------------------------------*;
+120283     %let EM_ACTION = UPDATE;
+120284     %let syscc = 0;
+120285     %macro main;
+120286     
+120287        filename temp catalog 'sashelp.emutil.gp_macros.source';
+120288        %include temp;
+120289        filename temp;
+120290     
+120291        %SetProperties;
+120292     
+120293        %if %upcase(&EM_ACTION) = CREATE %then %do;
+120294     
+120295            filename temp catalog 'sashelp.emutil.gp_create.source';
+120296            %include temp;
+120297            filename temp;
+120298     
+120299            %create;
+120300        %end;
+120301        %else
+120302        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+120303     
+120304            filename temp catalog 'sashelp.emutil.gp_train.source';
+120305            %include temp;
+120306            filename temp;
+120307     
+120308            %train;
+120309        %end;
+120310        %else
+120311        %if %upcase(&EM_ACTION) = SCORE %then %do;
+120312     
+120313            filename temp catalog 'sashelp.emutil.gp_score.source';
+120314            %include temp;
+120315            filename temp;
+120316     
+120317            %score;
+120318        %end;
+120319        %else
+120320        %if %upcase(&EM_ACTION) = REPORT %then %do;
+120321     
+120322            filename temp catalog 'sashelp.emutil.gp_report.source';
+120323            %include temp;
+120324            filename temp;
+120325     
+120326            %report;
+120327     
+120328        %end;
+120329        %else
+120330        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+120331     
+120332            filename temp catalog 'sashelp.emutil.gp_postloop.source';
+120333            %include temp;
+120334            filename temp;
+120335     
+120336            %postloop;
+120337     
+120338        %end;
+120339     
+120340        %doendm:
+120341     %mend main;
+120342     
+120343     %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_MACROS.SOURCE.
+120344    +%macro SetProperties;
+120345    +   %em_checkmacro(name=EM_PROPERTY_MODE,            global=Y, value=STRATIFY);
+120346    +   %em_checkmacro(name=EM_PROPERTY_TARGETGROUP,     global=Y, value=Y);
+120347    +   %em_checkmacro(name=EM_PROPERTY_INDEXCOUNT,      global=Y, value=10);
+120348    +   %em_checkmacro(name=EM_PROPERTY_MINIMUMOBS,      global=Y, value=10);
+120349    +   %em_checkmacro(name=EM_PROPERTY_SIZETYPE,        global=Y, value=PERCENT);
+120350    +   %em_checkmacro(name=EM_PROPERTY_SIZEOBS,         global=Y, value=.);
+120351    +   %em_checkmacro(name=EM_PROPERTY_SIZEPERCENT,     global=Y, value=10);
+120352    +%mend SetProperties;
+120353    +
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+120354     *------------------------------------------------------------*;
+120355     * End UPDATE: Grp11;
+120356     *------------------------------------------------------------*;
+120357     
+
+120358     %em_delMacro;
+
+120360     %let _HPDMGRIDHOST=;
+120361     %let _HPDMGRIDINSTALLLOC=;
+120362     %let _HPDMGRIDDATASERVER=;
+120363     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Grp11 : End Update 
+* datetime : 02JUN2018:15:12:37 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Grp9 : Beginning Update 
+* datetime : 02JUN2018:15:12:38 
+* 
+*------------------------------------------------------------* 
+120586     %let emexceptionString =;
+120587     %let EMEXCEPTIONSTRING=;
+120588     *------------------------------------------------------------*;
+120589     * UPDATE: Grp9;
+120590     *------------------------------------------------------------*;
+120591     %let EM_ACTION = UPDATE;
+120592     %let syscc = 0;
+120593     %macro main;
+120594     
+120595        filename temp catalog 'sashelp.emutil.gp_macros.source';
+120596        %include temp;
+120597        filename temp;
+120598     
+120599        %SetProperties;
+120600     
+120601        %if %upcase(&EM_ACTION) = CREATE %then %do;
+120602     
+120603            filename temp catalog 'sashelp.emutil.gp_create.source';
+120604            %include temp;
+120605            filename temp;
+120606     
+120607            %create;
+120608        %end;
+120609        %else
+120610        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+120611     
+120612            filename temp catalog 'sashelp.emutil.gp_train.source';
+120613            %include temp;
+120614            filename temp;
+120615     
+120616            %train;
+120617        %end;
+120618        %else
+120619        %if %upcase(&EM_ACTION) = SCORE %then %do;
+120620     
+120621            filename temp catalog 'sashelp.emutil.gp_score.source';
+120622            %include temp;
+120623            filename temp;
+120624     
+120625            %score;
+120626        %end;
+120627        %else
+120628        %if %upcase(&EM_ACTION) = REPORT %then %do;
+120629     
+120630            filename temp catalog 'sashelp.emutil.gp_report.source';
+120631            %include temp;
+120632            filename temp;
+120633     
+120634            %report;
+120635     
+120636        %end;
+120637        %else
+120638        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+120639     
+120640            filename temp catalog 'sashelp.emutil.gp_postloop.source';
+120641            %include temp;
+120642            filename temp;
+120643     
+120644            %postloop;
+120645     
+120646        %end;
+120647     
+120648        %doendm:
+120649     %mend main;
+120650     
+120651     %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_MACROS.SOURCE.
+120652    +%macro SetProperties;
+120653    +   %em_checkmacro(name=EM_PROPERTY_MODE,            global=Y, value=STRATIFY);
+120654    +   %em_checkmacro(name=EM_PROPERTY_TARGETGROUP,     global=Y, value=Y);
+120655    +   %em_checkmacro(name=EM_PROPERTY_INDEXCOUNT,      global=Y, value=10);
+120656    +   %em_checkmacro(name=EM_PROPERTY_MINIMUMOBS,      global=Y, value=10);
+120657    +   %em_checkmacro(name=EM_PROPERTY_SIZETYPE,        global=Y, value=PERCENT);
+120658    +   %em_checkmacro(name=EM_PROPERTY_SIZEOBS,         global=Y, value=.);
+120659    +   %em_checkmacro(name=EM_PROPERTY_SIZEPERCENT,     global=Y, value=10);
+120660    +%mend SetProperties;
+120661    +
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+120662     *------------------------------------------------------------*;
+120663     * End UPDATE: Grp9;
+120664     *------------------------------------------------------------*;
+120665     
+
+120666     %em_delMacro;
+
+120668     %let _HPDMGRIDHOST=;
+120669     %let _HPDMGRIDINSTALLLOC=;
+120670     %let _HPDMGRIDDATASERVER=;
+120671     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Grp9 : End Update 
+* datetime : 02JUN2018:15:12:38 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Grp7 : Beginning Update 
+* datetime : 02JUN2018:15:12:38 
+* 
+*------------------------------------------------------------* 
+120894     %let emexceptionString =;
+120895     %let EMEXCEPTIONSTRING=;
+120896     *------------------------------------------------------------*;
+120897     * UPDATE: Grp7;
+120898     *------------------------------------------------------------*;
+120899     %let EM_ACTION = UPDATE;
+120900     %let syscc = 0;
+120901     %macro main;
+120902     
+120903        filename temp catalog 'sashelp.emutil.gp_macros.source';
+120904        %include temp;
+120905        filename temp;
+120906     
+120907        %SetProperties;
+120908     
+120909        %if %upcase(&EM_ACTION) = CREATE %then %do;
+120910     
+120911            filename temp catalog 'sashelp.emutil.gp_create.source';
+120912            %include temp;
+120913            filename temp;
+120914     
+120915            %create;
+120916        %end;
+120917        %else
+120918        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+120919     
+120920            filename temp catalog 'sashelp.emutil.gp_train.source';
+120921            %include temp;
+120922            filename temp;
+120923     
+120924            %train;
+120925        %end;
+120926        %else
+120927        %if %upcase(&EM_ACTION) = SCORE %then %do;
+120928     
+120929            filename temp catalog 'sashelp.emutil.gp_score.source';
+120930            %include temp;
+120931            filename temp;
+120932     
+120933            %score;
+120934        %end;
+120935        %else
+120936        %if %upcase(&EM_ACTION) = REPORT %then %do;
+120937     
+120938            filename temp catalog 'sashelp.emutil.gp_report.source';
+120939            %include temp;
+120940            filename temp;
+120941     
+120942            %report;
+120943     
+120944        %end;
+120945        %else
+120946        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+120947     
+120948            filename temp catalog 'sashelp.emutil.gp_postloop.source';
+120949            %include temp;
+120950            filename temp;
+120951     
+120952            %postloop;
+120953     
+120954        %end;
+120955     
+120956        %doendm:
+120957     %mend main;
+120958     
+120959     %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_MACROS.SOURCE.
+120960    +%macro SetProperties;
+120961    +   %em_checkmacro(name=EM_PROPERTY_MODE,            global=Y, value=STRATIFY);
+120962    +   %em_checkmacro(name=EM_PROPERTY_TARGETGROUP,     global=Y, value=Y);
+120963    +   %em_checkmacro(name=EM_PROPERTY_INDEXCOUNT,      global=Y, value=10);
+120964    +   %em_checkmacro(name=EM_PROPERTY_MINIMUMOBS,      global=Y, value=10);
+120965    +   %em_checkmacro(name=EM_PROPERTY_SIZETYPE,        global=Y, value=PERCENT);
+120966    +   %em_checkmacro(name=EM_PROPERTY_SIZEOBS,         global=Y, value=.);
+120967    +   %em_checkmacro(name=EM_PROPERTY_SIZEPERCENT,     global=Y, value=10);
+120968    +%mend SetProperties;
+120969    +
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+120970     *------------------------------------------------------------*;
+120971     * End UPDATE: Grp7;
+120972     *------------------------------------------------------------*;
+120973     
+
+120974     %em_delMacro;
+
+120976     %let _HPDMGRIDHOST=;
+120977     %let _HPDMGRIDINSTALLLOC=;
+120978     %let _HPDMGRIDDATASERVER=;
+120979     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Grp7 : End Update 
+* datetime : 02JUN2018:15:12:39 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Grp8 : Beginning Update 
+* datetime : 02JUN2018:15:12:39 
+* 
+*------------------------------------------------------------* 
+121202     %let emexceptionString =;
+121203     %let EMEXCEPTIONSTRING=;
+121204     *------------------------------------------------------------*;
+121205     * UPDATE: Grp8;
+121206     *------------------------------------------------------------*;
+121207     %let EM_ACTION = UPDATE;
+121208     %let syscc = 0;
+121209     %macro main;
+121210     
+121211        filename temp catalog 'sashelp.emutil.gp_macros.source';
+121212        %include temp;
+121213        filename temp;
+121214     
+121215        %SetProperties;
+121216     
+121217        %if %upcase(&EM_ACTION) = CREATE %then %do;
+121218     
+121219            filename temp catalog 'sashelp.emutil.gp_create.source';
+121220            %include temp;
+121221            filename temp;
+121222     
+121223            %create;
+121224        %end;
+121225        %else
+121226        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+121227     
+121228            filename temp catalog 'sashelp.emutil.gp_train.source';
+121229            %include temp;
+121230            filename temp;
+121231     
+121232            %train;
+121233        %end;
+121234        %else
+121235        %if %upcase(&EM_ACTION) = SCORE %then %do;
+121236     
+121237            filename temp catalog 'sashelp.emutil.gp_score.source';
+121238            %include temp;
+121239            filename temp;
+121240     
+121241            %score;
+121242        %end;
+121243        %else
+121244        %if %upcase(&EM_ACTION) = REPORT %then %do;
+121245     
+121246            filename temp catalog 'sashelp.emutil.gp_report.source';
+121247            %include temp;
+121248            filename temp;
+121249     
+121250            %report;
+121251     
+121252        %end;
+121253        %else
+121254        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+121255     
+121256            filename temp catalog 'sashelp.emutil.gp_postloop.source';
+121257            %include temp;
+121258            filename temp;
+121259     
+121260            %postloop;
+121261     
+121262        %end;
+121263     
+121264        %doendm:
+121265     %mend main;
+121266     
+121267     %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_MACROS.SOURCE.
+121268    +%macro SetProperties;
+121269    +   %em_checkmacro(name=EM_PROPERTY_MODE,            global=Y, value=STRATIFY);
+121270    +   %em_checkmacro(name=EM_PROPERTY_TARGETGROUP,     global=Y, value=Y);
+121271    +   %em_checkmacro(name=EM_PROPERTY_INDEXCOUNT,      global=Y, value=10);
+121272    +   %em_checkmacro(name=EM_PROPERTY_MINIMUMOBS,      global=Y, value=10);
+121273    +   %em_checkmacro(name=EM_PROPERTY_SIZETYPE,        global=Y, value=PERCENT);
+121274    +   %em_checkmacro(name=EM_PROPERTY_SIZEOBS,         global=Y, value=.);
+121275    +   %em_checkmacro(name=EM_PROPERTY_SIZEPERCENT,     global=Y, value=10);
+121276    +%mend SetProperties;
+121277    +
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+121278     *------------------------------------------------------------*;
+121279     * End UPDATE: Grp8;
+121280     *------------------------------------------------------------*;
+121281     
+
+121282     %em_delMacro;
+
+121284     %let _HPDMGRIDHOST=;
+121285     %let _HPDMGRIDINSTALLLOC=;
+121286     %let _HPDMGRIDDATASERVER=;
+121287     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Grp8 : End Update 
+* datetime : 02JUN2018:15:12:39 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Grp5 : Beginning Update 
+* datetime : 02JUN2018:15:12:40 
+* 
+*------------------------------------------------------------* 
+121510     %let emexceptionString =;
+121511     %let EMEXCEPTIONSTRING=;
+121512     *------------------------------------------------------------*;
+121513     * UPDATE: Grp5;
+121514     *------------------------------------------------------------*;
+121515     %let EM_ACTION = UPDATE;
+121516     %let syscc = 0;
+121517     %macro main;
+121518     
+121519        filename temp catalog 'sashelp.emutil.gp_macros.source';
+121520        %include temp;
+121521        filename temp;
+121522     
+121523        %SetProperties;
+121524     
+121525        %if %upcase(&EM_ACTION) = CREATE %then %do;
+121526     
+121527            filename temp catalog 'sashelp.emutil.gp_create.source';
+121528            %include temp;
+121529            filename temp;
+121530     
+121531            %create;
+121532        %end;
+121533        %else
+121534        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+121535     
+121536            filename temp catalog 'sashelp.emutil.gp_train.source';
+121537            %include temp;
+121538            filename temp;
+121539     
+121540            %train;
+121541        %end;
+121542        %else
+121543        %if %upcase(&EM_ACTION) = SCORE %then %do;
+121544     
+121545            filename temp catalog 'sashelp.emutil.gp_score.source';
+121546            %include temp;
+121547            filename temp;
+121548     
+121549            %score;
+121550        %end;
+121551        %else
+121552        %if %upcase(&EM_ACTION) = REPORT %then %do;
+121553     
+121554            filename temp catalog 'sashelp.emutil.gp_report.source';
+121555            %include temp;
+121556            filename temp;
+121557     
+121558            %report;
+121559     
+121560        %end;
+121561        %else
+121562        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+121563     
+121564            filename temp catalog 'sashelp.emutil.gp_postloop.source';
+121565            %include temp;
+121566            filename temp;
+121567     
+121568            %postloop;
+121569     
+121570        %end;
+121571     
+121572        %doendm:
+121573     %mend main;
+121574     
+121575     %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_MACROS.SOURCE.
+121576    +%macro SetProperties;
+121577    +   %em_checkmacro(name=EM_PROPERTY_MODE,            global=Y, value=STRATIFY);
+121578    +   %em_checkmacro(name=EM_PROPERTY_TARGETGROUP,     global=Y, value=Y);
+121579    +   %em_checkmacro(name=EM_PROPERTY_INDEXCOUNT,      global=Y, value=10);
+121580    +   %em_checkmacro(name=EM_PROPERTY_MINIMUMOBS,      global=Y, value=10);
+121581    +   %em_checkmacro(name=EM_PROPERTY_SIZETYPE,        global=Y, value=PERCENT);
+121582    +   %em_checkmacro(name=EM_PROPERTY_SIZEOBS,         global=Y, value=.);
+121583    +   %em_checkmacro(name=EM_PROPERTY_SIZEPERCENT,     global=Y, value=10);
+121584    +%mend SetProperties;
+121585    +
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+121586     *------------------------------------------------------------*;
+121587     * End UPDATE: Grp5;
+121588     *------------------------------------------------------------*;
+121589     
+
+121590     %em_delMacro;
+
+121592     %let _HPDMGRIDHOST=;
+121593     %let _HPDMGRIDINSTALLLOC=;
+121594     %let _HPDMGRIDDATASERVER=;
+121595     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Grp5 : End Update 
+* datetime : 02JUN2018:15:12:40 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Grp3 : Beginning Update 
+* datetime : 02JUN2018:15:12:41 
+* 
+*------------------------------------------------------------* 
+121818     %let emexceptionString =;
+121819     %let EMEXCEPTIONSTRING=;
+121820     *------------------------------------------------------------*;
+121821     * UPDATE: Grp3;
+121822     *------------------------------------------------------------*;
+121823     %let EM_ACTION = UPDATE;
+121824     %let syscc = 0;
+121825     %macro main;
+121826     
+121827        filename temp catalog 'sashelp.emutil.gp_macros.source';
+121828        %include temp;
+121829        filename temp;
+121830     
+121831        %SetProperties;
+121832     
+121833        %if %upcase(&EM_ACTION) = CREATE %then %do;
+121834     
+121835            filename temp catalog 'sashelp.emutil.gp_create.source';
+121836            %include temp;
+121837            filename temp;
+121838     
+121839            %create;
+121840        %end;
+121841        %else
+121842        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+121843     
+121844            filename temp catalog 'sashelp.emutil.gp_train.source';
+121845            %include temp;
+121846            filename temp;
+121847     
+121848            %train;
+121849        %end;
+121850        %else
+121851        %if %upcase(&EM_ACTION) = SCORE %then %do;
+121852     
+121853            filename temp catalog 'sashelp.emutil.gp_score.source';
+121854            %include temp;
+121855            filename temp;
+121856     
+121857            %score;
+121858        %end;
+121859        %else
+121860        %if %upcase(&EM_ACTION) = REPORT %then %do;
+121861     
+121862            filename temp catalog 'sashelp.emutil.gp_report.source';
+121863            %include temp;
+121864            filename temp;
+121865     
+121866            %report;
+121867     
+121868        %end;
+121869        %else
+121870        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+121871     
+121872            filename temp catalog 'sashelp.emutil.gp_postloop.source';
+121873            %include temp;
+121874            filename temp;
+121875     
+121876            %postloop;
+121877     
+121878        %end;
+121879     
+121880        %doendm:
+121881     %mend main;
+121882     
+121883     %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_MACROS.SOURCE.
+121884    +%macro SetProperties;
+121885    +   %em_checkmacro(name=EM_PROPERTY_MODE,            global=Y, value=STRATIFY);
+121886    +   %em_checkmacro(name=EM_PROPERTY_TARGETGROUP,     global=Y, value=Y);
+121887    +   %em_checkmacro(name=EM_PROPERTY_INDEXCOUNT,      global=Y, value=10);
+121888    +   %em_checkmacro(name=EM_PROPERTY_MINIMUMOBS,      global=Y, value=10);
+121889    +   %em_checkmacro(name=EM_PROPERTY_SIZETYPE,        global=Y, value=PERCENT);
+121890    +   %em_checkmacro(name=EM_PROPERTY_SIZEOBS,         global=Y, value=.);
+121891    +   %em_checkmacro(name=EM_PROPERTY_SIZEPERCENT,     global=Y, value=10);
+121892    +%mend SetProperties;
+121893    +
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+121894     *------------------------------------------------------------*;
+121895     * End UPDATE: Grp3;
+121896     *------------------------------------------------------------*;
+121897     
+
+121898     %em_delMacro;
+
+121900     %let _HPDMGRIDHOST=;
+121901     %let _HPDMGRIDINSTALLLOC=;
+121902     %let _HPDMGRIDDATASERVER=;
+121903     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Grp3 : End Update 
+* datetime : 02JUN2018:15:12:41 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Grp2 : Beginning Update 
+* datetime : 02JUN2018:15:12:41 
+* 
+*------------------------------------------------------------* 
+122126     %let emexceptionString =;
+122127     %let EMEXCEPTIONSTRING=;
+122128     *------------------------------------------------------------*;
+122129     * UPDATE: Grp2;
+122130     *------------------------------------------------------------*;
+122131     %let EM_ACTION = UPDATE;
+122132     %let syscc = 0;
+122133     %macro main;
+122134     
+122135        filename temp catalog 'sashelp.emutil.gp_macros.source';
+122136        %include temp;
+122137        filename temp;
+122138     
+122139        %SetProperties;
+122140     
+122141        %if %upcase(&EM_ACTION) = CREATE %then %do;
+122142     
+122143            filename temp catalog 'sashelp.emutil.gp_create.source';
+122144            %include temp;
+122145            filename temp;
+122146     
+122147            %create;
+122148        %end;
+122149        %else
+122150        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+122151     
+122152            filename temp catalog 'sashelp.emutil.gp_train.source';
+122153            %include temp;
+122154            filename temp;
+122155     
+122156            %train;
+122157        %end;
+122158        %else
+122159        %if %upcase(&EM_ACTION) = SCORE %then %do;
+122160     
+122161            filename temp catalog 'sashelp.emutil.gp_score.source';
+122162            %include temp;
+122163            filename temp;
+122164     
+122165            %score;
+122166        %end;
+122167        %else
+122168        %if %upcase(&EM_ACTION) = REPORT %then %do;
+122169     
+122170            filename temp catalog 'sashelp.emutil.gp_report.source';
+122171            %include temp;
+122172            filename temp;
+122173     
+122174            %report;
+122175     
+122176        %end;
+122177        %else
+122178        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+122179     
+122180            filename temp catalog 'sashelp.emutil.gp_postloop.source';
+122181            %include temp;
+122182            filename temp;
+122183     
+122184            %postloop;
+122185     
+122186        %end;
+122187     
+122188        %doendm:
+122189     %mend main;
+122190     
+122191     %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_MACROS.SOURCE.
+122192    +%macro SetProperties;
+122193    +   %em_checkmacro(name=EM_PROPERTY_MODE,            global=Y, value=STRATIFY);
+122194    +   %em_checkmacro(name=EM_PROPERTY_TARGETGROUP,     global=Y, value=Y);
+122195    +   %em_checkmacro(name=EM_PROPERTY_INDEXCOUNT,      global=Y, value=10);
+122196    +   %em_checkmacro(name=EM_PROPERTY_MINIMUMOBS,      global=Y, value=10);
+122197    +   %em_checkmacro(name=EM_PROPERTY_SIZETYPE,        global=Y, value=PERCENT);
+122198    +   %em_checkmacro(name=EM_PROPERTY_SIZEOBS,         global=Y, value=.);
+122199    +   %em_checkmacro(name=EM_PROPERTY_SIZEPERCENT,     global=Y, value=10);
+122200    +%mend SetProperties;
+122201    +
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+122202     *------------------------------------------------------------*;
+122203     * End UPDATE: Grp2;
+122204     *------------------------------------------------------------*;
+122205     
+
+122206     %em_delMacro;
+
+122208     %let _HPDMGRIDHOST=;
+122209     %let _HPDMGRIDINSTALLLOC=;
+122210     %let _HPDMGRIDDATASERVER=;
+122211     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Grp2 : End Update 
+* datetime : 02JUN2018:15:12:41 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Grp : Beginning Update 
+* datetime : 02JUN2018:15:12:42 
+* 
+*------------------------------------------------------------* 
+122435     %let emexceptionString =;
+122436     %let EMEXCEPTIONSTRING=;
+122437     *------------------------------------------------------------*;
+122438     * UPDATE: Grp;
+122439     *------------------------------------------------------------*;
+122440     %let EM_ACTION = UPDATE;
+122441     %let syscc = 0;
+122442     %macro main;
+122443     
+122444        filename temp catalog 'sashelp.emutil.gp_macros.source';
+122445        %include temp;
+122446        filename temp;
+122447     
+122448        %SetProperties;
+122449     
+122450        %if %upcase(&EM_ACTION) = CREATE %then %do;
+122451     
+122452            filename temp catalog 'sashelp.emutil.gp_create.source';
+122453            %include temp;
+122454            filename temp;
+122455     
+122456            %create;
+122457        %end;
+122458        %else
+122459        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+122460     
+122461            filename temp catalog 'sashelp.emutil.gp_train.source';
+122462            %include temp;
+122463            filename temp;
+122464     
+122465            %train;
+122466        %end;
+122467        %else
+122468        %if %upcase(&EM_ACTION) = SCORE %then %do;
+122469     
+122470            filename temp catalog 'sashelp.emutil.gp_score.source';
+122471            %include temp;
+122472            filename temp;
+122473     
+122474            %score;
+122475        %end;
+122476        %else
+122477        %if %upcase(&EM_ACTION) = REPORT %then %do;
+122478     
+122479            filename temp catalog 'sashelp.emutil.gp_report.source';
+122480            %include temp;
+122481            filename temp;
+122482     
+122483            %report;
+122484     
+122485        %end;
+122486        %else
+122487        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+122488     
+122489            filename temp catalog 'sashelp.emutil.gp_postloop.source';
+122490            %include temp;
+122491            filename temp;
+122492     
+122493            %postloop;
+122494     
+122495        %end;
+122496     
+122497        %doendm:
+122498     %mend main;
+122499     
+122500     %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_MACROS.SOURCE.
+122501    +%macro SetProperties;
+122502    +   %em_checkmacro(name=EM_PROPERTY_MODE,            global=Y, value=STRATIFY);
+122503    +   %em_checkmacro(name=EM_PROPERTY_TARGETGROUP,     global=Y, value=Y);
+122504    +   %em_checkmacro(name=EM_PROPERTY_INDEXCOUNT,      global=Y, value=10);
+122505    +   %em_checkmacro(name=EM_PROPERTY_MINIMUMOBS,      global=Y, value=10);
+122506    +   %em_checkmacro(name=EM_PROPERTY_SIZETYPE,        global=Y, value=PERCENT);
+122507    +   %em_checkmacro(name=EM_PROPERTY_SIZEOBS,         global=Y, value=.);
+122508    +   %em_checkmacro(name=EM_PROPERTY_SIZEPERCENT,     global=Y, value=10);
+122509    +%mend SetProperties;
+122510    +
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+122511     *------------------------------------------------------------*;
+122512     * End UPDATE: Grp;
+122513     *------------------------------------------------------------*;
+122514     
+
+122515     %em_delMacro;
+
+122517     %let _HPDMGRIDHOST=;
+122518     %let _HPDMGRIDINSTALLLOC=;
+122519     %let _HPDMGRIDDATASERVER=;
+122520     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Grp : End Update 
+* datetime : 02JUN2018:15:12:42 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "ENDGRP9" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural2 : Beginning Update 
+* datetime : 02JUN2018:15:12:43 
+* 
+*------------------------------------------------------------* 
+122540     %let _HPDMGRIDHOST=;
+122541     %let _HPDMGRIDINSTALLLOC=;
+122542     %let _HPDMGRIDDATASERVER=;
+122543     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Neural2 : End Update 
+* datetime : 02JUN2018:15:12:43 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "ENDGRP13" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural5 : Beginning Update 
+* datetime : 02JUN2018:15:12:43 
+* 
+*------------------------------------------------------------* 
+122563     %let _HPDMGRIDHOST=;
+122564     %let _HPDMGRIDINSTALLLOC=;
+122565     %let _HPDMGRIDDATASERVER=;
+122566     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Neural5 : End Update 
+* datetime : 02JUN2018:15:12:43 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "ENDGRP12" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural4 : Beginning Update 
+* datetime : 02JUN2018:15:12:44 
+* 
+*------------------------------------------------------------* 
+122586     %let _HPDMGRIDHOST=;
+122587     %let _HPDMGRIDINSTALLLOC=;
+122588     %let _HPDMGRIDDATASERVER=;
+122589     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Neural4 : End Update 
+* datetime : 02JUN2018:15:12:44 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "ENDGRP11" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural3 : Beginning Update 
+* datetime : 02JUN2018:15:12:45 
+* 
+*------------------------------------------------------------* 
+122609     %let _HPDMGRIDHOST=;
+122610     %let _HPDMGRIDINSTALLLOC=;
+122611     %let _HPDMGRIDDATASERVER=;
+122612     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Neural3 : End Update 
+* datetime : 02JUN2018:15:12:45 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "ENDGRP10" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural : Beginning Update 
+* datetime : 02JUN2018:15:12:45 
+* 
+*------------------------------------------------------------* 
+122632     %let _HPDMGRIDHOST=;
+122633     %let _HPDMGRIDINSTALLLOC=;
+122634     %let _HPDMGRIDDATASERVER=;
+122635     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Neural : End Update 
+* datetime : 02JUN2018:15:12:45 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "ENDGRP8" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Reg3 : Beginning Update 
+* datetime : 02JUN2018:15:12:46 
+* 
+*------------------------------------------------------------* 
+122655     %let _HPDMGRIDHOST=;
+122656     %let _HPDMGRIDINSTALLLOC=;
+122657     %let _HPDMGRIDDATASERVER=;
+122658     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Reg3 : End Update 
+* datetime : 02JUN2018:15:12:46 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "ENDGRP7" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Reg4 : Beginning Update 
+* datetime : 02JUN2018:15:12:46 
+* 
+*------------------------------------------------------------* 
+122678     %let _HPDMGRIDHOST=;
+122679     %let _HPDMGRIDINSTALLLOC=;
+122680     %let _HPDMGRIDDATASERVER=;
+122681     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Reg4 : End Update 
+* datetime : 02JUN2018:15:12:47 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "ENDGRP6" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Reg2 : Beginning Update 
+* datetime : 02JUN2018:15:12:47 
+* 
+*------------------------------------------------------------* 
+122701     %let _HPDMGRIDHOST=;
+122702     %let _HPDMGRIDINSTALLLOC=;
+122703     %let _HPDMGRIDDATASERVER=;
+122704     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Reg2 : End Update 
+* datetime : 02JUN2018:15:12:47 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "ENDGRP3" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Tree3 : Beginning Update 
+* datetime : 02JUN2018:15:12:48 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+123141     data EM_TARGETDECINFO;
+123142     length TARGET $32 DECDATA DECMETA $43;
+123143     TARGET="DepVar";
+123144     DECDATA="EMWS1.Tree3_DepVar_DD";
+123145     DECMETA="EMWS1.Tree3_DepVar_DM";
+123146     output;
+123147     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+123148     %let emexceptionString =;
+123149     %let EMEXCEPTIONSTRING=;
+123150     *------------------------------------------------------------*;
+123151     * UPDATE: Tree3;
+123152     *------------------------------------------------------------*;
+123153     %let EM_ACTION = UPDATE;
+123154     %let syscc = 0;
+123155     %macro main;
+123156     
+123157       %if %upcase(&EM_ACTION) = CREATE %then %do;
+123158         filename temp catalog 'sashelp.emmodl.tree_create.source';
+123159         %include temp;
+123160         filename temp;
+123161     
+123162         %em_tree_create;
+123163       %end;
+123164     
+123165        %else
+123166        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+123167     
+123168            filename temp catalog 'sashelp.emmodl.tree_train.source';
+123169            %include temp;
+123170            filename temp;
+123171            %em_tree_train;
+123172        %end;
+123173     
+123174       %else
+123175       %if %upcase(&EM_ACTION) = SCORE %then %do;
+123176         filename temp catalog 'sashelp.emmodl.tree_score.source';
+123177         %include temp;
+123178         filename temp;
+123179     
+123180         %em_tree_score;
+123181     
+123182       %end;
+123183     
+123184       %else
+123185       %if %upcase(&EM_ACTION) = REPORT %then %do;
+123186     
+123187            filename temp catalog 'sashelp.emmodl.tree_report.source';
+123188            %include temp;
+123189            filename temp;
+123190     
+123191            %em_tree_report;
+123192        %end;
+123193     
+123194       %else
+123195       %if %upcase(&EM_ACTION) = OPENINT %then %do;
+123196     
+123197            filename temp catalog 'sashelp.emmodl.tree_actions.source';
+123198            %include temp;
+123199            filename temp;
+123200            %EM_TREE_OPENTREEVIEWER;
+123201     
+123202        %end;
+123203     
+123204       %else
+123205       %if %upcase(&EM_ACTION) = CLOSEINT %then %do;
+123206     
+123207            filename temp catalog 'sashelp.emmodl.tree_actions.source';
+123208            %include temp;
+123209            filename temp;
+123210            %EM_TREE_CLOSETREEVIEWER;
+123211     
+123212        %end;
+123213     
+123214     
+123215        %doendm:
+123216     %mend main;
+123217     
+123218     %main;
+123219     
+123220     *------------------------------------------------------------*;
+123221     * End UPDATE: Tree3;
+123222     *------------------------------------------------------------*;
+
+123223     %em_delMacro;
+
+123225     %let _HPDMGRIDHOST=;
+123226     %let _HPDMGRIDINSTALLLOC=;
+123227     %let _HPDMGRIDDATASERVER=;
+123228     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Tree3 : End Update 
+* datetime : 02JUN2018:15:12:48 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "ENDGRP2" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Tree2 : Beginning Update 
+* datetime : 02JUN2018:15:12:49 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+123665     data EM_TARGETDECINFO;
+123666     length TARGET $32 DECDATA DECMETA $43;
+123667     TARGET="DepVar";
+123668     DECDATA="EMWS1.Tree2_DepVar_DD";
+123669     DECMETA="EMWS1.Tree2_DepVar_DM";
+123670     output;
+123671     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+123672     %let emexceptionString =;
+123673     %let EMEXCEPTIONSTRING=;
+123674     *------------------------------------------------------------*;
+123675     * UPDATE: Tree2;
+123676     *------------------------------------------------------------*;
+123677     %let EM_ACTION = UPDATE;
+123678     %let syscc = 0;
+123679     %macro main;
+123680     
+123681       %if %upcase(&EM_ACTION) = CREATE %then %do;
+123682         filename temp catalog 'sashelp.emmodl.tree_create.source';
+123683         %include temp;
+123684         filename temp;
+123685     
+123686         %em_tree_create;
+123687       %end;
+123688     
+123689        %else
+123690        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+123691     
+123692            filename temp catalog 'sashelp.emmodl.tree_train.source';
+123693            %include temp;
+123694            filename temp;
+123695            %em_tree_train;
+123696        %end;
+123697     
+123698       %else
+123699       %if %upcase(&EM_ACTION) = SCORE %then %do;
+123700         filename temp catalog 'sashelp.emmodl.tree_score.source';
+123701         %include temp;
+123702         filename temp;
+123703     
+123704         %em_tree_score;
+123705     
+123706       %end;
+123707     
+123708       %else
+123709       %if %upcase(&EM_ACTION) = REPORT %then %do;
+123710     
+123711            filename temp catalog 'sashelp.emmodl.tree_report.source';
+123712            %include temp;
+123713            filename temp;
+123714     
+123715            %em_tree_report;
+123716        %end;
+123717     
+123718       %else
+123719       %if %upcase(&EM_ACTION) = OPENINT %then %do;
+123720     
+123721            filename temp catalog 'sashelp.emmodl.tree_actions.source';
+123722            %include temp;
+123723            filename temp;
+123724            %EM_TREE_OPENTREEVIEWER;
+123725     
+123726        %end;
+123727     
+123728       %else
+123729       %if %upcase(&EM_ACTION) = CLOSEINT %then %do;
+123730     
+123731            filename temp catalog 'sashelp.emmodl.tree_actions.source';
+123732            %include temp;
+123733            filename temp;
+123734            %EM_TREE_CLOSETREEVIEWER;
+123735     
+123736        %end;
+123737     
+123738     
+123739        %doendm:
+123740     %mend main;
+123741     
+123742     %main;
+123743     
+123744     *------------------------------------------------------------*;
+123745     * End UPDATE: Tree2;
+123746     *------------------------------------------------------------*;
+
+123747     %em_delMacro;
+
+123749     %let _HPDMGRIDHOST=;
+123750     %let _HPDMGRIDINSTALLLOC=;
+123751     %let _HPDMGRIDDATASERVER=;
+123752     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Tree2 : End Update 
+* datetime : 02JUN2018:15:12:49 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENDGRP" 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Tree : Beginning Update 
+* datetime : 02JUN2018:15:12:50 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+124189     data EM_TARGETDECINFO;
+124190     length TARGET $32 DECDATA DECMETA $43;
+124191     TARGET="DepVar";
+124192     DECDATA="EMWS1.Tree_DepVar_DD";
+124193     DECMETA="EMWS1.Tree_DepVar_DM";
+124194     output;
+124195     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+124196     %let emexceptionString =;
+124197     %let EMEXCEPTIONSTRING=;
+124198     *------------------------------------------------------------*;
+124199     * UPDATE: Tree;
+124200     *------------------------------------------------------------*;
+124201     %let EM_ACTION = UPDATE;
+124202     %let syscc = 0;
+124203     %macro main;
+124204     
+124205       %if %upcase(&EM_ACTION) = CREATE %then %do;
+124206         filename temp catalog 'sashelp.emmodl.tree_create.source';
+124207         %include temp;
+124208         filename temp;
+124209     
+124210         %em_tree_create;
+124211       %end;
+124212     
+124213        %else
+124214        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+124215     
+124216            filename temp catalog 'sashelp.emmodl.tree_train.source';
+124217            %include temp;
+124218            filename temp;
+124219            %em_tree_train;
+124220        %end;
+124221     
+124222       %else
+124223       %if %upcase(&EM_ACTION) = SCORE %then %do;
+124224         filename temp catalog 'sashelp.emmodl.tree_score.source';
+124225         %include temp;
+124226         filename temp;
+124227     
+124228         %em_tree_score;
+124229     
+124230       %end;
+124231     
+124232       %else
+124233       %if %upcase(&EM_ACTION) = REPORT %then %do;
+124234     
+124235            filename temp catalog 'sashelp.emmodl.tree_report.source';
+124236            %include temp;
+124237            filename temp;
+124238     
+124239            %em_tree_report;
+124240        %end;
+124241     
+124242       %else
+124243       %if %upcase(&EM_ACTION) = OPENINT %then %do;
+124244     
+124245            filename temp catalog 'sashelp.emmodl.tree_actions.source';
+124246            %include temp;
+124247            filename temp;
+124248            %EM_TREE_OPENTREEVIEWER;
+124249     
+124250        %end;
+124251     
+124252       %else
+124253       %if %upcase(&EM_ACTION) = CLOSEINT %then %do;
+124254     
+124255            filename temp catalog 'sashelp.emmodl.tree_actions.source';
+124256            %include temp;
+124257            filename temp;
+124258            %EM_TREE_CLOSETREEVIEWER;
+124259     
+124260        %end;
+124261     
+124262     
+124263        %doendm:
+124264     %mend main;
+124265     
+124266     %main;
+124267     
+124268     *------------------------------------------------------------*;
+124269     * End UPDATE: Tree;
+124270     *------------------------------------------------------------*;
+
+124271     %em_delMacro;
+
+124273     %let _HPDMGRIDHOST=;
+124274     %let _HPDMGRIDINSTALLLOC=;
+124275     %let _HPDMGRIDDATASERVER=;
+124276     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* Tree : End Update 
+* datetime : 02JUN2018:15:12:50 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "MDLIMP10" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EndGrp9 : Beginning Update 
+* datetime : 02JUN2018:15:12:51 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+124619     data EM_TARGETDECINFO;
+124620     length TARGET $32 DECDATA DECMETA $43;
+124621     TARGET="DepVar";
+124622     DECDATA="EMWS1.Neural2_DepVar_DD";
+124623     DECMETA="EMWS1.Neural2_DepVar_DM";
+124624     output;
+124625     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+124626     %let emexceptionString =;
+124627     %let EMEXCEPTIONSTRING=;
+124628     *------------------------------------------------------------*;
+124629     * UPDATE: EndGrp9;
+124630     *------------------------------------------------------------*;
+124631     %let EM_ACTION = UPDATE;
+124632     %let syscc = 0;
+124633     %macro main;
+124634        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+124635     
+124636            filename temp catalog 'sashelp.emutil.endgp_train.source';
+124637            %include temp;
+124638            filename temp;
+124639     
+124640            %train;
+124641     
+124642        %end;
+124643        %else
+124644           %if %upcase(&EM_ACTION) = SCORE %then %do;
+124645     
+124646            filename temp catalog 'sashelp.emutil.endgp_score.source';
+124647            %include temp;
+124648            filename temp;
+124649     
+124650            %score;
+124651        %end;
+124652        %else
+124653        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+124654     
+124655            filename temp catalog 'sashelp.emutil.endgp_postloop.source';
+124656            %include temp;
+124657            filename temp;
+124658     
+124659            %postloop;
+124660     
+124661        %end;
+124662     
+124663        %doendm:
+124664     %mend main;
+124665     
+124666     %main;
+124667     
+124668     *------------------------------------------------------------*;
+124669     * End UPDATE: EndGrp9;
+124670     *------------------------------------------------------------*;
+
+124671     %em_delMacro;
+
+124673     %let _HPDMGRIDHOST=;
+124674     %let _HPDMGRIDINSTALLLOC=;
+124675     %let _HPDMGRIDDATASERVER=;
+124676     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* EndGrp9 : End Update 
+* datetime : 02JUN2018:15:12:51 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "MDLIMP13" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EndGrp13 : Beginning Update 
+* datetime : 02JUN2018:15:12:52 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+125019     data EM_TARGETDECINFO;
+125020     length TARGET $32 DECDATA DECMETA $43;
+125021     TARGET="DepVar";
+125022     DECDATA="EMWS1.Neural5_DepVar_DD";
+125023     DECMETA="EMWS1.Neural5_DepVar_DM";
+125024     output;
+125025     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+125026     %let emexceptionString =;
+125027     %let EMEXCEPTIONSTRING=;
+125028     *------------------------------------------------------------*;
+125029     * UPDATE: EndGrp13;
+125030     *------------------------------------------------------------*;
+125031     %let EM_ACTION = UPDATE;
+125032     %let syscc = 0;
+125033     %macro main;
+125034        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+125035     
+125036            filename temp catalog 'sashelp.emutil.endgp_train.source';
+125037            %include temp;
+125038            filename temp;
+125039     
+125040            %train;
+125041     
+125042        %end;
+125043        %else
+125044           %if %upcase(&EM_ACTION) = SCORE %then %do;
+125045     
+125046            filename temp catalog 'sashelp.emutil.endgp_score.source';
+125047            %include temp;
+125048            filename temp;
+125049     
+125050            %score;
+125051        %end;
+125052        %else
+125053        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+125054     
+125055            filename temp catalog 'sashelp.emutil.endgp_postloop.source';
+125056            %include temp;
+125057            filename temp;
+125058     
+125059            %postloop;
+125060     
+125061        %end;
+125062     
+125063        %doendm:
+125064     %mend main;
+125065     
+125066     %main;
+125067     
+125068     *------------------------------------------------------------*;
+125069     * End UPDATE: EndGrp13;
+125070     *------------------------------------------------------------*;
+
+125071     %em_delMacro;
+
+125073     %let _HPDMGRIDHOST=;
+125074     %let _HPDMGRIDINSTALLLOC=;
+125075     %let _HPDMGRIDDATASERVER=;
+125076     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* EndGrp13 : End Update 
+* datetime : 02JUN2018:15:12:52 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "MDLIMP12" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EndGrp12 : Beginning Update 
+* datetime : 02JUN2018:15:12:53 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+125419     data EM_TARGETDECINFO;
+125420     length TARGET $32 DECDATA DECMETA $43;
+125421     TARGET="DepVar";
+125422     DECDATA="EMWS1.Neural4_DepVar_DD";
+125423     DECMETA="EMWS1.Neural4_DepVar_DM";
+125424     output;
+125425     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+125426     %let emexceptionString =;
+125427     %let EMEXCEPTIONSTRING=;
+125428     *------------------------------------------------------------*;
+125429     * UPDATE: EndGrp12;
+125430     *------------------------------------------------------------*;
+125431     %let EM_ACTION = UPDATE;
+125432     %let syscc = 0;
+125433     %macro main;
+125434        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+125435     
+125436            filename temp catalog 'sashelp.emutil.endgp_train.source';
+125437            %include temp;
+125438            filename temp;
+125439     
+125440            %train;
+125441     
+125442        %end;
+125443        %else
+125444           %if %upcase(&EM_ACTION) = SCORE %then %do;
+125445     
+125446            filename temp catalog 'sashelp.emutil.endgp_score.source';
+125447            %include temp;
+125448            filename temp;
+125449     
+125450            %score;
+125451        %end;
+125452        %else
+125453        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+125454     
+125455            filename temp catalog 'sashelp.emutil.endgp_postloop.source';
+125456            %include temp;
+125457            filename temp;
+125458     
+125459            %postloop;
+125460     
+125461        %end;
+125462     
+125463        %doendm:
+125464     %mend main;
+125465     
+125466     %main;
+125467     
+125468     *------------------------------------------------------------*;
+125469     * End UPDATE: EndGrp12;
+125470     *------------------------------------------------------------*;
+
+125471     %em_delMacro;
+
+125473     %let _HPDMGRIDHOST=;
+125474     %let _HPDMGRIDINSTALLLOC=;
+125475     %let _HPDMGRIDDATASERVER=;
+125476     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* EndGrp12 : End Update 
+* datetime : 02JUN2018:15:12:53 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "MDLIMP11" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EndGrp11 : Beginning Update 
+* datetime : 02JUN2018:15:12:54 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+125819     data EM_TARGETDECINFO;
+125820     length TARGET $32 DECDATA DECMETA $43;
+125821     TARGET="DepVar";
+125822     DECDATA="EMWS1.Neural3_DepVar_DD";
+125823     DECMETA="EMWS1.Neural3_DepVar_DM";
+125824     output;
+125825     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+125826     %let emexceptionString =;
+125827     %let EMEXCEPTIONSTRING=;
+125828     *------------------------------------------------------------*;
+125829     * UPDATE: EndGrp11;
+125830     *------------------------------------------------------------*;
+125831     %let EM_ACTION = UPDATE;
+125832     %let syscc = 0;
+125833     %macro main;
+125834        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+125835     
+125836            filename temp catalog 'sashelp.emutil.endgp_train.source';
+125837            %include temp;
+125838            filename temp;
+125839     
+125840            %train;
+125841     
+125842        %end;
+125843        %else
+125844           %if %upcase(&EM_ACTION) = SCORE %then %do;
+125845     
+125846            filename temp catalog 'sashelp.emutil.endgp_score.source';
+125847            %include temp;
+125848            filename temp;
+125849     
+125850            %score;
+125851        %end;
+125852        %else
+125853        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+125854     
+125855            filename temp catalog 'sashelp.emutil.endgp_postloop.source';
+125856            %include temp;
+125857            filename temp;
+125858     
+125859            %postloop;
+125860     
+125861        %end;
+125862     
+125863        %doendm:
+125864     %mend main;
+125865     
+125866     %main;
+125867     
+125868     *------------------------------------------------------------*;
+125869     * End UPDATE: EndGrp11;
+125870     *------------------------------------------------------------*;
+
+125871     %em_delMacro;
+
+125873     %let _HPDMGRIDHOST=;
+125874     %let _HPDMGRIDINSTALLLOC=;
+125875     %let _HPDMGRIDDATASERVER=;
+125876     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* EndGrp11 : End Update 
+* datetime : 02JUN2018:15:12:54 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "MDLIMP9" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EndGrp10 : Beginning Update 
+* datetime : 02JUN2018:15:12:55 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+126219     data EM_TARGETDECINFO;
+126220     length TARGET $32 DECDATA DECMETA $43;
+126221     TARGET="DepVar";
+126222     DECDATA="EMWS1.Neural_DepVar_DD";
+126223     DECMETA="EMWS1.Neural_DepVar_DM";
+126224     output;
+126225     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+126226     %let emexceptionString =;
+126227     %let EMEXCEPTIONSTRING=;
+126228     *------------------------------------------------------------*;
+126229     * UPDATE: EndGrp10;
+126230     *------------------------------------------------------------*;
+126231     %let EM_ACTION = UPDATE;
+126232     %let syscc = 0;
+126233     %macro main;
+126234        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+126235     
+126236            filename temp catalog 'sashelp.emutil.endgp_train.source';
+126237            %include temp;
+126238            filename temp;
+126239     
+126240            %train;
+126241     
+126242        %end;
+126243        %else
+126244           %if %upcase(&EM_ACTION) = SCORE %then %do;
+126245     
+126246            filename temp catalog 'sashelp.emutil.endgp_score.source';
+126247            %include temp;
+126248            filename temp;
+126249     
+126250            %score;
+126251        %end;
+126252        %else
+126253        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+126254     
+126255            filename temp catalog 'sashelp.emutil.endgp_postloop.source';
+126256            %include temp;
+126257            filename temp;
+126258     
+126259            %postloop;
+126260     
+126261        %end;
+126262     
+126263        %doendm:
+126264     %mend main;
+126265     
+126266     %main;
+126267     
+126268     *------------------------------------------------------------*;
+126269     * End UPDATE: EndGrp10;
+126270     *------------------------------------------------------------*;
+
+126271     %em_delMacro;
+
+126273     %let _HPDMGRIDHOST=;
+126274     %let _HPDMGRIDINSTALLLOC=;
+126275     %let _HPDMGRIDDATASERVER=;
+126276     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* EndGrp10 : End Update 
+* datetime : 02JUN2018:15:12:55 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "MDLIMP8" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EndGrp8 : Beginning Update 
+* datetime : 02JUN2018:15:12:56 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+126619     data EM_TARGETDECINFO;
+126620     length TARGET $32 DECDATA DECMETA $43;
+126621     TARGET="DepVar";
+126622     DECDATA="EMWS1.Reg3_DepVar_DD";
+126623     DECMETA="EMWS1.Reg3_DepVar_DM";
+126624     output;
+126625     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+126626     %let emexceptionString =;
+126627     %let EMEXCEPTIONSTRING=;
+126628     *------------------------------------------------------------*;
+126629     * UPDATE: EndGrp8;
+126630     *------------------------------------------------------------*;
+126631     %let EM_ACTION = UPDATE;
+126632     %let syscc = 0;
+126633     %macro main;
+126634        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+126635     
+126636            filename temp catalog 'sashelp.emutil.endgp_train.source';
+126637            %include temp;
+126638            filename temp;
+126639     
+126640            %train;
+126641     
+126642        %end;
+126643        %else
+126644           %if %upcase(&EM_ACTION) = SCORE %then %do;
+126645     
+126646            filename temp catalog 'sashelp.emutil.endgp_score.source';
+126647            %include temp;
+126648            filename temp;
+126649     
+126650            %score;
+126651        %end;
+126652        %else
+126653        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+126654     
+126655            filename temp catalog 'sashelp.emutil.endgp_postloop.source';
+126656            %include temp;
+126657            filename temp;
+126658     
+126659            %postloop;
+126660     
+126661        %end;
+126662     
+126663        %doendm:
+126664     %mend main;
+126665     
+126666     %main;
+126667     
+126668     *------------------------------------------------------------*;
+126669     * End UPDATE: EndGrp8;
+126670     *------------------------------------------------------------*;
+
+126671     %em_delMacro;
+
+126673     %let _HPDMGRIDHOST=;
+126674     %let _HPDMGRIDINSTALLLOC=;
+126675     %let _HPDMGRIDDATASERVER=;
+126676     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* EndGrp8 : End Update 
+* datetime : 02JUN2018:15:12:56 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "MDLIMP7" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EndGrp7 : Beginning Update 
+* datetime : 02JUN2018:15:12:57 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+127019     data EM_TARGETDECINFO;
+127020     length TARGET $32 DECDATA DECMETA $43;
+127021     TARGET="DepVar";
+127022     DECDATA="EMWS1.Reg4_DepVar_DD";
+127023     DECMETA="EMWS1.Reg4_DepVar_DM";
+127024     output;
+127025     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+127026     %let emexceptionString =;
+127027     %let EMEXCEPTIONSTRING=;
+127028     *------------------------------------------------------------*;
+127029     * UPDATE: EndGrp7;
+127030     *------------------------------------------------------------*;
+127031     %let EM_ACTION = UPDATE;
+127032     %let syscc = 0;
+127033     %macro main;
+127034        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+127035     
+127036            filename temp catalog 'sashelp.emutil.endgp_train.source';
+127037            %include temp;
+127038            filename temp;
+127039     
+127040            %train;
+127041     
+127042        %end;
+127043        %else
+127044           %if %upcase(&EM_ACTION) = SCORE %then %do;
+127045     
+127046            filename temp catalog 'sashelp.emutil.endgp_score.source';
+127047            %include temp;
+127048            filename temp;
+127049     
+127050            %score;
+127051        %end;
+127052        %else
+127053        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+127054     
+127055            filename temp catalog 'sashelp.emutil.endgp_postloop.source';
+127056            %include temp;
+127057            filename temp;
+127058     
+127059            %postloop;
+127060     
+127061        %end;
+127062     
+127063        %doendm:
+127064     %mend main;
+127065     
+127066     %main;
+127067     
+127068     *------------------------------------------------------------*;
+127069     * End UPDATE: EndGrp7;
+127070     *------------------------------------------------------------*;
+
+127071     %em_delMacro;
+
+127073     %let _HPDMGRIDHOST=;
+127074     %let _HPDMGRIDINSTALLLOC=;
+127075     %let _HPDMGRIDDATASERVER=;
+127076     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* EndGrp7 : End Update 
+* datetime : 02JUN2018:15:12:57 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "MDLIMP6" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EndGrp6 : Beginning Update 
+* datetime : 02JUN2018:15:12:58 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+127419     data EM_TARGETDECINFO;
+127420     length TARGET $32 DECDATA DECMETA $43;
+127421     TARGET="DepVar";
+127422     DECDATA="EMWS1.Reg2_DepVar_DD";
+127423     DECMETA="EMWS1.Reg2_DepVar_DM";
+127424     output;
+127425     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+127426     %let emexceptionString =;
+127427     %let EMEXCEPTIONSTRING=;
+127428     *------------------------------------------------------------*;
+127429     * UPDATE: EndGrp6;
+127430     *------------------------------------------------------------*;
+127431     %let EM_ACTION = UPDATE;
+127432     %let syscc = 0;
+127433     %macro main;
+127434        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+127435     
+127436            filename temp catalog 'sashelp.emutil.endgp_train.source';
+127437            %include temp;
+127438            filename temp;
+127439     
+127440            %train;
+127441     
+127442        %end;
+127443        %else
+127444           %if %upcase(&EM_ACTION) = SCORE %then %do;
+127445     
+127446            filename temp catalog 'sashelp.emutil.endgp_score.source';
+127447            %include temp;
+127448            filename temp;
+127449     
+127450            %score;
+127451        %end;
+127452        %else
+127453        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+127454     
+127455            filename temp catalog 'sashelp.emutil.endgp_postloop.source';
+127456            %include temp;
+127457            filename temp;
+127458     
+127459            %postloop;
+127460     
+127461        %end;
+127462     
+127463        %doendm:
+127464     %mend main;
+127465     
+127466     %main;
+127467     
+127468     *------------------------------------------------------------*;
+127469     * End UPDATE: EndGrp6;
+127470     *------------------------------------------------------------*;
+
+127471     %em_delMacro;
+
+127473     %let _HPDMGRIDHOST=;
+127474     %let _HPDMGRIDINSTALLLOC=;
+127475     %let _HPDMGRIDDATASERVER=;
+127476     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* EndGrp6 : End Update 
+* datetime : 02JUN2018:15:12:58 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "MDLIMP3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EndGrp3 : Beginning Update 
+* datetime : 02JUN2018:15:12:59 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+127819     data EM_TARGETDECINFO;
+127820     length TARGET $32 DECDATA DECMETA $43;
+127821     TARGET="DepVar";
+127822     DECDATA="EMWS1.Tree3_DepVar_DD";
+127823     DECMETA="EMWS1.Tree3_DepVar_DM";
+127824     output;
+127825     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+127826     %let emexceptionString =;
+127827     %let EMEXCEPTIONSTRING=;
+127828     *------------------------------------------------------------*;
+127829     * UPDATE: EndGrp3;
+127830     *------------------------------------------------------------*;
+127831     %let EM_ACTION = UPDATE;
+127832     %let syscc = 0;
+127833     %macro main;
+127834        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+127835     
+127836            filename temp catalog 'sashelp.emutil.endgp_train.source';
+127837            %include temp;
+127838            filename temp;
+127839     
+127840            %train;
+127841     
+127842        %end;
+127843        %else
+127844           %if %upcase(&EM_ACTION) = SCORE %then %do;
+127845     
+127846            filename temp catalog 'sashelp.emutil.endgp_score.source';
+127847            %include temp;
+127848            filename temp;
+127849     
+127850            %score;
+127851        %end;
+127852        %else
+127853        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+127854     
+127855            filename temp catalog 'sashelp.emutil.endgp_postloop.source';
+127856            %include temp;
+127857            filename temp;
+127858     
+127859            %postloop;
+127860     
+127861        %end;
+127862     
+127863        %doendm:
+127864     %mend main;
+127865     
+127866     %main;
+127867     
+127868     *------------------------------------------------------------*;
+127869     * End UPDATE: EndGrp3;
+127870     *------------------------------------------------------------*;
+
+127871     %em_delMacro;
+
+127873     %let _HPDMGRIDHOST=;
+127874     %let _HPDMGRIDINSTALLLOC=;
+127875     %let _HPDMGRIDDATASERVER=;
+127876     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* EndGrp3 : End Update 
+* datetime : 02JUN2018:15:12:59 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "MDLIMP2" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EndGrp2 : Beginning Update 
+* datetime : 02JUN2018:15:13:00 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+128219     data EM_TARGETDECINFO;
+128220     length TARGET $32 DECDATA DECMETA $43;
+128221     TARGET="DepVar";
+128222     DECDATA="EMWS1.Tree2_DepVar_DD";
+128223     DECMETA="EMWS1.Tree2_DepVar_DM";
+128224     output;
+128225     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+128226     %let emexceptionString =;
+128227     %let EMEXCEPTIONSTRING=;
+128228     *------------------------------------------------------------*;
+128229     * UPDATE: EndGrp2;
+128230     *------------------------------------------------------------*;
+128231     %let EM_ACTION = UPDATE;
+128232     %let syscc = 0;
+128233     %macro main;
+128234        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+128235     
+128236            filename temp catalog 'sashelp.emutil.endgp_train.source';
+128237            %include temp;
+128238            filename temp;
+128239     
+128240            %train;
+128241     
+128242        %end;
+128243        %else
+128244           %if %upcase(&EM_ACTION) = SCORE %then %do;
+128245     
+128246            filename temp catalog 'sashelp.emutil.endgp_score.source';
+128247            %include temp;
+128248            filename temp;
+128249     
+128250            %score;
+128251        %end;
+128252        %else
+128253        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+128254     
+128255            filename temp catalog 'sashelp.emutil.endgp_postloop.source';
+128256            %include temp;
+128257            filename temp;
+128258     
+128259            %postloop;
+128260     
+128261        %end;
+128262     
+128263        %doendm:
+128264     %mend main;
+128265     
+128266     %main;
+128267     
+128268     *------------------------------------------------------------*;
+128269     * End UPDATE: EndGrp2;
+128270     *------------------------------------------------------------*;
+
+128271     %em_delMacro;
+
+128273     %let _HPDMGRIDHOST=;
+128274     %let _HPDMGRIDINSTALLLOC=;
+128275     %let _HPDMGRIDDATASERVER=;
+128276     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* EndGrp2 : End Update 
+* datetime : 02JUN2018:15:13:00 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLIMP" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EndGrp : Beginning Update 
+* datetime : 02JUN2018:15:13:01 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+128619     data EM_TARGETDECINFO;
+128620     length TARGET $32 DECDATA DECMETA $43;
+128621     TARGET="DepVar";
+128622     DECDATA="EMWS1.Tree_DepVar_DD";
+128623     DECMETA="EMWS1.Tree_DepVar_DM";
+128624     output;
+128625     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+128626     %let emexceptionString =;
+128627     %let EMEXCEPTIONSTRING=;
+128628     *------------------------------------------------------------*;
+128629     * UPDATE: EndGrp;
+128630     *------------------------------------------------------------*;
+128631     %let EM_ACTION = UPDATE;
+128632     %let syscc = 0;
+128633     %macro main;
+128634        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+128635     
+128636            filename temp catalog 'sashelp.emutil.endgp_train.source';
+128637            %include temp;
+128638            filename temp;
+128639     
+128640            %train;
+128641     
+128642        %end;
+128643        %else
+128644           %if %upcase(&EM_ACTION) = SCORE %then %do;
+128645     
+128646            filename temp catalog 'sashelp.emutil.endgp_score.source';
+128647            %include temp;
+128648            filename temp;
+128649     
+128650            %score;
+128651        %end;
+128652        %else
+128653        %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+128654     
+128655            filename temp catalog 'sashelp.emutil.endgp_postloop.source';
+128656            %include temp;
+128657            filename temp;
+128658     
+128659            %postloop;
+128660     
+128661        %end;
+128662     
+128663        %doendm:
+128664     %mend main;
+128665     
+128666     %main;
+128667     
+128668     *------------------------------------------------------------*;
+128669     * End UPDATE: EndGrp;
+128670     *------------------------------------------------------------*;
+
+128671     %em_delMacro;
+
+128673     %let _HPDMGRIDHOST=;
+128674     %let _HPDMGRIDINSTALLLOC=;
+128675     %let _HPDMGRIDDATASERVER=;
+128676     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* EndGrp : End Update 
+* datetime : 02JUN2018:15:13:01 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* MdlImp10 : Beginning Update 
+* datetime : 02JUN2018:15:13:02 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+129018     data EM_TARGETDECINFO;
+129019     length TARGET $32 DECDATA DECMETA $43;
+129020     TARGET="DepVar";
+129021     DECDATA="EMWS1.Neural2_DepVar_DD";
+129022     DECMETA="EMWS1.Neural2_DepVar_DM";
+129023     output;
+129024     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+129025     %let emexceptionString =;
+129026     %let EMEXCEPTIONSTRING=;
+129027     *------------------------------------------------------------*;
+129028     * UPDATE: MdlImp10;
+129029     *------------------------------------------------------------*;
+129030     %let EM_ACTION = UPDATE;
+129031     %let syscc = 0;
+129032     %macro main;
+129033     
+129034        %if %upcase(&EM_ACTION) = CREATE %then %do;
+129035     
+129036            filename temp catalog 'sashelp.emmodl.modelimport_create.source';
+129037            %include temp;
+129038            filename temp;
+129039            %create;
+129040        %end;
+129041        %else
+129042        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+129043     
+129044            filename temp catalog 'sashelp.emmodl.modelimport_train.source';
+129045            %include temp;
+129046            filename temp;
+129047            %train;
+129048        %end;
+129049        %else
+129050        %if %upcase(&EM_ACTION) = SCORE %then %do;
+129051     
+129052            filename temp catalog 'sashelp.emmodl.modelimport_score.source';
+129053            %include temp;
+129054            filename temp;
+129055            %score;
+129056        %end;
+129057        %else
+129058        %if %upcase(&EM_ACTION) = OPENMAPPINGTABLE %then %do;
+129059     
+129060            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+129061            %include temp;
+129062            filename temp;
+129063            %openMappingTable;
+129064        %end;
+129065        %else
+129066        %if %upcase(&EM_ACTION) = CLOSEMAPPINGTABLE %then %do;
+129067     
+129068            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+129069            %include temp;
+129070            filename temp;
+129071            %closeMappingTable;
+129072        %end;
+129073     %mend main;
+129074     
+129075     %main;
+129076     
+129077     *------------------------------------------------------------*;
+129078     * End UPDATE: MdlImp10;
+129079     *------------------------------------------------------------*;
+
+129080     %em_delMacro;
+
+129082     %let _HPDMGRIDHOST=;
+129083     %let _HPDMGRIDINSTALLLOC=;
+129084     %let _HPDMGRIDDATASERVER=;
+129085     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* MdlImp10 : End Update 
+* datetime : 02JUN2018:15:13:02 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* MdlImp13 : Beginning Update 
+* datetime : 02JUN2018:15:13:03 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+129427     data EM_TARGETDECINFO;
+129428     length TARGET $32 DECDATA DECMETA $43;
+129429     TARGET="DepVar";
+129430     DECDATA="EMWS1.Neural5_DepVar_DD";
+129431     DECMETA="EMWS1.Neural5_DepVar_DM";
+129432     output;
+129433     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+129434     %let emexceptionString =;
+129435     %let EMEXCEPTIONSTRING=;
+129436     *------------------------------------------------------------*;
+129437     * UPDATE: MdlImp13;
+129438     *------------------------------------------------------------*;
+129439     %let EM_ACTION = UPDATE;
+129440     %let syscc = 0;
+129441     %macro main;
+129442     
+129443        %if %upcase(&EM_ACTION) = CREATE %then %do;
+129444     
+129445            filename temp catalog 'sashelp.emmodl.modelimport_create.source';
+129446            %include temp;
+129447            filename temp;
+129448            %create;
+129449        %end;
+129450        %else
+129451        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+129452     
+129453            filename temp catalog 'sashelp.emmodl.modelimport_train.source';
+129454            %include temp;
+129455            filename temp;
+129456            %train;
+129457        %end;
+129458        %else
+129459        %if %upcase(&EM_ACTION) = SCORE %then %do;
+129460     
+129461            filename temp catalog 'sashelp.emmodl.modelimport_score.source';
+129462            %include temp;
+129463            filename temp;
+129464            %score;
+129465        %end;
+129466        %else
+129467        %if %upcase(&EM_ACTION) = OPENMAPPINGTABLE %then %do;
+129468     
+129469            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+129470            %include temp;
+129471            filename temp;
+129472            %openMappingTable;
+129473        %end;
+129474        %else
+129475        %if %upcase(&EM_ACTION) = CLOSEMAPPINGTABLE %then %do;
+129476     
+129477            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+129478            %include temp;
+129479            filename temp;
+129480            %closeMappingTable;
+129481        %end;
+129482     %mend main;
+129483     
+129484     %main;
+129485     
+129486     *------------------------------------------------------------*;
+129487     * End UPDATE: MdlImp13;
+129488     *------------------------------------------------------------*;
+
+129489     %em_delMacro;
+
+129491     %let _HPDMGRIDHOST=;
+129492     %let _HPDMGRIDINSTALLLOC=;
+129493     %let _HPDMGRIDDATASERVER=;
+129494     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* MdlImp13 : End Update 
+* datetime : 02JUN2018:15:13:03 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* MdlImp12 : Beginning Update 
+* datetime : 02JUN2018:15:13:04 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+129836     data EM_TARGETDECINFO;
+129837     length TARGET $32 DECDATA DECMETA $43;
+129838     TARGET="DepVar";
+129839     DECDATA="EMWS1.Neural4_DepVar_DD";
+129840     DECMETA="EMWS1.Neural4_DepVar_DM";
+129841     output;
+129842     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+129843     %let emexceptionString =;
+129844     %let EMEXCEPTIONSTRING=;
+129845     *------------------------------------------------------------*;
+129846     * UPDATE: MdlImp12;
+129847     *------------------------------------------------------------*;
+129848     %let EM_ACTION = UPDATE;
+129849     %let syscc = 0;
+129850     %macro main;
+129851     
+129852        %if %upcase(&EM_ACTION) = CREATE %then %do;
+129853     
+129854            filename temp catalog 'sashelp.emmodl.modelimport_create.source';
+129855            %include temp;
+129856            filename temp;
+129857            %create;
+129858        %end;
+129859        %else
+129860        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+129861     
+129862            filename temp catalog 'sashelp.emmodl.modelimport_train.source';
+129863            %include temp;
+129864            filename temp;
+129865            %train;
+129866        %end;
+129867        %else
+129868        %if %upcase(&EM_ACTION) = SCORE %then %do;
+129869     
+129870            filename temp catalog 'sashelp.emmodl.modelimport_score.source';
+129871            %include temp;
+129872            filename temp;
+129873            %score;
+129874        %end;
+129875        %else
+129876        %if %upcase(&EM_ACTION) = OPENMAPPINGTABLE %then %do;
+129877     
+129878            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+129879            %include temp;
+129880            filename temp;
+129881            %openMappingTable;
+129882        %end;
+129883        %else
+129884        %if %upcase(&EM_ACTION) = CLOSEMAPPINGTABLE %then %do;
+129885     
+129886            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+129887            %include temp;
+129888            filename temp;
+129889            %closeMappingTable;
+129890        %end;
+129891     %mend main;
+129892     
+129893     %main;
+129894     
+129895     *------------------------------------------------------------*;
+129896     * End UPDATE: MdlImp12;
+129897     *------------------------------------------------------------*;
+
+129898     %em_delMacro;
+
+129900     %let _HPDMGRIDHOST=;
+129901     %let _HPDMGRIDINSTALLLOC=;
+129902     %let _HPDMGRIDDATASERVER=;
+129903     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* MdlImp12 : End Update 
+* datetime : 02JUN2018:15:13:04 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* MdlImp11 : Beginning Update 
+* datetime : 02JUN2018:15:13:05 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+130245     data EM_TARGETDECINFO;
+130246     length TARGET $32 DECDATA DECMETA $43;
+130247     TARGET="DepVar";
+130248     DECDATA="EMWS1.Neural3_DepVar_DD";
+130249     DECMETA="EMWS1.Neural3_DepVar_DM";
+130250     output;
+130251     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+130252     %let emexceptionString =;
+130253     %let EMEXCEPTIONSTRING=;
+130254     *------------------------------------------------------------*;
+130255     * UPDATE: MdlImp11;
+130256     *------------------------------------------------------------*;
+130257     %let EM_ACTION = UPDATE;
+130258     %let syscc = 0;
+130259     %macro main;
+130260     
+130261        %if %upcase(&EM_ACTION) = CREATE %then %do;
+130262     
+130263            filename temp catalog 'sashelp.emmodl.modelimport_create.source';
+130264            %include temp;
+130265            filename temp;
+130266            %create;
+130267        %end;
+130268        %else
+130269        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+130270     
+130271            filename temp catalog 'sashelp.emmodl.modelimport_train.source';
+130272            %include temp;
+130273            filename temp;
+130274            %train;
+130275        %end;
+130276        %else
+130277        %if %upcase(&EM_ACTION) = SCORE %then %do;
+130278     
+130279            filename temp catalog 'sashelp.emmodl.modelimport_score.source';
+130280            %include temp;
+130281            filename temp;
+130282            %score;
+130283        %end;
+130284        %else
+130285        %if %upcase(&EM_ACTION) = OPENMAPPINGTABLE %then %do;
+130286     
+130287            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+130288            %include temp;
+130289            filename temp;
+130290            %openMappingTable;
+130291        %end;
+130292        %else
+130293        %if %upcase(&EM_ACTION) = CLOSEMAPPINGTABLE %then %do;
+130294     
+130295            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+130296            %include temp;
+130297            filename temp;
+130298            %closeMappingTable;
+130299        %end;
+130300     %mend main;
+130301     
+130302     %main;
+130303     
+130304     *------------------------------------------------------------*;
+130305     * End UPDATE: MdlImp11;
+130306     *------------------------------------------------------------*;
+
+130307     %em_delMacro;
+
+130309     %let _HPDMGRIDHOST=;
+130310     %let _HPDMGRIDINSTALLLOC=;
+130311     %let _HPDMGRIDDATASERVER=;
+130312     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* MdlImp11 : End Update 
+* datetime : 02JUN2018:15:13:05 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* MdlImp9 : Beginning Update 
+* datetime : 02JUN2018:15:13:06 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+130654     data EM_TARGETDECINFO;
+130655     length TARGET $32 DECDATA DECMETA $43;
+130656     TARGET="DepVar";
+130657     DECDATA="EMWS1.Neural_DepVar_DD";
+130658     DECMETA="EMWS1.Neural_DepVar_DM";
+130659     output;
+130660     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+130661     %let emexceptionString =;
+130662     %let EMEXCEPTIONSTRING=;
+130663     *------------------------------------------------------------*;
+130664     * UPDATE: MdlImp9;
+130665     *------------------------------------------------------------*;
+130666     %let EM_ACTION = UPDATE;
+130667     %let syscc = 0;
+130668     %macro main;
+130669     
+130670        %if %upcase(&EM_ACTION) = CREATE %then %do;
+130671     
+130672            filename temp catalog 'sashelp.emmodl.modelimport_create.source';
+130673            %include temp;
+130674            filename temp;
+130675            %create;
+130676        %end;
+130677        %else
+130678        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+130679     
+130680            filename temp catalog 'sashelp.emmodl.modelimport_train.source';
+130681            %include temp;
+130682            filename temp;
+130683            %train;
+130684        %end;
+130685        %else
+130686        %if %upcase(&EM_ACTION) = SCORE %then %do;
+130687     
+130688            filename temp catalog 'sashelp.emmodl.modelimport_score.source';
+130689            %include temp;
+130690            filename temp;
+130691            %score;
+130692        %end;
+130693        %else
+130694        %if %upcase(&EM_ACTION) = OPENMAPPINGTABLE %then %do;
+130695     
+130696            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+130697            %include temp;
+130698            filename temp;
+130699            %openMappingTable;
+130700        %end;
+130701        %else
+130702        %if %upcase(&EM_ACTION) = CLOSEMAPPINGTABLE %then %do;
+130703     
+130704            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+130705            %include temp;
+130706            filename temp;
+130707            %closeMappingTable;
+130708        %end;
+130709     %mend main;
+130710     
+130711     %main;
+130712     
+130713     *------------------------------------------------------------*;
+130714     * End UPDATE: MdlImp9;
+130715     *------------------------------------------------------------*;
+
+130716     %em_delMacro;
+
+130718     %let _HPDMGRIDHOST=;
+130719     %let _HPDMGRIDINSTALLLOC=;
+130720     %let _HPDMGRIDDATASERVER=;
+130721     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* MdlImp9 : End Update 
+* datetime : 02JUN2018:15:13:06 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* MdlImp8 : Beginning Update 
+* datetime : 02JUN2018:15:13:07 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+131063     data EM_TARGETDECINFO;
+131064     length TARGET $32 DECDATA DECMETA $43;
+131065     TARGET="DepVar";
+131066     DECDATA="EMWS1.Reg3_DepVar_DD";
+131067     DECMETA="EMWS1.Reg3_DepVar_DM";
+131068     output;
+131069     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+131070     %let emexceptionString =;
+131071     %let EMEXCEPTIONSTRING=;
+131072     *------------------------------------------------------------*;
+131073     * UPDATE: MdlImp8;
+131074     *------------------------------------------------------------*;
+131075     %let EM_ACTION = UPDATE;
+131076     %let syscc = 0;
+131077     %macro main;
+131078     
+131079        %if %upcase(&EM_ACTION) = CREATE %then %do;
+131080     
+131081            filename temp catalog 'sashelp.emmodl.modelimport_create.source';
+131082            %include temp;
+131083            filename temp;
+131084            %create;
+131085        %end;
+131086        %else
+131087        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+131088     
+131089            filename temp catalog 'sashelp.emmodl.modelimport_train.source';
+131090            %include temp;
+131091            filename temp;
+131092            %train;
+131093        %end;
+131094        %else
+131095        %if %upcase(&EM_ACTION) = SCORE %then %do;
+131096     
+131097            filename temp catalog 'sashelp.emmodl.modelimport_score.source';
+131098            %include temp;
+131099            filename temp;
+131100            %score;
+131101        %end;
+131102        %else
+131103        %if %upcase(&EM_ACTION) = OPENMAPPINGTABLE %then %do;
+131104     
+131105            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+131106            %include temp;
+131107            filename temp;
+131108            %openMappingTable;
+131109        %end;
+131110        %else
+131111        %if %upcase(&EM_ACTION) = CLOSEMAPPINGTABLE %then %do;
+131112     
+131113            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+131114            %include temp;
+131115            filename temp;
+131116            %closeMappingTable;
+131117        %end;
+131118     %mend main;
+131119     
+131120     %main;
+131121     
+131122     *------------------------------------------------------------*;
+131123     * End UPDATE: MdlImp8;
+131124     *------------------------------------------------------------*;
+
+131125     %em_delMacro;
+
+131127     %let _HPDMGRIDHOST=;
+131128     %let _HPDMGRIDINSTALLLOC=;
+131129     %let _HPDMGRIDDATASERVER=;
+131130     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* MdlImp8 : End Update 
+* datetime : 02JUN2018:15:13:07 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* MdlImp7 : Beginning Update 
+* datetime : 02JUN2018:15:13:08 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+131472     data EM_TARGETDECINFO;
+131473     length TARGET $32 DECDATA DECMETA $43;
+131474     TARGET="DepVar";
+131475     DECDATA="EMWS1.Reg4_DepVar_DD";
+131476     DECMETA="EMWS1.Reg4_DepVar_DM";
+131477     output;
+131478     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+131479     %let emexceptionString =;
+131480     %let EMEXCEPTIONSTRING=;
+131481     *------------------------------------------------------------*;
+131482     * UPDATE: MdlImp7;
+131483     *------------------------------------------------------------*;
+131484     %let EM_ACTION = UPDATE;
+131485     %let syscc = 0;
+131486     %macro main;
+131487     
+131488        %if %upcase(&EM_ACTION) = CREATE %then %do;
+131489     
+131490            filename temp catalog 'sashelp.emmodl.modelimport_create.source';
+131491            %include temp;
+131492            filename temp;
+131493            %create;
+131494        %end;
+131495        %else
+131496        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+131497     
+131498            filename temp catalog 'sashelp.emmodl.modelimport_train.source';
+131499            %include temp;
+131500            filename temp;
+131501            %train;
+131502        %end;
+131503        %else
+131504        %if %upcase(&EM_ACTION) = SCORE %then %do;
+131505     
+131506            filename temp catalog 'sashelp.emmodl.modelimport_score.source';
+131507            %include temp;
+131508            filename temp;
+131509            %score;
+131510        %end;
+131511        %else
+131512        %if %upcase(&EM_ACTION) = OPENMAPPINGTABLE %then %do;
+131513     
+131514            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+131515            %include temp;
+131516            filename temp;
+131517            %openMappingTable;
+131518        %end;
+131519        %else
+131520        %if %upcase(&EM_ACTION) = CLOSEMAPPINGTABLE %then %do;
+131521     
+131522            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+131523            %include temp;
+131524            filename temp;
+131525            %closeMappingTable;
+131526        %end;
+131527     %mend main;
+131528     
+131529     %main;
+131530     
+131531     *------------------------------------------------------------*;
+131532     * End UPDATE: MdlImp7;
+131533     *------------------------------------------------------------*;
+
+131534     %em_delMacro;
+
+131536     %let _HPDMGRIDHOST=;
+131537     %let _HPDMGRIDINSTALLLOC=;
+131538     %let _HPDMGRIDDATASERVER=;
+131539     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* MdlImp7 : End Update 
+* datetime : 02JUN2018:15:13:08 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* MdlImp6 : Beginning Update 
+* datetime : 02JUN2018:15:13:09 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+131881     data EM_TARGETDECINFO;
+131882     length TARGET $32 DECDATA DECMETA $43;
+131883     TARGET="DepVar";
+131884     DECDATA="EMWS1.Reg2_DepVar_DD";
+131885     DECMETA="EMWS1.Reg2_DepVar_DM";
+131886     output;
+131887     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+131888     %let emexceptionString =;
+131889     %let EMEXCEPTIONSTRING=;
+131890     *------------------------------------------------------------*;
+131891     * UPDATE: MdlImp6;
+131892     *------------------------------------------------------------*;
+131893     %let EM_ACTION = UPDATE;
+131894     %let syscc = 0;
+131895     %macro main;
+131896     
+131897        %if %upcase(&EM_ACTION) = CREATE %then %do;
+131898     
+131899            filename temp catalog 'sashelp.emmodl.modelimport_create.source';
+131900            %include temp;
+131901            filename temp;
+131902            %create;
+131903        %end;
+131904        %else
+131905        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+131906     
+131907            filename temp catalog 'sashelp.emmodl.modelimport_train.source';
+131908            %include temp;
+131909            filename temp;
+131910            %train;
+131911        %end;
+131912        %else
+131913        %if %upcase(&EM_ACTION) = SCORE %then %do;
+131914     
+131915            filename temp catalog 'sashelp.emmodl.modelimport_score.source';
+131916            %include temp;
+131917            filename temp;
+131918            %score;
+131919        %end;
+131920        %else
+131921        %if %upcase(&EM_ACTION) = OPENMAPPINGTABLE %then %do;
+131922     
+131923            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+131924            %include temp;
+131925            filename temp;
+131926            %openMappingTable;
+131927        %end;
+131928        %else
+131929        %if %upcase(&EM_ACTION) = CLOSEMAPPINGTABLE %then %do;
+131930     
+131931            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+131932            %include temp;
+131933            filename temp;
+131934            %closeMappingTable;
+131935        %end;
+131936     %mend main;
+131937     
+131938     %main;
+131939     
+131940     *------------------------------------------------------------*;
+131941     * End UPDATE: MdlImp6;
+131942     *------------------------------------------------------------*;
+
+131943     %em_delMacro;
+
+131945     %let _HPDMGRIDHOST=;
+131946     %let _HPDMGRIDINSTALLLOC=;
+131947     %let _HPDMGRIDDATASERVER=;
+131948     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* MdlImp6 : End Update 
+* datetime : 02JUN2018:15:13:09 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* MdlImp3 : Beginning Update 
+* datetime : 02JUN2018:15:13:10 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+132290     data EM_TARGETDECINFO;
+132291     length TARGET $32 DECDATA DECMETA $43;
+132292     TARGET="DepVar";
+132293     DECDATA="EMWS1.Tree3_DepVar_DD";
+132294     DECMETA="EMWS1.Tree3_DepVar_DM";
+132295     output;
+132296     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+132297     %let emexceptionString =;
+132298     %let EMEXCEPTIONSTRING=;
+132299     *------------------------------------------------------------*;
+132300     * UPDATE: MdlImp3;
+132301     *------------------------------------------------------------*;
+132302     %let EM_ACTION = UPDATE;
+132303     %let syscc = 0;
+132304     %macro main;
+132305     
+132306        %if %upcase(&EM_ACTION) = CREATE %then %do;
+132307     
+132308            filename temp catalog 'sashelp.emmodl.modelimport_create.source';
+132309            %include temp;
+132310            filename temp;
+132311            %create;
+132312        %end;
+132313        %else
+132314        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+132315     
+132316            filename temp catalog 'sashelp.emmodl.modelimport_train.source';
+132317            %include temp;
+132318            filename temp;
+132319            %train;
+132320        %end;
+132321        %else
+132322        %if %upcase(&EM_ACTION) = SCORE %then %do;
+132323     
+132324            filename temp catalog 'sashelp.emmodl.modelimport_score.source';
+132325            %include temp;
+132326            filename temp;
+132327            %score;
+132328        %end;
+132329        %else
+132330        %if %upcase(&EM_ACTION) = OPENMAPPINGTABLE %then %do;
+132331     
+132332            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+132333            %include temp;
+132334            filename temp;
+132335            %openMappingTable;
+132336        %end;
+132337        %else
+132338        %if %upcase(&EM_ACTION) = CLOSEMAPPINGTABLE %then %do;
+132339     
+132340            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+132341            %include temp;
+132342            filename temp;
+132343            %closeMappingTable;
+132344        %end;
+132345     %mend main;
+132346     
+132347     %main;
+132348     
+132349     *------------------------------------------------------------*;
+132350     * End UPDATE: MdlImp3;
+132351     *------------------------------------------------------------*;
+
+132352     %em_delMacro;
+
+132354     %let _HPDMGRIDHOST=;
+132355     %let _HPDMGRIDINSTALLLOC=;
+132356     %let _HPDMGRIDDATASERVER=;
+132357     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* MdlImp3 : End Update 
+* datetime : 02JUN2018:15:13:10 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* MdlImp2 : Beginning Update 
+* datetime : 02JUN2018:15:13:11 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+132699     data EM_TARGETDECINFO;
+132700     length TARGET $32 DECDATA DECMETA $43;
+132701     TARGET="DepVar";
+132702     DECDATA="EMWS1.Tree2_DepVar_DD";
+132703     DECMETA="EMWS1.Tree2_DepVar_DM";
+132704     output;
+132705     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+132706     %let emexceptionString =;
+132707     %let EMEXCEPTIONSTRING=;
+132708     *------------------------------------------------------------*;
+132709     * UPDATE: MdlImp2;
+132710     *------------------------------------------------------------*;
+132711     %let EM_ACTION = UPDATE;
+132712     %let syscc = 0;
+132713     %macro main;
+132714     
+132715        %if %upcase(&EM_ACTION) = CREATE %then %do;
+132716     
+132717            filename temp catalog 'sashelp.emmodl.modelimport_create.source';
+132718            %include temp;
+132719            filename temp;
+132720            %create;
+132721        %end;
+132722        %else
+132723        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+132724     
+132725            filename temp catalog 'sashelp.emmodl.modelimport_train.source';
+132726            %include temp;
+132727            filename temp;
+132728            %train;
+132729        %end;
+132730        %else
+132731        %if %upcase(&EM_ACTION) = SCORE %then %do;
+132732     
+132733            filename temp catalog 'sashelp.emmodl.modelimport_score.source';
+132734            %include temp;
+132735            filename temp;
+132736            %score;
+132737        %end;
+132738        %else
+132739        %if %upcase(&EM_ACTION) = OPENMAPPINGTABLE %then %do;
+132740     
+132741            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+132742            %include temp;
+132743            filename temp;
+132744            %openMappingTable;
+132745        %end;
+132746        %else
+132747        %if %upcase(&EM_ACTION) = CLOSEMAPPINGTABLE %then %do;
+132748     
+132749            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+132750            %include temp;
+132751            filename temp;
+132752            %closeMappingTable;
+132753        %end;
+132754     %mend main;
+132755     
+132756     %main;
+132757     
+132758     *------------------------------------------------------------*;
+132759     * End UPDATE: MdlImp2;
+132760     *------------------------------------------------------------*;
+
+132761     %em_delMacro;
+
+132763     %let _HPDMGRIDHOST=;
+132764     %let _HPDMGRIDINSTALLLOC=;
+132765     %let _HPDMGRIDDATASERVER=;
+132766     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* MdlImp2 : End Update 
+* datetime : 02JUN2018:15:13:11 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* MdlImp : Beginning Update 
+* datetime : 02JUN2018:15:13:12 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+133108     data EM_TARGETDECINFO;
+133109     length TARGET $32 DECDATA DECMETA $43;
+133110     TARGET="DepVar";
+133111     DECDATA="EMWS1.Tree_DepVar_DD";
+133112     DECMETA="EMWS1.Tree_DepVar_DM";
+133113     output;
+133114     run;
+
+NOTE: The data set WORK.EM_TARGETDECINFO has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+133115     %let emexceptionString =;
+133116     %let EMEXCEPTIONSTRING=;
+133117     *------------------------------------------------------------*;
+133118     * UPDATE: MdlImp;
+133119     *------------------------------------------------------------*;
+133120     %let EM_ACTION = UPDATE;
+133121     %let syscc = 0;
+133122     %macro main;
+133123     
+133124        %if %upcase(&EM_ACTION) = CREATE %then %do;
+133125     
+133126            filename temp catalog 'sashelp.emmodl.modelimport_create.source';
+133127            %include temp;
+133128            filename temp;
+133129            %create;
+133130        %end;
+133131        %else
+133132        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+133133     
+133134            filename temp catalog 'sashelp.emmodl.modelimport_train.source';
+133135            %include temp;
+133136            filename temp;
+133137            %train;
+133138        %end;
+133139        %else
+133140        %if %upcase(&EM_ACTION) = SCORE %then %do;
+133141     
+133142            filename temp catalog 'sashelp.emmodl.modelimport_score.source';
+133143            %include temp;
+133144            filename temp;
+133145            %score;
+133146        %end;
+133147        %else
+133148        %if %upcase(&EM_ACTION) = OPENMAPPINGTABLE %then %do;
+133149     
+133150            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+133151            %include temp;
+133152            filename temp;
+133153            %openMappingTable;
+133154        %end;
+133155        %else
+133156        %if %upcase(&EM_ACTION) = CLOSEMAPPINGTABLE %then %do;
+133157     
+133158            filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+133159            %include temp;
+133160            filename temp;
+133161            %closeMappingTable;
+133162        %end;
+133163     %mend main;
+133164     
+133165     %main;
+133166     
+133167     *------------------------------------------------------------*;
+133168     * End UPDATE: MdlImp;
+133169     *------------------------------------------------------------*;
+
+133170     %em_delMacro;
+
+133172     %let _HPDMGRIDHOST=;
+133173     %let _HPDMGRIDINSTALLLOC=;
+133174     %let _HPDMGRIDDATASERVER=;
+133175     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* MdlImp : End Update 
+* datetime : 02JUN2018:15:13:12 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "EMCODE6" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* MdlComp : Beginning Update 
+* datetime : 02JUN2018:15:13:13 
+* 
+*------------------------------------------------------------* 
+133295     %let _HPDMGRIDHOST=;
+133296     %let _HPDMGRIDINSTALLLOC=;
+133297     %let _HPDMGRIDDATASERVER=;
+133298     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* MdlComp : End Update 
+* datetime : 02JUN2018:15:13:13 
+* 
+*------------------------------------------------------------* 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EMCODE6 : Beginning Update 
+* datetime : 02JUN2018:15:13:14 
+* 
+*------------------------------------------------------------* 
+133330     %let _HPDMGRIDHOST=;
+133331     %let _HPDMGRIDINSTALLLOC=;
+133332     %let _HPDMGRIDDATASERVER=;
+133333     %hpdm_gridSetOPtions;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+*------------------------------------------------------------* 
+* 
+* EMCODE6 : End Update 
+* datetime : 02JUN2018:15:13:14 
+* 
+*------------------------------------------------------------* 
+Traverser: Run Completed 
+133334     proc printto;
+133335     run;
+

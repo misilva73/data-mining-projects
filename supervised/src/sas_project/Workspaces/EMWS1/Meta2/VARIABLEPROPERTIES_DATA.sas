@@ -1,0 +1,13 @@
+*------------------------------------------------------------*;
+* Variable Attributes for DATA;
+*------------------------------------------------------------*;
+if upcase(NAME) = "ACCEPTEDCMP1" then NEWROLE="REJECTED";
+if upcase(NAME) = "ACCEPTEDCMP2" then NEWROLE="REJECTED";
+if upcase(NAME) = "ACCEPTEDCMP3" then NEWROLE="REJECTED";
+if upcase(NAME) = "ACCEPTEDCMP4" then NEWROLE="REJECTED";
+if upcase(NAME) = "ACCEPTEDCMP5" then NEWROLE="REJECTED";
+if upcase(NAME) = "CHILDHOME" then NEWLEVEL="BINARY";
+if upcase(NAME) = "DT_CUSTOMER" then NEWROLE="REJECTED";
+if upcase(NAME) = "KIDHOME" then NEWROLE="REJECTED";
+if upcase(NAME) = "TEENHOME" then NEWROLE="REJECTED";
+if upcase(NAME) = "YEAR_BIRTH" then NEWROLE="REJECTED";

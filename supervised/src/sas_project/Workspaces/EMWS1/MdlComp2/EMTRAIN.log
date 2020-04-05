@@ -1,0 +1,2780 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "17:17:22 o'clock" 
+);
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Training Log
+Date:                02 June 2018
+Time:                17:17:22 o'clock
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O1VQSWGV "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlComp2\EMTRAIN.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O1VQSWGV new;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOG "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlComp2\EMLOG.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "17:17:22 o'clock" 
+);
+MPRINT(EM_DIAGRAM):   file _LOG;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                misil";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "Site:                70107571";
+MPRINT(EM_DIAGRAM):   put "Platform:            X64_10PRO";
+MPRINT(EM_DIAGRAM):   put "Maintenance Release: 9.04.01M4P110916";
+MPRINT(EM_DIAGRAM):   put "EM Version:          14.2";
+MPRINT(EM_DIAGRAM):   put "* ";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlComp2\EMTRAIN.log" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _LOG MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_LOGIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _LOGIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlComp2\EMSCORE.log" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlComp2\EMREPORT.log" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    filename _LOG;
+MPRINT(EM_DIAGRAM):    filename _OUT "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlComp2\EMOUTPUT.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "17:17:22 o'clock" 
+);
+MPRINT(EM_DIAGRAM):   file _OUT;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                misil";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlComp2\EMTRAIN.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _OUT MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_OUTIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlComp2\EMSCORE.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Report Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlComp2\EMREPORT.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    filename _OUT;
+75656      data work.MdlComp2;
+MPRINT(EM_DIAGRAM):    data work.MdlComp2;
+75657      set EMWS1.em_nodeid;
+MPRINT(EM_DIAGRAM):   set EMWS1.em_nodeid;
+75658      where
+75659      (NODEID="Neural6" and LABEL ne 'Final - ANN 6HU')
+75660      ;
+MPRINT(EM_DIAGRAM):   where (NODEID="Neural6" and LABEL ne 'Final - ANN 6HU') ;
+75661      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.EM_NODEID.
+      WHERE (NODEID='Neural6') and (LABEL not = 'Final - ANN 6HU');
+NOTE: The data set WORK.MDLCOMP2 has 1 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+75662      data EMWS1.MdlComp2_EMOUTFIT;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMOUTFIT;
+75663      set EMWS1.MdlComp2_EMOUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS1.MdlComp2_EMOUTFIT;
+75664      if MODEL = "Neural6" then MODELDESCRIPTION= 'Final - ANN 8HU';
+MPRINT(EM_DIAGRAM):   if MODEL = "Neural6" then MODELDESCRIPTION= 'Final - ANN 8HU';
+75665      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMOUTFIT.
+NOTE: The data set EMWS1.MDLCOMP2_EMOUTFIT has 1 observations and 67 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+75666      data EMWS1.MdlComp2_EMEVENTREPORT;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMEVENTREPORT;
+75667      set EMWS1.MdlComp2_EMEVENTREPORT;
+MPRINT(EM_DIAGRAM):   set EMWS1.MdlComp2_EMEVENTREPORT;
+75668      if MODEL = "Neural6" then MODELDESCRIPTION= 'Final - ANN 8HU';
+MPRINT(EM_DIAGRAM):   if MODEL = "Neural6" then MODELDESCRIPTION= 'Final - ANN 8HU';
+75669      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 2 observations read from the data set EMWS1.MDLCOMP2_EMEVENTREPORT.
+NOTE: The data set EMWS1.MDLCOMP2_EMEVENTREPORT has 2 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+75670      data EMWS1.MdlComp2_EMCLASSIFICATION;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMCLASSIFICATION;
+75671      set EMWS1.MdlComp2_EMCLASSIFICATION;
+MPRINT(EM_DIAGRAM):   set EMWS1.MdlComp2_EMCLASSIFICATION;
+75672      if MODEL = "Neural6" then MODELDESCRIPTION= 'Final - ANN 8HU';
+MPRINT(EM_DIAGRAM):   if MODEL = "Neural6" then MODELDESCRIPTION= 'Final - ANN 8HU';
+75673      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 8 observations read from the data set EMWS1.MDLCOMP2_EMCLASSIFICATION.
+NOTE: The data set EMWS1.MDLCOMP2_EMCLASSIFICATION has 8 observations and 15 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+75674      data EMWS1.MdlComp2_EMROC;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMROC;
+75675      set EMWS1.MdlComp2_EMROC;
+MPRINT(EM_DIAGRAM):   set EMWS1.MdlComp2_EMROC;
+75676      if MODEL = "Neural6" then MODELDESCRIPTION= 'Final - ANN 8HU';
+MPRINT(EM_DIAGRAM):   if MODEL = "Neural6" then MODELDESCRIPTION= 'Final - ANN 8HU';
+75677      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 206 observations read from the data set EMWS1.MDLCOMP2_EMROC.
+NOTE: The data set EMWS1.MDLCOMP2_EMROC has 206 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_DIAGRAM):    filename _emtool_ 'C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlComp2\EMRUNSTATUS.xml' encoding="UTF-8" 
+NOBOM;
+75679      proc freq data=EMWS1.MdlComp2_VariableSet noprint;
+MPRINT(EM_DIAGRAM):    proc freq data=EMWS1.MdlComp2_VariableSet noprint;
+75680      table ROLE*LEVEL/out=WORK.MdlComp2META;
+MPRINT(EM_DIAGRAM):   table ROLE*LEVEL/out=WORK.MdlComp2META;
+75681      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_VARIABLESET.
+NOTE: The data set WORK.MDLCOMP2META has 1 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.01 seconds
+      
+
+75682      proc print data=WORK.MdlComp2META label noobs;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.MdlComp2META label noobs;
+75683      var ROLE LEVEL COUNT;
+MPRINT(EM_DIAGRAM):   var ROLE LEVEL COUNT;
+75684      label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL =
+75684    ! "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT =
+75684    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label ROLE = "Role" LEVEL = "Measurement Level" COUNT = "Frequency 
+Count";
+75685      title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+75686      title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Variable Summary";
+MPRINT(EM_DIAGRAM):   run;
+75687      run;
+
+NOTE: There were 1 observations read from the data set WORK.MDLCOMP2META.
+NOTE: The PROCEDURE PRINT printed page 27.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+75688      title10;
+MPRINT(EM_DIAGRAM):   title10;
+75689      %let _hpflow = 0;
+75690      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+75691      set EMWS1.Neural6_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS1.Neural6_EMINFO;
+75692      where key="HPDMSAMPLE";
+MPRINT(EM_DIAGRAM):   where key="HPDMSAMPLE";
+75693      call symput('_hpflow', '1');
+MPRINT(EM_DIAGRAM):   call symput('_hpflow', '1');
+75694      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 0 observations read from the data set EMWS1.NEURAL6_EMINFO.
+      WHERE key='HPDMSAMPLE';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+75695      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+75696      set EMWS1.em_nodeid;
+MPRINT(EM_DIAGRAM):   set EMWS1.em_nodeid;
+75697      where upcase(NODEID) = upcase("Neural6");
+MPRINT(EM_DIAGRAM):   where upcase(NODEID) = upcase("Neural6");
+75698      call symput('_MODELDESC', strip(tranwrd(LABEL, '"', '""')));
+MPRINT(EM_DIAGRAM):   call symput('_MODELDESC', strip(tranwrd(LABEL, '"', '""')));
+75699      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.EM_NODEID.
+      WHERE UPCASE(NODEID)='NEURAL6';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+75700      data EMWS1.MdlComp2_EMRANK;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMRANK;
+75701      length PARENT $16 MODEL $16 MODELDESCRIPTION $81 DATAROLE $20 TARGET $32 TARGETLABEL
+75701    !  $200;
+MPRINT(EM_DIAGRAM):   length PARENT $16 MODEL $16 MODELDESCRIPTION $81 DATAROLE $20 TARGET $32 
+TARGETLABEL $200;
+75702      label PARENT = "%sysfunc(sasmsg(sashelp.dmine, rpt_parent_vlabel  ,  NOQUOTE))"
+75702    ! MODEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_modelnode_vlabel, NOQUOTE))"
+75702    ! MODELDESCRIPTION = "%sysfunc(sasmsg(sashelp.dmine, rpt_modeldesc_vlabel, NOQUOTE))"
+75702    ! TARGETLABEL =
+75703         "%sysfunc(sasmsg(sashelp.dmine, meta_targetlabel_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label PARENT = "Predecessor Node" MODEL = "Model Node" MODELDESCRIPTION 
+= "Model Description" TARGETLABEL = "Target Label";
+75704      retain parent "Neural6" MODEL "Neural6" MODELDESCRIPTION "Final - ANN 8HU"
+75704    ! TARGETLABEL "DepVar";
+MPRINT(EM_DIAGRAM):   retain parent "Neural6" MODEL "Neural6" MODELDESCRIPTION "Final - ANN 
+8HU" TARGETLABEL "DepVar";
+75705      set EMWS1.Neural6_EMRANK;
+MPRINT(EM_DIAGRAM):   set EMWS1.Neural6_EMRANK;
+75706      where upcase(TARGET) = upcase("DepVar");
+MPRINT(EM_DIAGRAM):   where upcase(TARGET) = upcase("DepVar");
+75707      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 40 observations read from the data set EMWS1.NEURAL6_EMRANK.
+      WHERE UPCASE(TARGET)='DEPVAR';
+NOTE: The data set EMWS1.MDLCOMP2_EMRANK has 40 observations and 38 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+75708      data EMWS1.MdlComp2_EMSCOREDIST;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMSCOREDIST;
+75709      length PARENT $16 MODEL $16 MODELDESCRIPTION $81 DATAROLE $20 TARGET $32 TARGETLABEL
+75709    !  $200;
+MPRINT(EM_DIAGRAM):   length PARENT $16 MODEL $16 MODELDESCRIPTION $81 DATAROLE $20 TARGET $32 
+TARGETLABEL $200;
+75710      label PARENT = "%sysfunc(sasmsg(sashelp.dmine, rpt_parent_vlabel  ,  NOQUOTE))"
+75710    ! MODEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_modelnode_vlabel, NOQUOTE))"
+75710    ! MODELDESCRIPTION = "%sysfunc(sasmsg(sashelp.dmine, rpt_modeldesc_vlabel, NOQUOTE))"
+75710    ! TARGETLABEL =
+75711         "%sysfunc(sasmsg(sashelp.dmine, meta_targetlabel_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label PARENT = "Predecessor Node" MODEL = "Model Node" MODELDESCRIPTION 
+= "Model Description" TARGETLABEL = "Target Label";
+75712      retain parent "Neural6" MODEL "Neural6" MODELDESCRIPTION "Final - ANN 8HU"
+75712    ! TARGETLABEL "DepVar";
+MPRINT(EM_DIAGRAM):   retain parent "Neural6" MODEL "Neural6" MODELDESCRIPTION "Final - ANN 
+8HU" TARGETLABEL "DepVar";
+75713      set EMWS1.Neural6_EMSCOREDIST;
+MPRINT(EM_DIAGRAM):   set EMWS1.Neural6_EMSCOREDIST;
+75714      where upcase(TARGET) = upcase("DepVar");
+MPRINT(EM_DIAGRAM):   where upcase(TARGET) = upcase("DepVar");
+75715      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 40 observations read from the data set EMWS1.NEURAL6_EMSCOREDIST.
+      WHERE UPCASE(TARGET)='DEPVAR';
+NOTE: The data set EMWS1.MDLCOMP2_EMSCOREDIST has 40 observations and 24 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.NEURAL6_EMINFO.
+      WHERE (TARGET='DepVar') and (KEY='DECMETA');
+NOTE: The data set WORK.EMINFO41QJ22S4 has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+NOTE: There were 1 observations read from the data set EMWS1.NEURAL6_EMINFO.
+      WHERE (TARGET='DepVar') and (KEY='DECDATA');
+NOTE: The data set WORK.EMINFO41QJ22S4 has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+75716      data WORK.Neural6_OUTFIT;
+MPRINT(EM_DIAGRAM):    data WORK.Neural6_OUTFIT;
+75717      set EMWS1.Neural6_EMOUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS1.Neural6_EMOUTFIT;
+75718      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.NEURAL6_EMOUTFIT.
+NOTE: The data set WORK.NEURAL6_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+75719      data EMWS1.MdlComp2_EMOUTFIT;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMOUTFIT;
+75720      length PARENT $16 MODEL $16 MODELDESCRIPTION $81 TARGET $32 TARGETLABEL $200;
+MPRINT(EM_DIAGRAM):   length PARENT $16 MODEL $16 MODELDESCRIPTION $81 TARGET $32 TARGETLABEL 
+$200;
+75721      label PARENT = "%sysfunc(sasmsg(sashelp.dmine, rpt_parent_vlabel  ,  NOQUOTE))"
+75721    ! MODEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_modelnode_vlabel, NOQUOTE))"
+75721    ! MODELDESCRIPTION = "%sysfunc(sasmsg(sashelp.dmine, rpt_modeldesc_vlabel, NOQUOTE))"
+75721    ! TARGETLABEL =
+75722         "%sysfunc(sasmsg(sashelp.dmine, meta_targetlabel_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label PARENT = "Predecessor Node" MODEL = "Model Node" MODELDESCRIPTION 
+= "Model Description" TARGETLABEL = "Target Label";
+75723      retain parent "Neural6" MODEL "Neural6" MODELDESCRIPTION "Final - ANN 8HU"
+75723    ! TARGETLABEL "DepVar";
+MPRINT(EM_DIAGRAM):   retain parent "Neural6" MODEL "Neural6" MODELDESCRIPTION "Final - ANN 
+8HU" TARGETLABEL "DepVar";
+75724      set WORK.Neural6_OUTFIT;
+MPRINT(EM_DIAGRAM):   set WORK.Neural6_OUTFIT;
+75725      where upcase(TARGET) = upcase("DepVar");
+MPRINT(EM_DIAGRAM):   where upcase(TARGET) = upcase("DepVar");
+75726      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set WORK.NEURAL6_OUTFIT.
+      WHERE UPCASE(TARGET)='DEPVAR';
+NOTE: The data set EMWS1.MDLCOMP2_EMOUTFIT has 1 observations and 39 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+75727      data EMWS1.MdlComp2_EMCLASSIFICATION;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMCLASSIFICATION;
+75728      length PARENT $16 MODEL $16 MODELDESCRIPTION $81 DATAROLE $20 TARGET $32 TARGETLABEL
+75728    !  $200;
+MPRINT(EM_DIAGRAM):   length PARENT $16 MODEL $16 MODELDESCRIPTION $81 DATAROLE $20 TARGET $32 
+TARGETLABEL $200;
+75729      label PARENT = "%sysfunc(sasmsg(sashelp.dmine, rpt_parent_vlabel  ,  NOQUOTE))"
+75729    ! MODEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_modelnode_vlabel, NOQUOTE))"
+75729    ! MODELDESCRIPTION = "%sysfunc(sasmsg(sashelp.dmine, rpt_modeldesc_vlabel, NOQUOTE))"
+75729    ! TARGETLABEL =
+75730         "%sysfunc(sasmsg(sashelp.dmine, meta_targetlabel_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label PARENT = "Predecessor Node" MODEL = "Model Node" MODELDESCRIPTION 
+= "Model Description" TARGETLABEL = "Target Label";
+75731      retain parent "Neural6" MODEL "Neural6" MODELDESCRIPTION "Final - ANN 8HU"
+75731    ! TARGETLABEL "DepVar";
+MPRINT(EM_DIAGRAM):   retain parent "Neural6" MODEL "Neural6" MODELDESCRIPTION "Final - ANN 
+8HU" TARGETLABEL "DepVar";
+75732      set EMWS1.Neural6_EMCLASSIFICATION;
+MPRINT(EM_DIAGRAM):   set EMWS1.Neural6_EMCLASSIFICATION;
+75733      where upcase(TARGET) = upcase("DepVar");
+MPRINT(EM_DIAGRAM):   where upcase(TARGET) = upcase("DepVar");
+75734      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 8 observations read from the data set EMWS1.NEURAL6_EMCLASSIFICATION.
+      WHERE UPCASE(TARGET)='DEPVAR';
+NOTE: The data set EMWS1.MDLCOMP2_EMCLASSIFICATION has 8 observations and 15 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+75735      data EMWS1.MdlComp2_EMEVENTREPORT;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMEVENTREPORT;
+75736      length PARENT $16 MODEL $16 MODELDESCRIPTION $81 DATAROLE $20 TARGET $32 TARGETLABEL
+75736    !  $200;
+MPRINT(EM_DIAGRAM):   length PARENT $16 MODEL $16 MODELDESCRIPTION $81 DATAROLE $20 TARGET $32 
+TARGETLABEL $200;
+75737      label PARENT = "%sysfunc(sasmsg(sashelp.dmine, rpt_parent_vlabel  ,  NOQUOTE))"
+75737    ! MODEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_modelnode_vlabel, NOQUOTE))"
+75737    ! MODELDESCRIPTION = "%sysfunc(sasmsg(sashelp.dmine, rpt_modeldesc_vlabel, NOQUOTE))"
+75737    ! TARGETLABEL =
+75738         "%sysfunc(sasmsg(sashelp.dmine, meta_targetlabel_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label PARENT = "Predecessor Node" MODEL = "Model Node" MODELDESCRIPTION 
+= "Model Description" TARGETLABEL = "Target Label";
+75739      retain parent "Neural6" MODEL "Neural6" MODELDESCRIPTION "Final - ANN 8HU"
+75739    ! TARGETLABEL "DepVar";
+MPRINT(EM_DIAGRAM):   retain parent "Neural6" MODEL "Neural6" MODELDESCRIPTION "Final - ANN 
+8HU" TARGETLABEL "DepVar";
+75740      set EMWS1.Neural6_EMEVENTREPORT;
+MPRINT(EM_DIAGRAM):   set EMWS1.Neural6_EMEVENTREPORT;
+75741      where upcase(TARGET) = upcase("DepVar");
+MPRINT(EM_DIAGRAM):   where upcase(TARGET) = upcase("DepVar");
+75742      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 2 observations read from the data set EMWS1.NEURAL6_EMEVENTREPORT.
+      WHERE UPCASE(TARGET)='DEPVAR';
+NOTE: The data set EMWS1.MDLCOMP2_EMEVENTREPORT has 2 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+*------------------------------------------------------------* 
+* "Compute assessment statistics" 
+*------------------------------------------------------------* 
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   set EMWS1.em_nodeid;
+MPRINT(EM_DIAGRAM):   where upcase(NODEID) = upcase("Neural6");
+MPRINT(EM_DIAGRAM):   call symput('_MODELDESC', strip(tranwrd(LABEL, '"', '""')));
+MPRINT(EM_DIAGRAM):   run;
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL SETMETADATA >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+MPRINT(EM_DIAGRAM):    data ASSESS_REPORTMETA;
+MPRINT(EM_DIAGRAM):   set EMWS1.Neural6_CMeta_TRAIN;
+MPRINT(EM_DIAGRAM):   where REPORT='Y';
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   set EMWS1.MdlComp2_EMRANK end=eof;
+MPRINT(EM_DIAGRAM):   where MODEL="Neural6" and DATAROLE="TRAIN";
+MPRINT(EM_DIAGRAM):   if eof then call symput('ASSESSTRAIN', '0');
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   set EMWS1.Neural6_DepVar_DM;
+MPRINT(EM_DIAGRAM):   where _TYPE_="TARGET";
+MPRINT(EM_DIAGRAM):   call symput('ASSMT_EVENT', event);
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   
+MPRINT(EM_ASSESS):   data _ea_tmpdata;
+MPRINT(EM_ASSESS):   set EMWS1.Neural6_TRAIN;
+MPRINT(EM_ASSESS):   _tmpfreqvar_=1;
+MPRINT(EM_ASSESS):   run;
+MPRINT(EM_CHECKEMSETINIT):   DATA _NULL_;
+MPRINT(EM_CHECKEMSETINIT):   EM_SETINIT = 'N';
+MPRINT(EM_CHECKEMSETINIT):   IF SYSPROD('PRODNUM50') THEN EM_SETINIT = 'Y';
+MPRINT(EM_CHECKEMSETINIT):   ELSE IF SYSPROD('PRODNUM448') THEN EM_SETINIT = 'Y';
+MPRINT(EM_CHECKEMSETINIT):   ELSE IF SYSPROD('PRODNUM102') THEN EM_SETINIT = 'Y';
+MPRINT(EM_CHECKEMSETINIT):   ELSE IF SYSPROD('PRODNUM103') THEN EM_SETINIT = 'Y';
+MPRINT(EM_CHECKEMSETINIT):   CALL SYMPUT('EM_SETINIT', EM_SETINIT);
+MPRINT(EM_CHECKEMSETINIT):   RUN;
+MPRINT(EM_ASSESS):  ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ............ Reading in reporting data set;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   DATA _NULL_;
+MPRINT(EM_ASSESS):   SET ASSESS_REPORTMETA END = EOF;
+MPRINT(EM_ASSESS):   IF TYPE = "C" OR UPCASE (LEVEL) IN ("NOMINAL", "BINARY" , "ORDINAL") THEN 
+DO;
+MPRINT(EM_ASSESS):   IF UPCASE (NAME) NE UPCASE ("F_DepVar") THEN DO;
+MPRINT(EM_ASSESS):   NUMCTOREPORT + 1;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("REPORTC" || LEFT (PUT (NUMCTOREPORT, 5.)), NAME);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE CALL SYMPUTX ("RPRT_TRGT", "C");
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE IF TYPE = "N" THEN DO;
+MPRINT(EM_ASSESS):   IF UPCASE(NAME) NE UPCASE ("F_DepVar") THEN DO;
+MPRINT(EM_ASSESS):   NUMNTOREPORT + 1;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("REPORTN" || LEFT (PUT (NUMNTOREPORT, 5.)), NAME);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE CALL SYMPUTX ("RPRT_TRGT", "N");
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   IF EOF THEN DO;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NUMNTOREPORT", NUMNTOREPORT);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NUMCTOREPORT", NUMCTOREPORT);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NUMTOREPORT", SUM (NUMNTOREPORT, NUMCTOREPORT));
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   PROC DMDB DATA = _ea_tmpdata VAROUT = VAROUT DMDBCAT = _D CLASSOUT = 
+_ASSMT_CLASSOUT;
+MPRINT(EM_ASSESS):   CLASS F_DepVar ;
+
+MPRINT(EM_ASSESS):   VAR P_DepVar1 _tmpfreqvar_ ;
+MPRINT(EM_ASSESS):   FREQ _tmpfreqvar_;
+MPRINT(EM_ASSESS):   RUN ;
+MPRINT(EM_ASSESS):   QUIT;
+MPRINT(EM_ASSESS):   PROC SORT DATA = _ASSMT_CLASSOUT;
+MPRINT(EM_ASSESS):   BY NAME;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   DATA _auxeventname (keep = __event__) ;
+MPRINT(EM_ASSESS):   * ;
+MPRINT(EM_ASSESS):   * ...FLAG0_1 = ..... TARGET IS 0, 1 & EVENT = 1;
+
+MPRINT(EM_ASSESS):   ;
+MPRINT(EM_ASSESS):   length __event__ $ 32;
+MPRINT(EM_ASSESS):   RETAIN FLAG0_1 1 NUM1 . NUM0 . __event__ "_missing_" ;
+
+MPRINT(EM_ASSESS):   SET _ASSMT_CLASSOUT END = EOF;
+MPRINT(EM_ASSESS):   BY NAME;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ....... LEVEL = BINARY OR NOMINAL OR ORDINAL;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+
+MPRINT(EM_ASSESS):   IF UPCASE(NAME) = UPCASE ("F_DepVar") THEN DO;
+MPRINT(EM_ASSESS):   CUMFREQ + FREQUENCY;
+MPRINT(EM_ASSESS):   IF LEVEL NE "." THEN DO;
+MPRINT(EM_ASSESS):   N1 + 1;
+MPRINT(EM_ASSESS):   IF (NRAW NE 0 AND NRAW NE 1) OR TYPE NE "N" OR "" > " " THEN FLAG0_1 = 0;
+MPRINT(EM_ASSESS):   * ;
+MPRINT(EM_ASSESS):   * ......................... IF EVENT NE BLANK;
+MPRINT(EM_ASSESS):   * ....................LEVEL IS CHAR VAR ;
+MPRINT(EM_ASSESS):   * ;
+MPRINT(EM_ASSESS):   IF UPCASE("1                               ") = UPCASE(LEVEL) THEN DO;
+MPRINT(EM_ASSESS):   NUM1 = FREQUENCY;
+MPRINT(EM_ASSESS):   IF TYPE = "C" THEN do;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("EVENTVALUERAW", CRAW );
+MPRINT(EM_ASSESS):   __event__ = craw;
+MPRINT(EM_ASSESS):   end;
+MPRINT(EM_ASSESS):   ELSE do;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("EVENTVALUERAW", NRAW );
+MPRINT(EM_ASSESS):   __event__ = nraw;
+MPRINT(EM_ASSESS):   end;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   IF LAST.NAME THEN DO;
+
+MPRINT(EM_ASSESS):   * ;
+MPRINT(EM_ASSESS):   * .............. IN NOMINAL CASE, NEED TO GROUP ALL '0' ;
+MPRINT(EM_ASSESS):   *;
+
+MPRINT(EM_ASSESS):   NUM0 = SUM (CUMFREQ, - NUM1);
+MPRINT(EM_ASSESS):   IF NUM0 < 0 THEN NUM0 = 0;
+MPRINT(EM_ASSESS):   IF NUM1 = . THEN NUM1 = 0;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NUM0", NUM0 );
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NUM1", NUM1);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("PNUM1", NUM1 / CUMFREQ);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("PNUM0", (CUMFREQ - NUM1) / CUMFREQ);
+MPRINT(EM_ASSESS):   IF TYPE = "C" THEN DO;
+MPRINT(EM_ASSESS):   FLAG0_1 = 0;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("TARGETTYPE", "C" );
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE IF TYPE = "N" THEN DO;
+MPRINT(EM_ASSESS):   IF "" = " " THEN DO;
+MPRINT(EM_ASSESS):   IF "1                               " NE "1" THEN FLAG0_1 = 0;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("TARGETTYPE", "N" );
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   * ................... IF TYPE = N;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("FLAG0_1", FLAG0_1 );
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   * ..................IF LAST.NAME ;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   * ...............IF LEVEL NE '.' ;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   * .............. IF NAME = TARGET;
+MPRINT(EM_ASSESS):   ELSE IF "" > " " AND UPCASE(NAME) = UPCASE("") THEN DO;
+MPRINT(EM_ASSESS):   NUMDECISIONS + 1;
+MPRINT(EM_ASSESS):   LEVEL = TRANSLATE (LEVEL, "_", "'", "_", '"');
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("D_LABEL" || LEFT (PUT (NUMDECISIONS, 3.)), LEVEL );
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   * ..................... ELSE IF UPCASE;
+MPRINT(EM_ASSESS):   IF EOF THEN DO;
+MPRINT(EM_ASSESS):   output _auxeventname;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NUMOBS", CUMFREQ);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NUMDECISIONS", NUMDECISIONS);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   DATA _NULL_;
+MPRINT(EM_ASSESS):   SET VAROUT END = EOF;
+MPRINT(EM_ASSESS):   IF UPCASE (NAME) = UPCASE ("P_DepVar1") THEN DO;
+MPRINT(EM_ASSESS):   IF N = 0 THEN DO;
+MPRINT(EM_ASSESS):   PUT //// "          Warning: All posterior probabilities are missing 
+values ";
+MPRINT(EM_ASSESS):   PUT ///;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("ALLMISS", 1);
+MPRINT(EM_ASSESS):   STOP;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE CALL SYMPUTX ("ALLMISS", 0);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("MINPROB", MIN);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("MAXPROB", MAX);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("DIFF", MAX - MIN);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NMISSPROB", NMISS);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE IF UPCASE (NAME) = UPCASE ("_tmpfreqvar_") THEN DO;
+MPRINT(EM_ASSESS):   AUXMIN = MIN - INT (MIN);
+MPRINT(EM_ASSESS):   AUXMAX = MAX - INT (MAX);
+MPRINT(EM_ASSESS):   IF AUXMIN > 0 OR AUXMAX > 0 THEN CALL SYMPUTX ("USEWEIGHT", "Y");
+MPRINT(EM_ASSESS):   ELSE CALL SYMPUTX ("USEWEIGHT", "N");
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   DATA _ANY0;
+MPRINT(EM_ASSESS):   SET _ea_tmpdata (KEEP = F_DepVar P_DepVar1 _tmpfreqvar_ );
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ................... No Formats;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   IF LEFT ( F_DepVar ) = "1" THEN NTARGET = 1;
+MPRINT(EM_ASSESS):   ELSE NTARGET = 0;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * .............. Before proc summary of binary case;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   PROC SUMMARY DATA = _ANY0 (KEEP = P_DepVar1 NTARGET _tmpfreqvar_ WHERE = 
+(NTARGET > . )) NWAY MISSING;
+MPRINT(EM_ASSESS):   ;
+MPRINT(EM_ASSESS):   CLASS P_DepVar1 ;
+MPRINT(EM_ASSESS):   VAR NTARGET ;
+MPRINT(EM_ASSESS):   FREQ _tmpfreqvar_ ;
+MPRINT(EM_ASSESS):   OUTPUT OUT = ANYSUM (DROP = _TYPE_) MEAN = _MEANTARGET _MEANFREQVAR ;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   QUIT;
+MPRINT(EM_ASSESS):   ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * .................... Main Data Set Processing, Binary case;
+MPRINT(EM_ASSESS):   *;
+
+MPRINT(EM_ASSESS):   DATA WORK.MdlComp2_ROCTEMP (KEEP = SENSITIVITY SPECIFICITY EVENTVALUE 
+ONEMINUSSPECIFICITY _FALPOS_ _FALNEG_ _POS_ _NEG_ FIRSTINGROUP LASTINGROUP LOWPOSTERIOR 
+UPPOSTERIOR ) ;
+
+MPRINT(EM_ASSESS):   SET ANYSUM END = EOF;
+
+MPRINT(EM_ASSESS):   IF _N_ = 1 THEN SET _AUXEVENTNAME;
+
+MPRINT(EM_ASSESS):   RETAIN MINPROB1 - MINPROB20 1 MAXPROB1 - MAXPROB20 0 MNPROB1 - MNPROB20 0 
+NUMOBS1 - NUMOBS20 0 NUMRESP1 - NUMRESP20 0 TRUEPOS1 - TRUEPOS100 0 TRUENEG1 - TRUENEG100 0 
+FALSEPOS1 - FALSEPOS100 0 FALSENEG1 - FALSENEG100 0 EVENTS1 - EVENTS100 NONEVENTS1 - 
+NONEVENTS100 0 FIRSTIN1 - FIRSTIN100 . LASTIN1 - LASTIN100 . RESPRATE 0.1367370892 _NEVENTS 
+233 _NNONEVENTS 1471 TARGET "NTARGET" ;
+MPRINT(EM_ASSESS):   ARRAY MINPROBS (20) MINPROB1 - MINPROB20;
+MPRINT(EM_ASSESS):   ARRAY MAXPROBS (20) MAXPROB1 - MAXPROB20;
+MPRINT(EM_ASSESS):   ARRAY MNPROBS (20) MNPROB1 - MNPROB20;
+MPRINT(EM_ASSESS):   ARRAY NUMOBSS (20) NUMOBS1 - NUMOBS20;
+MPRINT(EM_ASSESS):   ARRAY NUMRESPS (20) NUMRESP1 - NUMRESP20;
+MPRINT(EM_ASSESS):   ARRAY TRUEPOSX (100) TRUEPOS1 - TRUEPOS100;
+MPRINT(EM_ASSESS):   ARRAY FALSEPOSX (100) FALSEPOS1 - FALSEPOS100;
+MPRINT(EM_ASSESS):   ARRAY FALSENEGX (100) FALSENEG1 - FALSENEG100;
+MPRINT(EM_ASSESS):   ARRAY TRUENEGX (100) TRUENEG1 - TRUENEG100;
+MPRINT(EM_ASSESS):   ARRAY _EVENTS (100) EVENTS1 - EVENTS100;
+MPRINT(EM_ASSESS):   ARRAY NONEVENTS (100) NONEVENTS1 - NONEVENTS100;
+MPRINT(EM_ASSESS):   ARRAY FIRSTIN (100) FIRSTIN1 - FIRSTIN100;
+MPRINT(EM_ASSESS):   ARRAY LASTIN (100) LASTIN1 - LASTIN100;
+MPRINT(EM_ASSESS):   IF _MEANTARGET = . THEN _MEANTARGET = RESPRATE;
+MPRINT(EM_ASSESS):   DROP N1 _K SUMWEIGHTS ;
+MPRINT(EM_ASSESS):   SUMWEIGHTS = 1;
+
+MPRINT(EM_ASSESS):   DO _K = 1 TO CEIL (_FREQ_);
+MPRINT(EM_ASSESS):   IF _K = CEIL (_FREQ_) THEN DO;
+MPRINT(EM_ASSESS):   IF _FREQ_ < CEIL (_FREQ_) THEN _WEIGHT = _FREQ_ - FLOOR (_FREQ_);
+MPRINT(EM_ASSESS):   ELSE _WEIGHT = 1;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE _WEIGHT = 1;
+MPRINT(EM_ASSESS):   N1 + _WEIGHT;
+MPRINT(EM_ASSESS):   NTARGET = _MEANTARGET ;
+MPRINT(EM_ASSESS):   DECILE = MIN (20, CEIL (N1 * 20 / 1704));
+MPRINT(EM_ASSESS):   MINPROBS ( DECILE) = MIN (MINPROBS ( DECILE), P_DepVar1 );
+MPRINT(EM_ASSESS):   MAXPROBS ( DECILE) = MAX (MAXPROBS ( DECILE), P_DepVar1 );
+MPRINT(EM_ASSESS):   MNPROBS ( DECILE) = SUM (MNPROBS ( DECILE), P_DepVar1 * _WEIGHT);
+MPRINT(EM_ASSESS):   NUMOBSS ( DECILE) = NUMOBSS ( DECILE) + _WEIGHT;
+MPRINT(EM_ASSESS):   NUMRESPS ( DECILE) = NUMRESPS ( DECILE) + _MEANTARGET * _WEIGHT;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ........ outside of do loop, Area for final ROC;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   RANKDELTA = (ROUND ( _FREQ_ ) + 1) / 2;
+MPRINT(EM_ASSESS):   RANK = UNTIEDRANK + RANKDELTA;
+MPRINT(EM_ASSESS):   DROP RANK ;
+MPRINT(EM_ASSESS):   SUMRANK1 + RANK * ROUND (_MEANTARGET * _FREQ_, .0000001);
+MPRINT(EM_ASSESS):   UNTIEDRANK + ROUND (_FREQ_, .00000001);
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ............ Area For ROC Curve;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   DO _K = 1 TO 100;
+MPRINT(EM_ASSESS):   IF P_DepVar1 * 100 >= _K THEN DO;
+MPRINT(EM_ASSESS):   TRUEPOSX ( _K ) + _FREQ_ * _MEANTARGET ;
+MPRINT(EM_ASSESS):   FALSEPOSX ( _K ) + _FREQ_ * (1 - _MEANTARGET) ;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   TRUENEGX ( _K ) + _FREQ_ * ( 1 - _MEANTARGET) ;
+MPRINT(EM_ASSESS):   FALSENEGX ( _K ) + _FREQ_ * _MEANTARGET ;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   SLOT = MIN (MAX (CEIL (P_DepVar1 * 100), 1), 100) ;
+MPRINT(EM_ASSESS):   DROP SLOT;
+MPRINT(EM_ASSESS):   FIRSTIN ( SLOT ) = MIN ( FIRSTIN ( SLOT ), P_DepVar1);
+MPRINT(EM_ASSESS):   LASTIN ( SLOT ) = MAX ( LASTIN ( SLOT ), P_DepVar1);
+MPRINT(EM_ASSESS):   _EVENTS ( SLOT) = _EVENTS ( SLOT) + _FREQ_ * _MEANTARGET;
+MPRINT(EM_ASSESS):   NONEVENTS ( SLOT) = NONEVENTS ( SLOT) + _FREQ_ * (1 - _MEANTARGET);
+MPRINT(EM_ASSESS):   IF EOF THEN DO;
+MPRINT(EM_ASSESS):   PUT //;
+MPRINT(EM_ASSESS):   DO K = 1 TO 20;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   LENGTH EVENTVALUE $ 32;
+MPRINT(EM_ASSESS):   RETAIN EVENTVALUE "1                               " ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ......... Start of EOF area of BINARY processing of main data set ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("SUMRANK1", SUMRANK1);
+MPRINT(EM_ASSESS):   LENGTH DATAROLE $ 10;
+MPRINT(EM_ASSESS):   RETAIN DATAROLE "TRAIN" ;
+MPRINT(EM_ASSESS):   RETAIN OVLMIN 4.362597E-6 OVLMAX 0.9999253003 ;
+MPRINT(EM_ASSESS):   DROP OVLMIN OVLMAX ;
+MPRINT(EM_ASSESS):   C_NUMOBS = 0;
+MPRINT(EM_ASSESS):   C_NUM_RESP = 0;
+MPRINT(EM_ASSESS):   C_NUM_NONRESP = 0;
+MPRINT(EM_ASSESS):   C_P_RESP = 0;
+MPRINT(EM_ASSESS):   P_CAPT_RESP = 0;
+MPRINT(EM_ASSESS):   C_P_CAPT_RESP = 0;
+MPRINT(EM_ASSESS):   PREVIOUSPROFIT = 0;
+MPRINT(EM_ASSESS):   MAXPROFIT = 0;
+MPRINT(EM_ASSESS):   _KS_BIN_ = 0;
+MPRINT(EM_ASSESS):   DROP _KS_BIN_;
+MPRINT(EM_ASSESS):   AVGNUMRESP = _NEVENTS / 20;
+MPRINT(EM_ASSESS):   BASERESP = 100 * RESPRATE;
+MPRINT(EM_ASSESS):   BASERESPC = BASERESP;
+MPRINT(EM_ASSESS):   BASECAP = 100 / 20;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ........................Start OF Gainschart = Outranks Area;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   _KS_BIN_PROB = 0;
+MPRINT(EM_ASSESS):   DO GROUP = 20 TO 1 BY -1;
+
+MPRINT(EM_ASSESS):   BASECAPC + BASECAP;
+MPRINT(EM_ASSESS):   PERCENTILE = GROUP * (100 / 20);
+MPRINT(EM_ASSESS):   MINPROB = MINPROBS ( GROUP);
+MPRINT(EM_ASSESS):   MAXPROB = MAXPROBS ( GROUP);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("MINPROB" || LEFT ( PUT (GROUP, 3.)), MINPROB);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("MAXPROB" || LEFT ( PUT (GROUP, 3.)), MAXPROB);
+MPRINT(EM_ASSESS):   NUMOBS = NUMOBSS ( GROUP);
+MPRINT(EM_ASSESS):   IF NUMOBS > 0 THEN MNPROB = MNPROBS ( GROUP) / NUMOBS;
+MPRINT(EM_ASSESS):   ELSE MNPROB = .;
+MPRINT(EM_ASSESS):   C_NUMOBS = SUM (NUMOBS, C_NUMOBS);
+MPRINT(EM_ASSESS):   NUMRESP = NUMRESPS ( GROUP);
+MPRINT(EM_ASSESS):   NUMNONRESP = NUMOBS - NUMRESP;
+MPRINT(EM_ASSESS):   C_AVGNUM_RESP + AVGNUMRESP;
+MPRINT(EM_ASSESS):   IF C_NUMOBS <= _NEVENTS THEN DO;
+MPRINT(EM_ASSESS):   BESTNUMEVENTS = NUMOBS;
+MPRINT(EM_ASSESS):   BESTCAPC = C_NUMOBS * 100 / _NEVENTS;
+MPRINT(EM_ASSESS):   BASEEVENTS = _NEVENTS / 20;
+MPRINT(EM_ASSESS):   BASENONEVENTS = 0;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   FLAG + 1;
+MPRINT(EM_ASSESS):   DROP FLAG;
+MPRINT(EM_ASSESS):   BESTNUMEVENTS = _NEVENTS - C_NUMOBS + NUMOBS;
+MPRINT(EM_ASSESS):   IF FLAG > 1 THEN BESTNUMEVENTS = 0;
+MPRINT(EM_ASSESS):   BESTCAPC = 100;
+MPRINT(EM_ASSESS):   IF C_NUMOBS - _NEVENTS <= NUMOBS THEN DO;
+MPRINT(EM_ASSESS):   BASEEVENTS = C_NUMOBS - _NEVENTS;
+MPRINT(EM_ASSESS):   BASENONEVENTS = NUMOBS - C_NUMOBS + _NEVENTS;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   BASEEVENTS = 0;
+MPRINT(EM_ASSESS):   BASENONEVENTS = NUMOBS;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   BESTCAP = BESTNUMEVENTS * 100 / _NEVENTS;
+MPRINT(EM_ASSESS):   IF C_NUMOBS <= _NEVENTS THEN DO;
+MPRINT(EM_ASSESS):   BESTLIFT = ((_NEVENTS+_NNONEVENTS) / 20) /AVGNUMRESP;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   BESTLIFT = BESTNUMEVENTS / AVGNUMRESP;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   C_BESTNUMEVENTS + BESTNUMEVENTS;
+MPRINT(EM_ASSESS):   DROP C_BESTNUMEVENTS;
+MPRINT(EM_ASSESS):   IF C_NUMOBS > 0 THEN BESTLIFTC = C_BESTNUMEVENTS / (_NEVENTS / 1704 * 
+C_NUMOBS);
+MPRINT(EM_ASSESS):   ELSE BESTLIFTC = .;
+MPRINT(EM_ASSESS):   IF NUMOBS > 0 THEN DO;
+MPRINT(EM_ASSESS):   BESTRESP = BESTNUMEVENTS * 100 / NUMOBS;
+MPRINT(EM_ASSESS):   P_RESP = NUMRESP * 100 / NUMOBS;
+MPRINT(EM_ASSESS):   P_NONRESP = NUMNONRESP * 100 / NUMOBS;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   BESTRESP = .;
+MPRINT(EM_ASSESS):   P_RESP = .;
+MPRINT(EM_ASSESS):   P_NONRESP = .;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   IF C_NUMOBS > 0 THEN DO;
+MPRINT(EM_ASSESS):   BESTRESPC = C_BESTNUMEVENTS * 100 / C_NUMOBS;
+MPRINT(EM_ASSESS):   BESTGAIN = MAX (0, ((C_BESTNUMEVENTS / C_NUMOBS ) / ( AVGNUMRESP / 
+(1704/20)) - 1) * 100);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   BESTRESPC = .;
+MPRINT(EM_ASSESS):   BESTGAIN = .;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   IF NUMNONRESP > 0 THEN ODDS = NUMRESP / NUMNONRESP;
+MPRINT(EM_ASSESS):   ELSE ODDS = .;
+MPRINT(EM_ASSESS):   C_NUM_RESP = SUM (C_NUM_RESP , NUMRESP );
+MPRINT(EM_ASSESS):   C_NUM_NONRESP = SUM (C_NUM_NONRESP, NUMNONRESP );
+MPRINT(EM_ASSESS):   IF C_NUM_NONRESP > 0 THEN C_ODDS = C_NUM_RESP / C_NUM_NONRESP;
+MPRINT(EM_ASSESS):   ELSE C_ODDS = .;
+MPRINT(EM_ASSESS):   IF C_NUMOBS > 0 THEN DO;
+MPRINT(EM_ASSESS):   C_P_RESP = C_NUM_RESP * 100 / C_NUMOBS;
+MPRINT(EM_ASSESS):   GAIN = ABS(100 * (((C_NUM_RESP / C_NUMOBS ) / (_NEVENTS / 1704)) - 1));
+MPRINT(EM_ASSESS):   BASEGAIN = 100 * (( (C_AVGNUM_RESP /((20-GROUP+1)* 1704/20) ) / ( 
+AVGNUMRESP / (1704/20))) - 1);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   GAIN = .;
+MPRINT(EM_ASSESS):   BASEGAIN = .;
+MPRINT(EM_ASSESS):   C_P_RESP = .;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   IF BASEGAIN <= 0 THEN BASEGAIN = 0;
+MPRINT(EM_ASSESS):   P_CAPT_RESP = NUMRESP * 100 / _NEVENTS;
+MPRINT(EM_ASSESS):   P_CAPT_NONRESP = NUMNONRESP * 100 / ( 1704 - _NEVENTS);
+MPRINT(EM_ASSESS):   C_P_CAPT_RESP = C_NUM_RESP * 100 / _NEVENTS;
+MPRINT(EM_ASSESS):   C_P_CAPT_NONRESP = C_NUM_NONRESP * 100 / ( 1704 - _NEVENTS);
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * Area For Binned KS in Outranks area;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   _DIFFERENCE = C_P_CAPT_RESP - C_P_CAPT_NONRESP ;
+MPRINT(EM_ASSESS):   IF _KS_BIN_ < _DIFFERENCE THEN DO;
+MPRINT(EM_ASSESS):   _KS_BIN_ = _DIFFERENCE;
+MPRINT(EM_ASSESS):   _KS_BIN_PROB = MINPROB + (MAXPROB - MINPROB) / 2 ;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   LIFT = P_RESP * .01 / RESPRATE ;
+MPRINT(EM_ASSESS):   C_LIFT = C_P_RESP * .01 / RESPRATE;
+MPRINT(EM_ASSESS):   IF NUMOBS > 0 THEN DO;
+MPRINT(EM_ASSESS):   BASELIFT = AVGNUMRESP / ( RESPRATE * 1704/20 );
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE BASELIFT = .;
+MPRINT(EM_ASSESS):   IF C_NUMOBS > 0 THEN CBASELIFT = C_AVGNUM_RESP / (RESPRATE * 
+((20-GROUP+1)* 1704/20));
+MPRINT(EM_ASSESS):   ELSE CBASELIFT = .;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ........ WITHIN DO LOOP FOR OUTRANKS;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   BIN = 20 + 1 - GROUP;
+MPRINT(EM_ASSESS):   PERCENTILE = BIN * (100 / 20);
+MPRINT(EM_ASSESS):   B_C_P_RESP = PERCENTILE;
+MPRINT(EM_ASSESS):   ;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ........................ END OF GAINSCHART = OUTRANKS AREA;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("MAXPROFITGROUP" , MAXPROFITGROUP);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("MAXPROFIT" , MAXPROFIT );
+MPRINT(EM_ASSESS):   KS_ABSDIFF = 0 ;
+MPRINT(EM_ASSESS):   MINPRECTPR = 9999;
+MPRINT(EM_ASSESS):   Y0 = 1 - RESPRATE;
+MPRINT(EM_ASSESS):   Y1 = RESPRATE;
+MPRINT(EM_ASSESS):   MAXMUTUAL = 0;
+MPRINT(EM_ASSESS):   DROP MAXMUTUAL KSPROB Y0 Y1 KS_ABSDIFF MINPRECTPR;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * .....................About to start Processing Outroc ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   DO _K = 1 TO 100;
+MPRINT(EM_ASSESS):   IF CEIL (OVLMIN * 100) <= _K <= FLOOR (OVLMAX * 100) THEN DO;
+MPRINT(EM_ASSESS):   PROBABILITY = _K / 100;
+MPRINT(EM_ASSESS):   _POS_ = TRUEPOSX ( _K);
+MPRINT(EM_ASSESS):   SENSITIVITY = _POS_ / _NEVENTS;
+MPRINT(EM_ASSESS):   _NEG_ = TRUENEGX ( _K);
+MPRINT(EM_ASSESS):   _FALPOS_ = FALSEPOSX ( _K);
+MPRINT(EM_ASSESS):   ONEMINUSSPECIFICITY = _FALPOS_ / (1704 - _NEVENTS);
+MPRINT(EM_ASSESS):   SPECIFICITY = 1 - ONEMINUSSPECIFICITY;
+MPRINT(EM_ASSESS):   _FALNEG_ = FALSENEGX ( _K);
+MPRINT(EM_ASSESS):   FALSENEG = _FALNEG_ / _NEVENTS;
+MPRINT(EM_ASSESS):   OVL_ACCURACY = (_NEG_ + _POS_) / 1704;
+MPRINT(EM_ASSESS):   Y0P0 = _NEG_ / 1704;
+MPRINT(EM_ASSESS):   Y1P1 = _POS_ / 1704;
+MPRINT(EM_ASSESS):   Y0P1 = _FALPOS_ / 1704;
+MPRINT(EM_ASSESS):   Y1P0 = _FALNEG_ / 1704;
+MPRINT(EM_ASSESS):   PROB = _K / 100;
+MPRINT(EM_ASSESS):   IF _POS_ > 0 THEN POSPREC = _POS_ / (_POS_ + ONEMINUSSPECIFICITY * 
+_NNONEVENTS);
+MPRINT(EM_ASSESS):   ELSE POSPREC = .;
+MPRINT(EM_ASSESS):   IF _NEG_ > 0 THEN NEGPREC = _NEG_ / (_NEG_ + FALSENEG * _NEVENTS);
+MPRINT(EM_ASSESS):   ELSE NEGPREC = .;
+MPRINT(EM_ASSESS):   _DIFFERENCE = ABS (SUM ( FALSENEG, - SPECIFICITY ));
+MPRINT(EM_ASSESS):   IF FALSENEG > . AND SPECIFICITY > . AND KS_ABSDIFF < _DIFFERENCE THEN DO;
+MPRINT(EM_ASSESS):   KSPROB = PROB;
+MPRINT(EM_ASSESS):   KS_ABSDIFF = _DIFFERENCE;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   PERCENT1 = _EVENTS (_K) / _NEVENTS;
+MPRINT(EM_ASSESS):   PERCENT0 = NONEVENTS (_K) / (1704 - _NEVENTS);
+MPRINT(EM_ASSESS):   IF POSPREC > . AND SENSITIVITY > . AND MINPRECTPR > ABS (POSPREC - 
+SENSITIVITY) THEN DO;
+MPRINT(EM_ASSESS):   PRECTPR = PROB;
+MPRINT(EM_ASSESS):   MINPRECTPR = ABS (POSPREC - SENSITIVITY);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   DO KK = 20 TO 1 BY -1;
+MPRINT(EM_ASSESS):   IF MINPROBS ( KK) <= PROB <= MAXPROBS ( KK) THEN DO;
+MPRINT(EM_ASSESS):   DECILE = KK;
+MPRINT(EM_ASSESS):   KK = 1;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   FIRSTINGROUP = FIRSTIN (_K);
+MPRINT(EM_ASSESS):   LASTINGROUP = LASTIN (_K);
+MPRINT(EM_ASSESS):   IF FIRSTINGROUP > . THEN DO;
+MPRINT(EM_ASSESS):   LOWPOSTERIOR = ROUND (FIRSTINGROUP, .001);
+MPRINT(EM_ASSESS):   UPPOSTERIOR = LOWPOSTERIOR + .0099;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   LOWPOSTERIOR = . ;
+MPRINT(EM_ASSESS):   UPPOSTERIOR = .;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   OUTPUT WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ........................... Finished Processing Outroc ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * .............. Outdist ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("KSPROB" , PUT (KSPROB, 5.3 ) );
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("_KS_BIN_PROB" , _KS_BIN_PROB );
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("_KS_BIN_" , _KS_BIN_ / 100 );
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("KSDIFF" , KS_ABSDIFF );
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("PRECTPR" , PRECTPR );
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("MAXMUTUALPROB" , MAXMUTUALPROB);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   LABEL __EVENT__ = "Event" DECILE = "Depth" ;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * RUN for large data set;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   PROC DATASETS NOLIST;
+MPRINT(EM_ASSESS):   DELETE _AUXEVENTNAME;
+MPRINT(EM_ASSESS):   QUIT;
+
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * Just adding extremes;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   DATA _NULL_;
+MPRINT(EM_ASSESS):   IF 0 THEN SET WORK.MdlComp2_ROCTEMP NOBS = NOBS;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NOBS", NOBS);
+MPRINT(EM_ASSESS):   STOP;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   DATA WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   SET WORK.MdlComp2_ROCTEMP END = EOF;
+MPRINT(EM_ASSESS):   OUTPUT WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   IF EOF THEN DO;
+MPRINT(EM_ASSESS):   ;
+MPRINT(EM_ASSESS):   _POS_ = .;
+MPRINT(EM_ASSESS):   _FALPOS_ = .;
+MPRINT(EM_ASSESS):   _NEG_ = .;
+MPRINT(EM_ASSESS):   _FALNEG_ = .;
+MPRINT(EM_ASSESS):   EVENTVALUE = "1                               " ;
+MPRINT(EM_ASSESS):   FIRSTINGROUP = .;
+MPRINT(EM_ASSESS):   LASTINGROUP = 1;
+MPRINT(EM_ASSESS):   LOWPOSTERIOR = 1;
+MPRINT(EM_ASSESS):   UPPOSTERIOR = 1;
+MPRINT(EM_ASSESS):   SENSITIVITY = 0;
+MPRINT(EM_ASSESS):   ONEMINUSSPECIFICITY = 0;
+MPRINT(EM_ASSESS):   SPECIFICITY = 1;
+MPRINT(EM_ASSESS):   OUTPUT WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   LOWPOSTERIOR = 0;
+MPRINT(EM_ASSESS):   UPPOSTERIOR = 0;
+MPRINT(EM_ASSESS):   LASTINGROUP = 0;
+MPRINT(EM_ASSESS):   SENSITIVITY = 1;
+MPRINT(EM_ASSESS):   ONEMINUSSPECIFICITY = 1;
+MPRINT(EM_ASSESS):   SPECIFICITY = 0;
+MPRINT(EM_ASSESS):   OUTPUT WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   RENAME LASTINGROUP = CUTOFF EVENTVALUE = EVENT ;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * Run for data outroc ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   PROC SORT DATA = WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   BY SENSITIVITY ONEMINUSSPECIFICITY;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ..................................... OUTROC;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   PROC DATASETS NOLIST LIB = WORK;
+MPRINT(EM_ASSESS):   MODIFY MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   LABEL EVENT = "Event" ONEMINUSSPECIFICITY = "1 - Specificity" SENSITIVITY 
+= "Sensitivity" _POS_ = "True Positive Count" _NEG_ = "True Negative Count" _FALPOS_ = "False 
+Positive Count" _FALNEG_ = "False Negative Count" CUTOFF = "Last in Group" LOWPOSTERIOR = 
+"Lower Bound Probability" UPPOSTERIOR = "Upper Bound Probability" SPECIFICITY = "Specificity" 
+FIRSTINGROUP = "First in Group" ;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   QUIT;
+MPRINT(EM_ASSESS):   PROC SORT DATA = WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   BY ONEMINUSSPECIFICITY SENSITIVITY;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   OPTION NOCENTER LS = 95;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * Report Vars Area.;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ....................... Analyzing outfit data set ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   DATA WORK.MdlComp2_STATTEMP;
+MPRINT(EM_ASSESS):   _AUR_ = INPUT ( PUT (0.99049433540582, 5.3), 5.3);
+MPRINT(EM_ASSESS):   _GINI_ = INPUT ( PUT (0.98098867081164, 5.3), 5.3);
+MPRINT(EM_ASSESS):   _KS_ = INPUT ( PUT (0.9099616914, 5.3), 5.3);
+MPRINT(EM_ASSESS):   _KS_PROB_CUTOFF = INPUT ( PUT (0.210, 5.3), 5.3);
+MPRINT(EM_ASSESS):   _KS_BIN_ = INPUT ( PUT (0.9017222817, 5.3), 5.3);
+MPRINT(EM_ASSESS):   BINNED_KS_PROB_CUTOFF = INPUT ( PUT (0.2087722312, 5.3), 5.3);
+MPRINT(EM_ASSESS):   LABEL _AUR_ = "Area Under ROC" ;
+MPRINT(EM_ASSESS):   LABEL _GINI_ = "Gini Coefficient" ;
+MPRINT(EM_ASSESS):   LABEL _KS_ = _KS_ = "Two-Sample Kolmogorov-Smirnov Statistic" ;
+MPRINT(EM_ASSESS):   LABEL _KS_PROB_CUTOFF = " Kolmogorov-Smirnov Stat Prob Cut-off";
+MPRINT(EM_ASSESS):   LABEL _KS_BIN_ = "Bin-Based Two-sample Kolmogorov-Smirnov Statistic" ;
+MPRINT(EM_ASSESS):   LABEL BINNED_KS_PROB_CUTOFF = " Binned Kolmogorov-Smirnov Stat Prob 
+Cut-off";
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   proc datasets lib=work nolist;
+MPRINT(EM_ASSESS):   delete _ea_tmpdata;
+MPRINT(EM_ASSESS):   run;
+MPRINT(EM_ASSESS):   quit;
+MPRINT(EM_ASSESS):  ;
+MPRINT(EM_ASSESS):   OPTION ERRORS = 20;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):    data WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_DIAGRAM):   length PARENT $16 MODEL $16 MODELDESCRIPTION $81 DATAROLE $8 TARGET $32 
+TARGETLABEL $200;
+MPRINT(EM_DIAGRAM):   label PARENT = "Predecessor Node" MODEL = "Model Node" MODELDESCRIPTION 
+= "Model Description" DATAROLE = "Data Role" TARGET = "Target Variable" TARGETLABEL = "Target 
+Label";
+MPRINT(EM_DIAGRAM):   set WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_DIAGRAM):   retain PARENT "Neural6" MODEL "Neural6" MODELDESCRIPTION "Final - ANN 
+8HU" TARGET "DepVar" TARGETLABEL "DepVar" DATAROLE "TRAIN";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMROC;
+MPRINT(EM_DIAGRAM):   set WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data WORK.MdlComp2_STATTEMP;
+MPRINT(EM_DIAGRAM):   length TARGET $32 TARGETLABEL $200;
+MPRINT(EM_DIAGRAM):   retain TARGET "DepVar" TARGETLABEL "DepVar";
+MPRINT(EM_DIAGRAM):   set WORK.MdlComp2_STATTEMP;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    proc datasets lib=WORK nolist;
+MPRINT(EM_DIAGRAM):   modify MdlComp2_STATTEMP;
+MPRINT(EM_DIAGRAM):   rename _KS_=KS;
+MPRINT(EM_DIAGRAM):   label _AUR_ = "Train: Roc Index" _Gini_ = "Train: Gini Coefficient" KS = 
+"Train: Kolmogorov-Smirnov Statistic" _KS_BIN_ = "Train: Bin-Based Two-Way Kolmogorov-Smirnov 
+Statistic" _KS_PROB_CUTOFF = "Train: Kolmogorov-Smirnov Probability Cutoff" 
+BINNED_KS_PROB_CUTOFF= "Train: Bin-Based Two-Way Kolmogorov-Smirnov Probability Cutoff";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data WORK.MdlComp2INDEXTEMP;
+MPRINT(EM_DIAGRAM):   set WORK.MdlComp2_STATTEMP;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data ASSESS_REPORTMETA;
+MPRINT(EM_DIAGRAM):   set EMWS1.Neural6_CMeta_TRAIN;
+MPRINT(EM_DIAGRAM):   where REPORT='Y';
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   set EMWS1.MdlComp2_EMRANK end=eof;
+MPRINT(EM_DIAGRAM):   where MODEL="Neural6" and DATAROLE="TRAIN";
+MPRINT(EM_DIAGRAM):   if eof then call symput('ASSESSTRAIN', '0');
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   set EMWS1.MdlComp2_EMRANK end=eof;
+MPRINT(EM_DIAGRAM):   where MODEL="Neural6" and DATAROLE="VALIDATE";
+MPRINT(EM_DIAGRAM):   if eof then call symput('ASSESSVALID', '0');
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   set EMWS1.Neural6_DepVar_DM;
+MPRINT(EM_DIAGRAM):   where _TYPE_="TARGET";
+MPRINT(EM_DIAGRAM):   call symput('ASSMT_EVENT', event);
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   
+MPRINT(EM_ASSESS):   data _ea_tmpdata;
+MPRINT(EM_ASSESS):   set EMWS1.Neural6_VALIDATE;
+MPRINT(EM_ASSESS):   _tmpfreqvar_=1;
+MPRINT(EM_ASSESS):   run;
+MPRINT(EM_CHECKEMSETINIT):   DATA _NULL_;
+MPRINT(EM_CHECKEMSETINIT):   EM_SETINIT = 'N';
+MPRINT(EM_CHECKEMSETINIT):   IF SYSPROD('PRODNUM50') THEN EM_SETINIT = 'Y';
+MPRINT(EM_CHECKEMSETINIT):   ELSE IF SYSPROD('PRODNUM448') THEN EM_SETINIT = 'Y';
+MPRINT(EM_CHECKEMSETINIT):   ELSE IF SYSPROD('PRODNUM102') THEN EM_SETINIT = 'Y';
+MPRINT(EM_CHECKEMSETINIT):   ELSE IF SYSPROD('PRODNUM103') THEN EM_SETINIT = 'Y';
+MPRINT(EM_CHECKEMSETINIT):   CALL SYMPUT('EM_SETINIT', EM_SETINIT);
+MPRINT(EM_CHECKEMSETINIT):   RUN;
+MPRINT(EM_ASSESS):  ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ............ Reading in reporting data set;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   DATA _NULL_;
+MPRINT(EM_ASSESS):   SET ASSESS_REPORTMETA END = EOF;
+MPRINT(EM_ASSESS):   IF TYPE = "C" OR UPCASE (LEVEL) IN ("NOMINAL", "BINARY" , "ORDINAL") THEN 
+DO;
+MPRINT(EM_ASSESS):   IF UPCASE (NAME) NE UPCASE ("F_DepVar") THEN DO;
+MPRINT(EM_ASSESS):   NUMCTOREPORT + 1;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("REPORTC" || LEFT (PUT (NUMCTOREPORT, 5.)), NAME);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE CALL SYMPUTX ("RPRT_TRGT", "C");
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE IF TYPE = "N" THEN DO;
+MPRINT(EM_ASSESS):   IF UPCASE(NAME) NE UPCASE ("F_DepVar") THEN DO;
+MPRINT(EM_ASSESS):   NUMNTOREPORT + 1;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("REPORTN" || LEFT (PUT (NUMNTOREPORT, 5.)), NAME);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE CALL SYMPUTX ("RPRT_TRGT", "N");
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   IF EOF THEN DO;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NUMNTOREPORT", NUMNTOREPORT);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NUMCTOREPORT", NUMCTOREPORT);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NUMTOREPORT", SUM (NUMNTOREPORT, NUMCTOREPORT));
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   PROC DMDB DATA = _ea_tmpdata VAROUT = VAROUT DMDBCAT = _D CLASSOUT = 
+_ASSMT_CLASSOUT;
+MPRINT(EM_ASSESS):   CLASS F_DepVar ;
+
+MPRINT(EM_ASSESS):   VAR P_DepVar1 _tmpfreqvar_ ;
+MPRINT(EM_ASSESS):   FREQ _tmpfreqvar_;
+MPRINT(EM_ASSESS):   RUN ;
+MPRINT(EM_ASSESS):   QUIT;
+MPRINT(EM_ASSESS):   PROC SORT DATA = _ASSMT_CLASSOUT;
+MPRINT(EM_ASSESS):   BY NAME;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   DATA _auxeventname (keep = __event__) ;
+MPRINT(EM_ASSESS):   * ;
+MPRINT(EM_ASSESS):   * ...FLAG0_1 = ..... TARGET IS 0, 1 & EVENT = 1;
+
+MPRINT(EM_ASSESS):   ;
+MPRINT(EM_ASSESS):   length __event__ $ 32;
+MPRINT(EM_ASSESS):   RETAIN FLAG0_1 1 NUM1 . NUM0 . __event__ "_missing_" ;
+
+MPRINT(EM_ASSESS):   SET _ASSMT_CLASSOUT END = EOF;
+MPRINT(EM_ASSESS):   BY NAME;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ....... LEVEL = BINARY OR NOMINAL OR ORDINAL;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+
+MPRINT(EM_ASSESS):   IF UPCASE(NAME) = UPCASE ("F_DepVar") THEN DO;
+MPRINT(EM_ASSESS):   CUMFREQ + FREQUENCY;
+MPRINT(EM_ASSESS):   IF LEVEL NE "." THEN DO;
+MPRINT(EM_ASSESS):   N1 + 1;
+MPRINT(EM_ASSESS):   IF (NRAW NE 0 AND NRAW NE 1) OR TYPE NE "N" OR "" > " " THEN FLAG0_1 = 0;
+MPRINT(EM_ASSESS):   * ;
+MPRINT(EM_ASSESS):   * ......................... IF EVENT NE BLANK;
+MPRINT(EM_ASSESS):   * ....................LEVEL IS CHAR VAR ;
+MPRINT(EM_ASSESS):   * ;
+MPRINT(EM_ASSESS):   IF UPCASE("1                               ") = UPCASE(LEVEL) THEN DO;
+MPRINT(EM_ASSESS):   NUM1 = FREQUENCY;
+MPRINT(EM_ASSESS):   IF TYPE = "C" THEN do;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("EVENTVALUERAW", CRAW );
+MPRINT(EM_ASSESS):   __event__ = craw;
+MPRINT(EM_ASSESS):   end;
+MPRINT(EM_ASSESS):   ELSE do;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("EVENTVALUERAW", NRAW );
+MPRINT(EM_ASSESS):   __event__ = nraw;
+MPRINT(EM_ASSESS):   end;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   IF LAST.NAME THEN DO;
+
+MPRINT(EM_ASSESS):   * ;
+MPRINT(EM_ASSESS):   * .............. IN NOMINAL CASE, NEED TO GROUP ALL '0' ;
+MPRINT(EM_ASSESS):   *;
+
+MPRINT(EM_ASSESS):   NUM0 = SUM (CUMFREQ, - NUM1);
+MPRINT(EM_ASSESS):   IF NUM0 < 0 THEN NUM0 = 0;
+MPRINT(EM_ASSESS):   IF NUM1 = . THEN NUM1 = 0;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NUM0", NUM0 );
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NUM1", NUM1);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("PNUM1", NUM1 / CUMFREQ);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("PNUM0", (CUMFREQ - NUM1) / CUMFREQ);
+MPRINT(EM_ASSESS):   IF TYPE = "C" THEN DO;
+MPRINT(EM_ASSESS):   FLAG0_1 = 0;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("TARGETTYPE", "C" );
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE IF TYPE = "N" THEN DO;
+MPRINT(EM_ASSESS):   IF "" = " " THEN DO;
+MPRINT(EM_ASSESS):   IF "1                               " NE "1" THEN FLAG0_1 = 0;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("TARGETTYPE", "N" );
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   * ................... IF TYPE = N;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("FLAG0_1", FLAG0_1 );
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   * ..................IF LAST.NAME ;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   * ...............IF LEVEL NE '.' ;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   * .............. IF NAME = TARGET;
+MPRINT(EM_ASSESS):   ELSE IF "" > " " AND UPCASE(NAME) = UPCASE("") THEN DO;
+MPRINT(EM_ASSESS):   NUMDECISIONS + 1;
+MPRINT(EM_ASSESS):   LEVEL = TRANSLATE (LEVEL, "_", "'", "_", '"');
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("D_LABEL" || LEFT (PUT (NUMDECISIONS, 3.)), LEVEL );
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   * ..................... ELSE IF UPCASE;
+MPRINT(EM_ASSESS):   IF EOF THEN DO;
+MPRINT(EM_ASSESS):   output _auxeventname;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NUMOBS", CUMFREQ);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NUMDECISIONS", NUMDECISIONS);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   DATA _NULL_;
+MPRINT(EM_ASSESS):   SET VAROUT END = EOF;
+MPRINT(EM_ASSESS):   IF UPCASE (NAME) = UPCASE ("P_DepVar1") THEN DO;
+MPRINT(EM_ASSESS):   IF N = 0 THEN DO;
+MPRINT(EM_ASSESS):   PUT //// "          Warning: All posterior probabilities are missing 
+values ";
+MPRINT(EM_ASSESS):   PUT ///;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("ALLMISS", 1);
+MPRINT(EM_ASSESS):   STOP;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE CALL SYMPUTX ("ALLMISS", 0);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("MINPROB", MIN);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("MAXPROB", MAX);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("DIFF", MAX - MIN);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NMISSPROB", NMISS);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE IF UPCASE (NAME) = UPCASE ("_tmpfreqvar_") THEN DO;
+MPRINT(EM_ASSESS):   AUXMIN = MIN - INT (MIN);
+MPRINT(EM_ASSESS):   AUXMAX = MAX - INT (MAX);
+MPRINT(EM_ASSESS):   IF AUXMIN > 0 OR AUXMAX > 0 THEN CALL SYMPUTX ("USEWEIGHT", "Y");
+MPRINT(EM_ASSESS):   ELSE CALL SYMPUTX ("USEWEIGHT", "N");
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   DATA _ANY0;
+MPRINT(EM_ASSESS):   SET _ea_tmpdata (KEEP = F_DepVar P_DepVar1 _tmpfreqvar_ );
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ................... No Formats;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   IF LEFT ( F_DepVar ) = "1" THEN NTARGET = 1;
+MPRINT(EM_ASSESS):   ELSE NTARGET = 0;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * .............. Before proc summary of binary case;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   PROC SUMMARY DATA = _ANY0 (KEEP = P_DepVar1 NTARGET _tmpfreqvar_ WHERE = 
+(NTARGET > . )) NWAY MISSING;
+MPRINT(EM_ASSESS):   ;
+MPRINT(EM_ASSESS):   CLASS P_DepVar1 ;
+MPRINT(EM_ASSESS):   VAR NTARGET ;
+MPRINT(EM_ASSESS):   FREQ _tmpfreqvar_ ;
+MPRINT(EM_ASSESS):   OUTPUT OUT = ANYSUM (DROP = _TYPE_) MEAN = _MEANTARGET _MEANFREQVAR ;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   QUIT;
+MPRINT(EM_ASSESS):   ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * .................... Main Data Set Processing, Binary case;
+MPRINT(EM_ASSESS):   *;
+
+MPRINT(EM_ASSESS):   DATA WORK.MdlComp2_ROCTEMP (KEEP = SENSITIVITY SPECIFICITY EVENTVALUE 
+ONEMINUSSPECIFICITY _FALPOS_ _FALNEG_ _POS_ _NEG_ FIRSTINGROUP LASTINGROUP LOWPOSTERIOR 
+UPPOSTERIOR ) ;
+
+MPRINT(EM_ASSESS):   SET ANYSUM END = EOF;
+
+MPRINT(EM_ASSESS):   IF _N_ = 1 THEN SET _AUXEVENTNAME;
+
+MPRINT(EM_ASSESS):   RETAIN MINPROB1 - MINPROB20 1 MAXPROB1 - MAXPROB20 0 MNPROB1 - MNPROB20 0 
+NUMOBS1 - NUMOBS20 0 NUMRESP1 - NUMRESP20 0 TRUEPOS1 - TRUEPOS100 0 TRUENEG1 - TRUENEG100 0 
+FALSEPOS1 - FALSEPOS100 0 FALSENEG1 - FALSENEG100 0 EVENTS1 - EVENTS100 NONEVENTS1 - 
+NONEVENTS100 0 FIRSTIN1 - FIRSTIN100 . LASTIN1 - LASTIN100 . RESPRATE 0.1377899045 _NEVENTS 
+101 _NNONEVENTS 632 TARGET "NTARGET" ;
+MPRINT(EM_ASSESS):   ARRAY MINPROBS (20) MINPROB1 - MINPROB20;
+MPRINT(EM_ASSESS):   ARRAY MAXPROBS (20) MAXPROB1 - MAXPROB20;
+MPRINT(EM_ASSESS):   ARRAY MNPROBS (20) MNPROB1 - MNPROB20;
+MPRINT(EM_ASSESS):   ARRAY NUMOBSS (20) NUMOBS1 - NUMOBS20;
+MPRINT(EM_ASSESS):   ARRAY NUMRESPS (20) NUMRESP1 - NUMRESP20;
+MPRINT(EM_ASSESS):   ARRAY TRUEPOSX (100) TRUEPOS1 - TRUEPOS100;
+MPRINT(EM_ASSESS):   ARRAY FALSEPOSX (100) FALSEPOS1 - FALSEPOS100;
+MPRINT(EM_ASSESS):   ARRAY FALSENEGX (100) FALSENEG1 - FALSENEG100;
+MPRINT(EM_ASSESS):   ARRAY TRUENEGX (100) TRUENEG1 - TRUENEG100;
+MPRINT(EM_ASSESS):   ARRAY _EVENTS (100) EVENTS1 - EVENTS100;
+MPRINT(EM_ASSESS):   ARRAY NONEVENTS (100) NONEVENTS1 - NONEVENTS100;
+MPRINT(EM_ASSESS):   ARRAY FIRSTIN (100) FIRSTIN1 - FIRSTIN100;
+MPRINT(EM_ASSESS):   ARRAY LASTIN (100) LASTIN1 - LASTIN100;
+MPRINT(EM_ASSESS):   IF _MEANTARGET = . THEN _MEANTARGET = RESPRATE;
+MPRINT(EM_ASSESS):   DROP N1 _K SUMWEIGHTS ;
+MPRINT(EM_ASSESS):   SUMWEIGHTS = 1;
+
+MPRINT(EM_ASSESS):   DO _K = 1 TO CEIL (_FREQ_);
+MPRINT(EM_ASSESS):   IF _K = CEIL (_FREQ_) THEN DO;
+MPRINT(EM_ASSESS):   IF _FREQ_ < CEIL (_FREQ_) THEN _WEIGHT = _FREQ_ - FLOOR (_FREQ_);
+MPRINT(EM_ASSESS):   ELSE _WEIGHT = 1;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE _WEIGHT = 1;
+MPRINT(EM_ASSESS):   N1 + _WEIGHT;
+MPRINT(EM_ASSESS):   NTARGET = _MEANTARGET ;
+MPRINT(EM_ASSESS):   DECILE = MIN (20, CEIL (N1 * 20 / 733));
+MPRINT(EM_ASSESS):   MINPROBS ( DECILE) = MIN (MINPROBS ( DECILE), P_DepVar1 );
+MPRINT(EM_ASSESS):   MAXPROBS ( DECILE) = MAX (MAXPROBS ( DECILE), P_DepVar1 );
+MPRINT(EM_ASSESS):   MNPROBS ( DECILE) = SUM (MNPROBS ( DECILE), P_DepVar1 * _WEIGHT);
+MPRINT(EM_ASSESS):   NUMOBSS ( DECILE) = NUMOBSS ( DECILE) + _WEIGHT;
+MPRINT(EM_ASSESS):   NUMRESPS ( DECILE) = NUMRESPS ( DECILE) + _MEANTARGET * _WEIGHT;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ........ outside of do loop, Area for final ROC;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   RANKDELTA = (ROUND ( _FREQ_ ) + 1) / 2;
+MPRINT(EM_ASSESS):   RANK = UNTIEDRANK + RANKDELTA;
+MPRINT(EM_ASSESS):   DROP RANK ;
+MPRINT(EM_ASSESS):   SUMRANK1 + RANK * ROUND (_MEANTARGET * _FREQ_, .0000001);
+MPRINT(EM_ASSESS):   UNTIEDRANK + ROUND (_FREQ_, .00000001);
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ............ Area For ROC Curve;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   DO _K = 1 TO 100;
+MPRINT(EM_ASSESS):   IF P_DepVar1 * 100 >= _K THEN DO;
+MPRINT(EM_ASSESS):   TRUEPOSX ( _K ) + _FREQ_ * _MEANTARGET ;
+MPRINT(EM_ASSESS):   FALSEPOSX ( _K ) + _FREQ_ * (1 - _MEANTARGET) ;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   TRUENEGX ( _K ) + _FREQ_ * ( 1 - _MEANTARGET) ;
+MPRINT(EM_ASSESS):   FALSENEGX ( _K ) + _FREQ_ * _MEANTARGET ;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   SLOT = MIN (MAX (CEIL (P_DepVar1 * 100), 1), 100) ;
+MPRINT(EM_ASSESS):   DROP SLOT;
+MPRINT(EM_ASSESS):   FIRSTIN ( SLOT ) = MIN ( FIRSTIN ( SLOT ), P_DepVar1);
+MPRINT(EM_ASSESS):   LASTIN ( SLOT ) = MAX ( LASTIN ( SLOT ), P_DepVar1);
+MPRINT(EM_ASSESS):   _EVENTS ( SLOT) = _EVENTS ( SLOT) + _FREQ_ * _MEANTARGET;
+MPRINT(EM_ASSESS):   NONEVENTS ( SLOT) = NONEVENTS ( SLOT) + _FREQ_ * (1 - _MEANTARGET);
+MPRINT(EM_ASSESS):   IF EOF THEN DO;
+MPRINT(EM_ASSESS):   PUT //;
+MPRINT(EM_ASSESS):   DO K = 1 TO 20;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   LENGTH EVENTVALUE $ 32;
+MPRINT(EM_ASSESS):   RETAIN EVENTVALUE "1                               " ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ......... Start of EOF area of BINARY processing of main data set ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("SUMRANK1", SUMRANK1);
+MPRINT(EM_ASSESS):   LENGTH DATAROLE $ 10;
+MPRINT(EM_ASSESS):   RETAIN DATAROLE "VALIDATE" ;
+MPRINT(EM_ASSESS):   RETAIN OVLMIN 4.3771778E-6 OVLMAX 0.9998983954 ;
+MPRINT(EM_ASSESS):   DROP OVLMIN OVLMAX ;
+MPRINT(EM_ASSESS):   C_NUMOBS = 0;
+MPRINT(EM_ASSESS):   C_NUM_RESP = 0;
+MPRINT(EM_ASSESS):   C_NUM_NONRESP = 0;
+MPRINT(EM_ASSESS):   C_P_RESP = 0;
+MPRINT(EM_ASSESS):   P_CAPT_RESP = 0;
+MPRINT(EM_ASSESS):   C_P_CAPT_RESP = 0;
+MPRINT(EM_ASSESS):   PREVIOUSPROFIT = 0;
+MPRINT(EM_ASSESS):   MAXPROFIT = 0;
+MPRINT(EM_ASSESS):   _KS_BIN_ = 0;
+MPRINT(EM_ASSESS):   DROP _KS_BIN_;
+MPRINT(EM_ASSESS):   AVGNUMRESP = _NEVENTS / 20;
+MPRINT(EM_ASSESS):   BASERESP = 100 * RESPRATE;
+MPRINT(EM_ASSESS):   BASERESPC = BASERESP;
+MPRINT(EM_ASSESS):   BASECAP = 100 / 20;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ........................Start OF Gainschart = Outranks Area;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   _KS_BIN_PROB = 0;
+MPRINT(EM_ASSESS):   DO GROUP = 20 TO 1 BY -1;
+
+MPRINT(EM_ASSESS):   BASECAPC + BASECAP;
+MPRINT(EM_ASSESS):   PERCENTILE = GROUP * (100 / 20);
+MPRINT(EM_ASSESS):   MINPROB = MINPROBS ( GROUP);
+MPRINT(EM_ASSESS):   MAXPROB = MAXPROBS ( GROUP);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("MINPROB" || LEFT ( PUT (GROUP, 3.)), MINPROB);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("MAXPROB" || LEFT ( PUT (GROUP, 3.)), MAXPROB);
+MPRINT(EM_ASSESS):   NUMOBS = NUMOBSS ( GROUP);
+MPRINT(EM_ASSESS):   IF NUMOBS > 0 THEN MNPROB = MNPROBS ( GROUP) / NUMOBS;
+MPRINT(EM_ASSESS):   ELSE MNPROB = .;
+MPRINT(EM_ASSESS):   C_NUMOBS = SUM (NUMOBS, C_NUMOBS);
+MPRINT(EM_ASSESS):   NUMRESP = NUMRESPS ( GROUP);
+MPRINT(EM_ASSESS):   NUMNONRESP = NUMOBS - NUMRESP;
+MPRINT(EM_ASSESS):   C_AVGNUM_RESP + AVGNUMRESP;
+MPRINT(EM_ASSESS):   IF C_NUMOBS <= _NEVENTS THEN DO;
+MPRINT(EM_ASSESS):   BESTNUMEVENTS = NUMOBS;
+MPRINT(EM_ASSESS):   BESTCAPC = C_NUMOBS * 100 / _NEVENTS;
+MPRINT(EM_ASSESS):   BASEEVENTS = _NEVENTS / 20;
+MPRINT(EM_ASSESS):   BASENONEVENTS = 0;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   FLAG + 1;
+MPRINT(EM_ASSESS):   DROP FLAG;
+MPRINT(EM_ASSESS):   BESTNUMEVENTS = _NEVENTS - C_NUMOBS + NUMOBS;
+MPRINT(EM_ASSESS):   IF FLAG > 1 THEN BESTNUMEVENTS = 0;
+MPRINT(EM_ASSESS):   BESTCAPC = 100;
+MPRINT(EM_ASSESS):   IF C_NUMOBS - _NEVENTS <= NUMOBS THEN DO;
+MPRINT(EM_ASSESS):   BASEEVENTS = C_NUMOBS - _NEVENTS;
+MPRINT(EM_ASSESS):   BASENONEVENTS = NUMOBS - C_NUMOBS + _NEVENTS;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   BASEEVENTS = 0;
+MPRINT(EM_ASSESS):   BASENONEVENTS = NUMOBS;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   BESTCAP = BESTNUMEVENTS * 100 / _NEVENTS;
+MPRINT(EM_ASSESS):   IF C_NUMOBS <= _NEVENTS THEN DO;
+MPRINT(EM_ASSESS):   BESTLIFT = ((_NEVENTS+_NNONEVENTS) / 20) /AVGNUMRESP;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   BESTLIFT = BESTNUMEVENTS / AVGNUMRESP;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   C_BESTNUMEVENTS + BESTNUMEVENTS;
+MPRINT(EM_ASSESS):   DROP C_BESTNUMEVENTS;
+MPRINT(EM_ASSESS):   IF C_NUMOBS > 0 THEN BESTLIFTC = C_BESTNUMEVENTS / (_NEVENTS / 733 * 
+C_NUMOBS);
+MPRINT(EM_ASSESS):   ELSE BESTLIFTC = .;
+MPRINT(EM_ASSESS):   IF NUMOBS > 0 THEN DO;
+MPRINT(EM_ASSESS):   BESTRESP = BESTNUMEVENTS * 100 / NUMOBS;
+MPRINT(EM_ASSESS):   P_RESP = NUMRESP * 100 / NUMOBS;
+MPRINT(EM_ASSESS):   P_NONRESP = NUMNONRESP * 100 / NUMOBS;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   BESTRESP = .;
+MPRINT(EM_ASSESS):   P_RESP = .;
+MPRINT(EM_ASSESS):   P_NONRESP = .;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   IF C_NUMOBS > 0 THEN DO;
+MPRINT(EM_ASSESS):   BESTRESPC = C_BESTNUMEVENTS * 100 / C_NUMOBS;
+MPRINT(EM_ASSESS):   BESTGAIN = MAX (0, ((C_BESTNUMEVENTS / C_NUMOBS ) / ( AVGNUMRESP / 
+(733/20)) - 1) * 100);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   BESTRESPC = .;
+MPRINT(EM_ASSESS):   BESTGAIN = .;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   IF NUMNONRESP > 0 THEN ODDS = NUMRESP / NUMNONRESP;
+MPRINT(EM_ASSESS):   ELSE ODDS = .;
+MPRINT(EM_ASSESS):   C_NUM_RESP = SUM (C_NUM_RESP , NUMRESP );
+MPRINT(EM_ASSESS):   C_NUM_NONRESP = SUM (C_NUM_NONRESP, NUMNONRESP );
+MPRINT(EM_ASSESS):   IF C_NUM_NONRESP > 0 THEN C_ODDS = C_NUM_RESP / C_NUM_NONRESP;
+MPRINT(EM_ASSESS):   ELSE C_ODDS = .;
+MPRINT(EM_ASSESS):   IF C_NUMOBS > 0 THEN DO;
+MPRINT(EM_ASSESS):   C_P_RESP = C_NUM_RESP * 100 / C_NUMOBS;
+MPRINT(EM_ASSESS):   GAIN = ABS(100 * (((C_NUM_RESP / C_NUMOBS ) / (_NEVENTS / 733)) - 1));
+MPRINT(EM_ASSESS):   BASEGAIN = 100 * (( (C_AVGNUM_RESP /((20-GROUP+1)* 733/20) ) / ( 
+AVGNUMRESP / (733/20))) - 1);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   GAIN = .;
+MPRINT(EM_ASSESS):   BASEGAIN = .;
+MPRINT(EM_ASSESS):   C_P_RESP = .;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   IF BASEGAIN <= 0 THEN BASEGAIN = 0;
+MPRINT(EM_ASSESS):   P_CAPT_RESP = NUMRESP * 100 / _NEVENTS;
+MPRINT(EM_ASSESS):   P_CAPT_NONRESP = NUMNONRESP * 100 / ( 733 - _NEVENTS);
+MPRINT(EM_ASSESS):   C_P_CAPT_RESP = C_NUM_RESP * 100 / _NEVENTS;
+MPRINT(EM_ASSESS):   C_P_CAPT_NONRESP = C_NUM_NONRESP * 100 / ( 733 - _NEVENTS);
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * Area For Binned KS in Outranks area;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   _DIFFERENCE = C_P_CAPT_RESP - C_P_CAPT_NONRESP ;
+MPRINT(EM_ASSESS):   IF _KS_BIN_ < _DIFFERENCE THEN DO;
+MPRINT(EM_ASSESS):   _KS_BIN_ = _DIFFERENCE;
+MPRINT(EM_ASSESS):   _KS_BIN_PROB = MINPROB + (MAXPROB - MINPROB) / 2 ;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   LIFT = P_RESP * .01 / RESPRATE ;
+MPRINT(EM_ASSESS):   C_LIFT = C_P_RESP * .01 / RESPRATE;
+MPRINT(EM_ASSESS):   IF NUMOBS > 0 THEN DO;
+MPRINT(EM_ASSESS):   BASELIFT = AVGNUMRESP / ( RESPRATE * 733/20 );
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE BASELIFT = .;
+MPRINT(EM_ASSESS):   IF C_NUMOBS > 0 THEN CBASELIFT = C_AVGNUM_RESP / (RESPRATE * 
+((20-GROUP+1)* 733/20));
+MPRINT(EM_ASSESS):   ELSE CBASELIFT = .;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ........ WITHIN DO LOOP FOR OUTRANKS;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   BIN = 20 + 1 - GROUP;
+MPRINT(EM_ASSESS):   PERCENTILE = BIN * (100 / 20);
+MPRINT(EM_ASSESS):   B_C_P_RESP = PERCENTILE;
+MPRINT(EM_ASSESS):   ;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ........................ END OF GAINSCHART = OUTRANKS AREA;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("MAXPROFITGROUP" , MAXPROFITGROUP);
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("MAXPROFIT" , MAXPROFIT );
+MPRINT(EM_ASSESS):   KS_ABSDIFF = 0 ;
+MPRINT(EM_ASSESS):   MINPRECTPR = 9999;
+MPRINT(EM_ASSESS):   Y0 = 1 - RESPRATE;
+MPRINT(EM_ASSESS):   Y1 = RESPRATE;
+MPRINT(EM_ASSESS):   MAXMUTUAL = 0;
+MPRINT(EM_ASSESS):   DROP MAXMUTUAL KSPROB Y0 Y1 KS_ABSDIFF MINPRECTPR;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * .....................About to start Processing Outroc ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   DO _K = 1 TO 100;
+MPRINT(EM_ASSESS):   IF CEIL (OVLMIN * 100) <= _K <= FLOOR (OVLMAX * 100) THEN DO;
+MPRINT(EM_ASSESS):   PROBABILITY = _K / 100;
+MPRINT(EM_ASSESS):   _POS_ = TRUEPOSX ( _K);
+MPRINT(EM_ASSESS):   SENSITIVITY = _POS_ / _NEVENTS;
+MPRINT(EM_ASSESS):   _NEG_ = TRUENEGX ( _K);
+MPRINT(EM_ASSESS):   _FALPOS_ = FALSEPOSX ( _K);
+MPRINT(EM_ASSESS):   ONEMINUSSPECIFICITY = _FALPOS_ / (733 - _NEVENTS);
+MPRINT(EM_ASSESS):   SPECIFICITY = 1 - ONEMINUSSPECIFICITY;
+MPRINT(EM_ASSESS):   _FALNEG_ = FALSENEGX ( _K);
+MPRINT(EM_ASSESS):   FALSENEG = _FALNEG_ / _NEVENTS;
+MPRINT(EM_ASSESS):   OVL_ACCURACY = (_NEG_ + _POS_) / 733;
+MPRINT(EM_ASSESS):   Y0P0 = _NEG_ / 733;
+MPRINT(EM_ASSESS):   Y1P1 = _POS_ / 733;
+MPRINT(EM_ASSESS):   Y0P1 = _FALPOS_ / 733;
+MPRINT(EM_ASSESS):   Y1P0 = _FALNEG_ / 733;
+MPRINT(EM_ASSESS):   PROB = _K / 100;
+MPRINT(EM_ASSESS):   IF _POS_ > 0 THEN POSPREC = _POS_ / (_POS_ + ONEMINUSSPECIFICITY * 
+_NNONEVENTS);
+MPRINT(EM_ASSESS):   ELSE POSPREC = .;
+MPRINT(EM_ASSESS):   IF _NEG_ > 0 THEN NEGPREC = _NEG_ / (_NEG_ + FALSENEG * _NEVENTS);
+MPRINT(EM_ASSESS):   ELSE NEGPREC = .;
+MPRINT(EM_ASSESS):   _DIFFERENCE = ABS (SUM ( FALSENEG, - SPECIFICITY ));
+MPRINT(EM_ASSESS):   IF FALSENEG > . AND SPECIFICITY > . AND KS_ABSDIFF < _DIFFERENCE THEN DO;
+MPRINT(EM_ASSESS):   KSPROB = PROB;
+MPRINT(EM_ASSESS):   KS_ABSDIFF = _DIFFERENCE;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   PERCENT1 = _EVENTS (_K) / _NEVENTS;
+MPRINT(EM_ASSESS):   PERCENT0 = NONEVENTS (_K) / (733 - _NEVENTS);
+MPRINT(EM_ASSESS):   IF POSPREC > . AND SENSITIVITY > . AND MINPRECTPR > ABS (POSPREC - 
+SENSITIVITY) THEN DO;
+MPRINT(EM_ASSESS):   PRECTPR = PROB;
+MPRINT(EM_ASSESS):   MINPRECTPR = ABS (POSPREC - SENSITIVITY);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   DO KK = 20 TO 1 BY -1;
+MPRINT(EM_ASSESS):   IF MINPROBS ( KK) <= PROB <= MAXPROBS ( KK) THEN DO;
+MPRINT(EM_ASSESS):   DECILE = KK;
+MPRINT(EM_ASSESS):   KK = 1;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   FIRSTINGROUP = FIRSTIN (_K);
+MPRINT(EM_ASSESS):   LASTINGROUP = LASTIN (_K);
+MPRINT(EM_ASSESS):   IF FIRSTINGROUP > . THEN DO;
+MPRINT(EM_ASSESS):   LOWPOSTERIOR = ROUND (FIRSTINGROUP, .001);
+MPRINT(EM_ASSESS):   UPPOSTERIOR = LOWPOSTERIOR + .0099;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   ELSE DO;
+MPRINT(EM_ASSESS):   LOWPOSTERIOR = . ;
+MPRINT(EM_ASSESS):   UPPOSTERIOR = .;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   OUTPUT WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ........................... Finished Processing Outroc ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * .............. Outdist ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("KSPROB" , PUT (KSPROB, 5.3 ) );
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("_KS_BIN_PROB" , _KS_BIN_PROB );
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("_KS_BIN_" , _KS_BIN_ / 100 );
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("KSDIFF" , KS_ABSDIFF );
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("PRECTPR" , PRECTPR );
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("MAXMUTUALPROB" , MAXMUTUALPROB);
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   LABEL __EVENT__ = "Event" DECILE = "Depth" ;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * RUN for large data set;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   PROC DATASETS NOLIST;
+MPRINT(EM_ASSESS):   DELETE _AUXEVENTNAME;
+MPRINT(EM_ASSESS):   QUIT;
+
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * Just adding extremes;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   DATA _NULL_;
+MPRINT(EM_ASSESS):   IF 0 THEN SET WORK.MdlComp2_ROCTEMP NOBS = NOBS;
+MPRINT(EM_ASSESS):   CALL SYMPUTX ("NOBS", NOBS);
+MPRINT(EM_ASSESS):   STOP;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   DATA WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   SET WORK.MdlComp2_ROCTEMP END = EOF;
+MPRINT(EM_ASSESS):   OUTPUT WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   IF EOF THEN DO;
+MPRINT(EM_ASSESS):   ;
+MPRINT(EM_ASSESS):   _POS_ = .;
+MPRINT(EM_ASSESS):   _FALPOS_ = .;
+MPRINT(EM_ASSESS):   _NEG_ = .;
+MPRINT(EM_ASSESS):   _FALNEG_ = .;
+MPRINT(EM_ASSESS):   EVENTVALUE = "1                               " ;
+MPRINT(EM_ASSESS):   FIRSTINGROUP = .;
+MPRINT(EM_ASSESS):   LASTINGROUP = 1;
+MPRINT(EM_ASSESS):   LOWPOSTERIOR = 1;
+MPRINT(EM_ASSESS):   UPPOSTERIOR = 1;
+MPRINT(EM_ASSESS):   SENSITIVITY = 0;
+MPRINT(EM_ASSESS):   ONEMINUSSPECIFICITY = 0;
+MPRINT(EM_ASSESS):   SPECIFICITY = 1;
+MPRINT(EM_ASSESS):   OUTPUT WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   LOWPOSTERIOR = 0;
+MPRINT(EM_ASSESS):   UPPOSTERIOR = 0;
+MPRINT(EM_ASSESS):   LASTINGROUP = 0;
+MPRINT(EM_ASSESS):   SENSITIVITY = 1;
+MPRINT(EM_ASSESS):   ONEMINUSSPECIFICITY = 1;
+MPRINT(EM_ASSESS):   SPECIFICITY = 0;
+MPRINT(EM_ASSESS):   OUTPUT WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   END;
+MPRINT(EM_ASSESS):   RENAME LASTINGROUP = CUTOFF EVENTVALUE = EVENT ;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * Run for data outroc ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   PROC SORT DATA = WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   BY SENSITIVITY ONEMINUSSPECIFICITY;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ..................................... OUTROC;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   PROC DATASETS NOLIST LIB = WORK;
+MPRINT(EM_ASSESS):   MODIFY MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   LABEL EVENT = "Event" ONEMINUSSPECIFICITY = "1 - Specificity" SENSITIVITY 
+= "Sensitivity" _POS_ = "True Positive Count" _NEG_ = "True Negative Count" _FALPOS_ = "False 
+Positive Count" _FALNEG_ = "False Negative Count" CUTOFF = "Last in Group" LOWPOSTERIOR = 
+"Lower Bound Probability" UPPOSTERIOR = "Upper Bound Probability" SPECIFICITY = "Specificity" 
+FIRSTINGROUP = "First in Group" ;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   QUIT;
+MPRINT(EM_ASSESS):   PROC SORT DATA = WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_ASSESS):   BY ONEMINUSSPECIFICITY SENSITIVITY;
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   OPTION NOCENTER LS = 95;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * Report Vars Area.;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   * ....................... Analyzing outfit data set ;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   *;
+MPRINT(EM_ASSESS):   DATA WORK.MdlComp2_STATTEMP;
+MPRINT(EM_ASSESS):   _AUR_ = INPUT ( PUT (0.98875172327359, 5.3), 5.3);
+MPRINT(EM_ASSESS):   _GINI_ = INPUT ( PUT (0.97750344654718, 5.3), 5.3);
+MPRINT(EM_ASSESS):   _KS_ = INPUT ( PUT (0.8975122196, 5.3), 5.3);
+MPRINT(EM_ASSESS):   _KS_PROB_CUTOFF = INPUT ( PUT (0.090, 5.3), 5.3);
+MPRINT(EM_ASSESS):   _KS_BIN_ = INPUT ( PUT (0.8927653841, 5.3), 5.3);
+MPRINT(EM_ASSESS):   BINNED_KS_PROB_CUTOFF = INPUT ( PUT (0.1789687365, 5.3), 5.3);
+MPRINT(EM_ASSESS):   LABEL _AUR_ = "Area Under ROC" ;
+MPRINT(EM_ASSESS):   LABEL _GINI_ = "Gini Coefficient" ;
+MPRINT(EM_ASSESS):   LABEL _KS_ = _KS_ = "Two-Sample Kolmogorov-Smirnov Statistic" ;
+MPRINT(EM_ASSESS):   LABEL _KS_PROB_CUTOFF = " Kolmogorov-Smirnov Stat Prob Cut-off";
+MPRINT(EM_ASSESS):   LABEL _KS_BIN_ = "Bin-Based Two-sample Kolmogorov-Smirnov Statistic" ;
+MPRINT(EM_ASSESS):   LABEL BINNED_KS_PROB_CUTOFF = " Binned Kolmogorov-Smirnov Stat Prob 
+Cut-off";
+MPRINT(EM_ASSESS):   RUN;
+MPRINT(EM_ASSESS):   proc datasets lib=work nolist;
+MPRINT(EM_ASSESS):   delete _ea_tmpdata;
+MPRINT(EM_ASSESS):   run;
+MPRINT(EM_ASSESS):   quit;
+MPRINT(EM_ASSESS):  ;
+MPRINT(EM_ASSESS):   OPTION ERRORS = 20;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):    data WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_DIAGRAM):   length PARENT $16 MODEL $16 MODELDESCRIPTION $81 DATAROLE $8 TARGET $32 
+TARGETLABEL $200;
+MPRINT(EM_DIAGRAM):   label PARENT = "Predecessor Node" MODEL = "Model Node" MODELDESCRIPTION 
+= "Model Description" DATAROLE = "Data Role" TARGET = "Target Variable" TARGETLABEL = "Target 
+Label";
+MPRINT(EM_DIAGRAM):   set WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_DIAGRAM):   retain PARENT "Neural6" MODEL "Neural6" MODELDESCRIPTION "Final - ANN 
+8HU" TARGET "DepVar" TARGETLABEL "DepVar" DATAROLE "VALIDATE";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMROC;
+MPRINT(EM_DIAGRAM):   set EMWS1.MdlComp2_EMROC WORK.MdlComp2_ROCTEMP;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data WORK.MdlComp2_STATTEMP;
+MPRINT(EM_DIAGRAM):   length TARGET $32 TARGETLABEL $200;
+MPRINT(EM_DIAGRAM):   retain TARGET "DepVar" TARGETLABEL "DepVar";
+MPRINT(EM_DIAGRAM):   set WORK.MdlComp2_STATTEMP;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    proc datasets lib=WORK nolist;
+MPRINT(EM_DIAGRAM):   modify MdlComp2_STATTEMP;
+MPRINT(EM_DIAGRAM):   rename _AUR_=_VAUR_ _GINI_=_VGINI_ _KS_=VKS _KS_BIN_=_VKS_BIN_ 
+_KS_PROB_CUTOFF=_VKS_PROB_CUTOFF_ BINNED_KS_PROB_CUTOFF=_VBINNED_KS_PROB_CUTOFF_;
+MPRINT(EM_DIAGRAM):   label _VAUR_ = "Valid: Roc Index" _VGini_ = "Valid: Gini Coefficient" 
+VKS = "Valid: Kolmogorov-Smirnov Statistic" _VKS_BIN_ = "Valid: Bin-Based Two-Way 
+Kolmogorov-Smirnov Statistic" _VKS_PROB_CUTOFF_ = "Valid: Kolmogorov-Smirnov Probability 
+Cutoff" _VBINNED_KS_PROB_CUTOFF_= "Valid: Bin-Based Two-Way Kolmogorov-Smirnov Probability 
+Cutoff";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data WORK.MdlComp2INDEXTEMP;
+MPRINT(EM_DIAGRAM):   set WORK.MdlComp2INDEXTEMP;
+MPRINT(EM_DIAGRAM):   if _N_ =1 then set WORK.MdlComp2_STATTEMP;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data WORK.MdlComp2INDEXTEMP;
+MPRINT(EM_DIAGRAM):   length PARENT $16 MODEL $16 MODELDESCRIPTION $81 TARGET $32 TARGETLABEL 
+$200;
+MPRINT(EM_DIAGRAM):   label PARENT = "Predecessor Node" MODEL = "Model Node" MODELDESCRIPTION 
+= "Model Description" TARGET = "Target Variable" TARGETLABEL = "Target Label";
+MPRINT(EM_DIAGRAM):   set WORK.MdlComp2INDEXTEMP;
+MPRINT(EM_DIAGRAM):   retain PARENT "Neural6" MODEL "Neural6" MODELDESCRIPTION "Final - ANN 
+8HU" TARGET "" TARGETLABEL "DepVar";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMINDEX;
+MPRINT(EM_DIAGRAM):   set WORK.MdlComp2INDEXTEMP;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMROC;
+MPRINT(EM_DIAGRAM):   set EMWS1.MdlComp2_EMROC end=lastobs;
+MPRINT(EM_DIAGRAM):   output;
+MPRINT(EM_DIAGRAM):   if lastobs then do;
+MPRINT(EM_DIAGRAM):   MODEL=' _Baseline_ ';
+MPRINT(EM_DIAGRAM):   MODELDESCRIPTION="Baseline";
+MPRINT(EM_DIAGRAM):   DATAROLE ='TRAIN';
+MPRINT(EM_DIAGRAM):   sensitivity = 0;
+MPRINT(EM_DIAGRAM):   oneminusspecificity = 0;
+MPRINT(EM_DIAGRAM):   output;
+MPRINT(EM_DIAGRAM):   MODEL=' _Baseline_ ';
+MPRINT(EM_DIAGRAM):   MODELDESCRIPTION="Baseline";
+MPRINT(EM_DIAGRAM):   DATAROLE ='TRAIN';
+MPRINT(EM_DIAGRAM):   sensitivity = 1;
+MPRINT(EM_DIAGRAM):   oneminusspecificity = 1;
+MPRINT(EM_DIAGRAM):   output;
+MPRINT(EM_DIAGRAM):   MODEL=' _Baseline_ ';
+MPRINT(EM_DIAGRAM):   MODELDESCRIPTION="Baseline";
+MPRINT(EM_DIAGRAM):   DATAROLE='VALIDATE';
+MPRINT(EM_DIAGRAM):   sensitivity = 0;
+MPRINT(EM_DIAGRAM):   oneminusspecificity = 0;
+MPRINT(EM_DIAGRAM):   output;
+MPRINT(EM_DIAGRAM):   MODEL=' _Baseline_ ';
+MPRINT(EM_DIAGRAM):   MODELDESCRIPTION="Baseline";
+MPRINT(EM_DIAGRAM):   DATAROLE='VALIDATE';
+MPRINT(EM_DIAGRAM):   sensitivity = 1;
+MPRINT(EM_DIAGRAM):   oneminusspecificity = 1;
+MPRINT(EM_DIAGRAM):   output;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   run;
+75888      proc sort data=EMWS1.MdlComp2_EMOUTFIT NOTHREADS;
+MPRINT(EM_DIAGRAM):    proc sort data=EMWS1.MdlComp2_EMOUTFIT NOTHREADS;
+75889      by model target;
+MPRINT(EM_DIAGRAM):   by model target;
+75890      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMOUTFIT.
+NOTE: The data set EMWS1.MDLCOMP2_EMOUTFIT has 1 observations and 39 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+75891      proc sort data=EMWS1.MdlComp2_EMINDEX NOTHREADS;
+MPRINT(EM_DIAGRAM):    proc sort data=EMWS1.MdlComp2_EMINDEX NOTHREADS;
+75892      by model target;
+MPRINT(EM_DIAGRAM):   by model target;
+75893      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMINDEX.
+NOTE: The data set EMWS1.MDLCOMP2_EMINDEX has 1 observations and 17 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+75894      data EMWS1.MdlComp2_EMOUTFIT;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMOUTFIT;
+75895      merge EMWS1.MdlComp2_EMOUTFIT EMWS1.MdlComp2_EMINDEX;
+MPRINT(EM_DIAGRAM):   merge EMWS1.MdlComp2_EMOUTFIT EMWS1.MdlComp2_EMINDEX;
+75896      label TARGET = "%sysfunc(sasmsg(sashelp.dmine, rpt_targetvar_vlabel,  NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label TARGET = "Target Variable";
+75897      by model target;
+MPRINT(EM_DIAGRAM):   by model target;
+75898      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMOUTFIT.
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMINDEX.
+NOTE: The data set EMWS1.MDLCOMP2_EMOUTFIT has 1 observations and 51 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+75899      proc sort data=EMWS1.MdlComp2_EMRANK(keep=DATAROLE DECILE MODEL GAIN LIFT LIFTC RESP
+75899    !  RESPC CAP CAPC) out=_temp;
+MPRINT(EM_DIAGRAM):    proc sort data=EMWS1.MdlComp2_EMRANK(keep=DATAROLE DECILE MODEL GAIN 
+LIFT LIFTC RESP RESPC CAP CAPC) out=_temp;
+75900      by MODEL;
+MPRINT(EM_DIAGRAM):   by MODEL;
+75901      where DECILE=10;
+MPRINT(EM_DIAGRAM):   where DECILE=10;
+75902      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 2 observations read from the data set EMWS1.MDLCOMP2_EMRANK.
+      WHERE DECILE=10;
+NOTE: The data set WORK._TEMP has 2 observations and 10 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+75903      data _temp;
+MPRINT(EM_DIAGRAM):   data _temp;
+75904      retain _GAIN_ _VGAIN_ _LIFT_ _LIFTC_ _VLIFT_ _VLIFTC_ _RESP_ _RESPC_ _VRESP_
+75904    ! _VRESPC_ _CAP_ _CAPC_ _VCAP_ _VCAPC_ .;
+MPRINT(EM_DIAGRAM):   retain _GAIN_ _VGAIN_ _LIFT_ _LIFTC_ _VLIFT_ _VLIFTC_ _RESP_ _RESPC_ 
+_VRESP_ _VRESPC_ _CAP_ _CAPC_ _VCAP_ _VCAPC_ .;
+75905      label _GAIN_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_traingain_vlabel, NOQUOTE))"
+75905    ! _VGAIN_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_validgain_vlabel, NOQUOTE))" _LIFT_ =
+75905    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_trainlift_vlabel, NOQUOTE))" _VLIFT_ =
+75906         "%sysfunc(sasmsg(sashelp.dmine, rpt_validlift_vlabel, NOQUOTE))" _RESP_ =
+75906    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_trainresp_vlabel, NOQUOTE))" _VRESP_ =
+75906    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_validresp_vlabel, NOQUOTE))" _CAP_ =
+75907         "%sysfunc(sasmsg(sashelp.dmine, rpt_traincap_vlabel,  NOQUOTE))" _VCAP_ =
+75907    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_validcap_vlabel,  NOQUOTE))" _LIFTC_ =
+75907    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_trainliftc_vlabel, NOQUOTE))" _VLIFTC_ =
+75908         "%sysfunc(sasmsg(sashelp.dmine, rpt_validliftc_vlabel, NOQUOTE))" _RESPC_ =
+75908    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_trainrespc_vlabel, NOQUOTE))" _VRESPC_ =
+75908    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_validrespc_vlabel, NOQUOTE))" _CAPC_ =
+75909         "%sysfunc(sasmsg(sashelp.dmine, rpt_traincapc_vlabel,  NOQUOTE))" _VCAPC_ =
+75909    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_validcapc_vlabel,  NOQUOTE))" _TGAIN_ =
+75909    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_testgain_vlabel,  NOQUOTE))" _TLIFT_ =
+75910         "%sysfunc(sasmsg(sashelp.dmine, rpt_testlift_vlabel,   NOQUOTE))" _TRESP_ =
+75910    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_testresp_vlabel,  NOQUOTE))" _TCAP_ =
+75910    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_testcap_vlabel,   NOQUOTE))" _TLIFTC_ =
+75911         "%sysfunc(sasmsg(sashelp.dmine, rpt_testliftc_vlabel,   NOQUOTE))" _TRESPC_ =
+75911    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_testrespc_vlabel,  NOQUOTE))" _TCAPC_ =
+75911    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_testcapc_vlabel,   NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _GAIN_ = "Train: Gain" _VGAIN_ = "Valid: Gain" _LIFT_ = "Train: 
+Lift" _VLIFT_ = "Valid: Lift" _RESP_ = "Train: Percent Response" _VRESP_ = "Valid: Percent 
+Response" _CAP_ = "Train: Percent Captured Response" _VCAP_ = "Valid: Percent Captured 
+Response" _LIFTC_ = "Train: Cumulative Lift" _VLIFTC_ = "Valid: Cumulative Lift" _RESPC_ = 
+"Train: Cumulative Percent Response" _VRESPC_ = "Valid: Cumulative Percent Response" _CAPC_ = 
+"Train: Cumulative Percent Captured Response" _VCAPC_ = "Valid: Cumulative Percent Captured 
+Response" _TGAIN_ = "Test: Gain" _TLIFT_ = "Test: Lift" _TRESP_ = "Test: Percent Response" 
+_TCAP_ = "Test: Percent Captured Response" _TLIFTC_ = "Test: Cumulative Lift" _TRESPC_ = 
+"Test: Cumulative Percent Response" _TCAPC_ = "Test: Cumulative Percent Captured Response";
+75912      set _temp;
+MPRINT(EM_DIAGRAM):   set _temp;
+75913      by MODEL;
+MPRINT(EM_DIAGRAM):   by MODEL;
+75914      if first.MODEL then do;
+MPRINT(EM_DIAGRAM):   if first.MODEL then do;
+75915      _GAIN_=.;
+MPRINT(EM_DIAGRAM):   _GAIN_=.;
+75916      _VGAIN_=.;
+MPRINT(EM_DIAGRAM):   _VGAIN_=.;
+75917      _TGAIN_=.;
+MPRINT(EM_DIAGRAM):   _TGAIN_=.;
+75918      _LIFT_=.;
+MPRINT(EM_DIAGRAM):   _LIFT_=.;
+75919      _VLIFT_=.;
+MPRINT(EM_DIAGRAM):   _VLIFT_=.;
+75920      _TLIFT_=.;
+MPRINT(EM_DIAGRAM):   _TLIFT_=.;
+75921      _LIFTC_=.;
+MPRINT(EM_DIAGRAM):   _LIFTC_=.;
+75922      _VLIFTC_=.;
+MPRINT(EM_DIAGRAM):   _VLIFTC_=.;
+75923      _TLIFTC_=.;
+MPRINT(EM_DIAGRAM):   _TLIFTC_=.;
+75924      _RESP_=.;
+MPRINT(EM_DIAGRAM):   _RESP_=.;
+75925      _VRESP_=.;
+MPRINT(EM_DIAGRAM):   _VRESP_=.;
+75926      _TRESP_=.;
+MPRINT(EM_DIAGRAM):   _TRESP_=.;
+75927      _RESPC_=.;
+MPRINT(EM_DIAGRAM):   _RESPC_=.;
+75928      _VRESPC_=.;
+MPRINT(EM_DIAGRAM):   _VRESPC_=.;
+75929      _TRESPC_=.;
+MPRINT(EM_DIAGRAM):   _TRESPC_=.;
+75930      _CAP_=.;
+MPRINT(EM_DIAGRAM):   _CAP_=.;
+75931      _VCAP_=.;
+MPRINT(EM_DIAGRAM):   _VCAP_=.;
+75932      _TCAP_=.;
+MPRINT(EM_DIAGRAM):   _TCAP_=.;
+75933      _CAPC_=.;
+MPRINT(EM_DIAGRAM):   _CAPC_=.;
+75934      _VCAPC_=.;
+MPRINT(EM_DIAGRAM):   _VCAPC_=.;
+75935      _VCAPC_=.;
+MPRINT(EM_DIAGRAM):   _VCAPC_=.;
+75936      end;
+MPRINT(EM_DIAGRAM):   end;
+75937      select(DATAROLE);
+MPRINT(EM_DIAGRAM):   select(DATAROLE);
+75938      when('TRAIN') do;
+MPRINT(EM_DIAGRAM):   when('TRAIN') do;
+75939      _GAIN_=GAIN;
+MPRINT(EM_DIAGRAM):   _GAIN_=GAIN;
+75940      _LIFT_=LIFT;
+MPRINT(EM_DIAGRAM):   _LIFT_=LIFT;
+75941      _LIFTC_=LIFTC;
+MPRINT(EM_DIAGRAM):   _LIFTC_=LIFTC;
+75942      _RESP_=RESP;
+MPRINT(EM_DIAGRAM):   _RESP_=RESP;
+75943      _RESPC_=RESPC;
+MPRINT(EM_DIAGRAM):   _RESPC_=RESPC;
+75944      _CAP_=CAP;
+MPRINT(EM_DIAGRAM):   _CAP_=CAP;
+75945      _CAPC_=CAPC;
+MPRINT(EM_DIAGRAM):   _CAPC_=CAPC;
+75946      end;
+MPRINT(EM_DIAGRAM):   end;
+75947      when('VALIDATE') do;
+MPRINT(EM_DIAGRAM):   when('VALIDATE') do;
+75948      _VGAIN_=GAIN;
+MPRINT(EM_DIAGRAM):   _VGAIN_=GAIN;
+75949      _VLIFT_=LIFT;
+MPRINT(EM_DIAGRAM):   _VLIFT_=LIFT;
+75950      _VLIFTC_=LIFTC;
+MPRINT(EM_DIAGRAM):   _VLIFTC_=LIFTC;
+75951      _VRESP_=RESP;
+MPRINT(EM_DIAGRAM):   _VRESP_=RESP;
+75952      _VRESPC_=RESPC;
+MPRINT(EM_DIAGRAM):   _VRESPC_=RESPC;
+75953      _VCAP_=CAP;
+MPRINT(EM_DIAGRAM):   _VCAP_=CAP;
+75954      _VCAPC_=CAPC;
+MPRINT(EM_DIAGRAM):   _VCAPC_=CAPC;
+75955      end;
+MPRINT(EM_DIAGRAM):   end;
+75956      when('TEST') do;
+MPRINT(EM_DIAGRAM):   when('TEST') do;
+75957      _TGAIN_=GAIN;
+MPRINT(EM_DIAGRAM):   _TGAIN_=GAIN;
+75958      _TLIFT_=LIFT;
+MPRINT(EM_DIAGRAM):   _TLIFT_=LIFT;
+75959      _TLIFTC_=LIFTC;
+MPRINT(EM_DIAGRAM):   _TLIFTC_=LIFTC;
+75960      _TRESP_=RESP;
+MPRINT(EM_DIAGRAM):   _TRESP_=RESP;
+75961      _TRESPC_=RESPC;
+MPRINT(EM_DIAGRAM):   _TRESPC_=RESPC;
+75962      _TCAP_=CAP;
+MPRINT(EM_DIAGRAM):   _TCAP_=CAP;
+75963      _TCAPC_=CAPC;
+MPRINT(EM_DIAGRAM):   _TCAPC_=CAPC;
+75964      end;
+MPRINT(EM_DIAGRAM):   end;
+75965      otherwise;
+MPRINT(EM_DIAGRAM):   otherwise;
+75966      end;
+MPRINT(EM_DIAGRAM):   end;
+75967      keep MODEL _GAIN_ _LIFT_ _LIFTC_ _RESP_ _RESPC_ _CAP_ _CAPC_
+75968      _VGAIN_ _VLIFT_ _VLIFTC_ _VRESP_ _VRESPC_ _VCAP_ _VCAPC_
+75969      ;
+MPRINT(EM_DIAGRAM):   keep MODEL _GAIN_ _LIFT_ _LIFTC_ _RESP_ _RESPC_ _CAP_ _CAPC_ _VGAIN_ 
+_VLIFT_ _VLIFTC_ _VRESP_ _VRESPC_ _VCAP_ _VCAPC_ ;
+75970      if last.model then output;
+MPRINT(EM_DIAGRAM):   if last.model then output;
+75971      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 2 observations read from the data set WORK._TEMP.
+NOTE: The data set WORK._TEMP has 1 observations and 15 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.03 seconds
+      
+
+75972      proc sort data=EMWS1.MdlComp2_EMOUTFIT;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS1.MdlComp2_EMOUTFIT;
+75973      by MODEL;
+MPRINT(EM_DIAGRAM):   by MODEL;
+75974      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMOUTFIT.
+NOTE: The data set EMWS1.MDLCOMP2_EMOUTFIT has 1 observations and 51 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+75975      data EMWS1.MdlComp2_EMOUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS1.MdlComp2_EMOUTFIT;
+75976      merge EMWS1.MdlComp2_EMOUTFIT _temp;
+MPRINT(EM_DIAGRAM):   merge EMWS1.MdlComp2_EMOUTFIT _temp;
+75977      by MODEL;
+MPRINT(EM_DIAGRAM):   by MODEL;
+75978      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMOUTFIT.
+NOTE: There were 1 observations read from the data set WORK._TEMP.
+NOTE: The data set EMWS1.MDLCOMP2_EMOUTFIT has 1 observations and 65 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+75979      data EMWS1.MdlComp2_EMOUTFIT;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMOUTFIT;
+75980      length PARENT $16 MODEL $16 MODELDESCRIPTION $81 TARGET $32 TARGETLABEL $200
+75980    ! _CRITERION_ 8;
+MPRINT(EM_DIAGRAM):   length PARENT $16 MODEL $16 MODELDESCRIPTION $81 TARGET $32 TARGETLABEL 
+$200 _CRITERION_ 8;
+75981      set EMWS1.MdlComp2_EMOUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS1.MdlComp2_EMOUTFIT;
+75982      label _CRITERION_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_selectioncriterion_vlabel ,
+75982    !  NOQUOTE, %nrbquote(Valid: Misclassification Rate)))";
+MPRINT(EM_DIAGRAM):   label _CRITERION_ = "Selection Criterion: Valid: Misclassification Rate";
+75983      _CRITERION_ = _VMISC_;
+MPRINT(EM_DIAGRAM):   _CRITERION_ = _VMISC_;
+75984      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMOUTFIT.
+NOTE: The data set EMWS1.MDLCOMP2_EMOUTFIT has 1 observations and 66 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+75985      data EMWS1.MdlComp2_EMOUTFIT;
+MPRINT(EM_DIAGRAM):    data EMWS1.MdlComp2_EMOUTFIT;
+75986      length USE $1;
+MPRINT(EM_DIAGRAM):   length USE $1;
+75987      label USE= "%sysfunc(sasmsg(sashelp.dmine, rpt_selmodel_vlabel,  NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label USE= "Selected Model";
+75988      set EMWS1.MdlComp2_EMOUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS1.MdlComp2_EMOUTFIT;
+75989      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Variable USE is uninitialized.
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMOUTFIT.
+NOTE: The data set EMWS1.MDLCOMP2_EMOUTFIT has 1 observations and 67 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+75990      proc sort data = EMWS1.MdlComp2_EMOUTFIT NOTHREADS;
+MPRINT(EM_DIAGRAM):    proc sort data = EMWS1.MdlComp2_EMOUTFIT NOTHREADS;
+75991      by
+75992      _VMISC_
+75993      _VASE_ _ASE_ _MISC_;
+MPRINT(EM_DIAGRAM):   by _VMISC_ _VASE_ _ASE_ _MISC_;
+75994      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMOUTFIT.
+NOTE: The data set EMWS1.MDLCOMP2_EMOUTFIT has 1 observations and 67 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+75995      %let EM_AUTOMODEL = %str();
+75996      data EMWS1.MdlComp2_EMOUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS1.MdlComp2_EMOUTFIT;
+75997      set EMWS1.MdlComp2_EMOUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS1.MdlComp2_EMOUTFIT;
+75998      drop found;
+MPRINT(EM_DIAGRAM):   drop found;
+75999      retain found 0;
+MPRINT(EM_DIAGRAM):   retain found 0;
+76000      if found = 0 and _VMISC_ ne . then do;
+MPRINT(EM_DIAGRAM):   if found = 0 and _VMISC_ ne . then do;
+76001      use = 'Y';
+MPRINT(EM_DIAGRAM):   use = 'Y';
+76002      found = 1;
+MPRINT(EM_DIAGRAM):   found = 1;
+76003      call symput('EM_AUTOMODEL', model);
+MPRINT(EM_DIAGRAM):   call symput('EM_AUTOMODEL', model);
+76004      end;
+MPRINT(EM_DIAGRAM):   end;
+76005      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMOUTFIT.
+NOTE: The data set EMWS1.MDLCOMP2_EMOUTFIT has 1 observations and 67 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+76006      title ' ';
+MPRINT(EM_DIAGRAM):    title ' ';
+76007      proc print data=EMWS1.MdlComp2_EMOUTFIT noobs label;
+MPRINT(EM_DIAGRAM):   proc print data=EMWS1.MdlComp2_EMOUTFIT noobs label;
+76008      var
+76009      USE
+76010      MODEL
+76011      MODELDESCRIPTION
+76012      _VMISC_
+76013      _ASE_
+76014      _MISC_
+76015      _VASE_
+76016      ;
+MPRINT(EM_DIAGRAM):   var USE MODEL MODELDESCRIPTION _VMISC_ _ASE_ _MISC_ _VASE_ ;
+76017      title9 "%sysfunc(sasmsg(sashelp.dmine, rpt_fitstat_title,        NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title9 "Fit Statistics";
+76018      title10 "Model Selection based on Valid: Misclassification Rate (_VMISC_)";
+MPRINT(EM_DIAGRAM):   title10 "Model Selection based on Valid: Misclassification Rate 
+(_VMISC_)";
+MPRINT(EM_DIAGRAM):   run;
+76019      run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMOUTFIT.
+NOTE: The PROCEDURE PRINT printed page 28.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+76020      title9;
+MPRINT(EM_DIAGRAM):   title9;
+76021      title10;
+MPRINT(EM_DIAGRAM):   title10;
+76022      proc transpose data=EMWS1.MdlComp2_EMOUTFIT out=
+76022    ! work.modelstats(rename=(_LABEL_=Label _NAME_=STAT));
+MPRINT(EM_DIAGRAM):   proc transpose data=EMWS1.MdlComp2_EMOUTFIT out= 
+work.modelstats(rename=(_LABEL_=Label _NAME_=STAT));
+76023      ID model;
+MPRINT(EM_DIAGRAM):   ID model;
+76024      by target targetLabel;
+MPRINT(EM_DIAGRAM):   by target targetLabel;
+76025      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMOUTFIT.
+NOTE: The data set WORK.MODELSTATS has 61 observations and 5 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+76026      data work.modelstats;
+MPRINT(EM_DIAGRAM):   data work.modelstats;
+76027      set work.modelstats;
+MPRINT(EM_DIAGRAM):   set work.modelstats;
+76028      if substr(STAT, 1, 2) = '_V' or STAT='VKS' then do;
+MPRINT(EM_DIAGRAM):   if substr(STAT, 1, 2) = '_V' or STAT='VKS' then do;
+76029      NumRole=2;
+MPRINT(EM_DIAGRAM):   NumRole=2;
+76030      end;
+MPRINT(EM_DIAGRAM):   end;
+76031      else if substr(STAT, 1, 2) = '_T' or STAT='TKS' then do;
+MPRINT(EM_DIAGRAM):   else if substr(STAT, 1, 2) = '_T' or STAT='TKS' then do;
+76032      NumRole=3;
+MPRINT(EM_DIAGRAM):   NumRole=3;
+76033      end;
+MPRINT(EM_DIAGRAM):   end;
+76034      else if substr(STAT, 1, 1) = '_' or STAT in('KS', 'BINNED_KS_PROB_CUTOFF') then do;
+MPRINT(EM_DIAGRAM):   else if substr(STAT, 1, 1) = '_' or STAT in('KS', 
+'BINNED_KS_PROB_CUTOFF') then do;
+76035      NumRole=1;
+MPRINT(EM_DIAGRAM):   NumRole=1;
+76036      end;
+MPRINT(EM_DIAGRAM):   end;
+76037      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 61 observations read from the data set WORK.MODELSTATS.
+NOTE: The data set WORK.MODELSTATS has 61 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+76038      proc sort data=work.modelstats out=work.modelstats;
+MPRINT(EM_DIAGRAM):   proc sort data=work.modelstats out=work.modelstats;
+76039      by NumRole STAT;
+MPRINT(EM_DIAGRAM):   by NumRole STAT;
+76040      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 61 observations read from the data set WORK.MODELSTATS.
+NOTE: The data set WORK.MODELSTATS has 61 observations and 6 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+76041      proc format;
+MPRINT(EM_DIAGRAM):   proc format;
+76042      value RoleFmt 1='Train' 2='Valid' 3='Test';
+MPRINT(EM_DIAGRAM):   value RoleFmt 1='Train' 2='Valid' 3='Test';
+NOTE: Format ROLEFMT has been output.
+MPRINT(EM_DIAGRAM):   run;
+76043      run;
+
+NOTE: PROCEDURE FORMAT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+76044      proc print data= work.modelstats(drop=STAT target targetLabel) noobs label;
+MPRINT(EM_DIAGRAM):   proc print data= work.modelstats(drop=STAT target targetLabel) noobs 
+label;
+76045      label Label = "%sysfunc(sasmsg(sashelp.dmine, rpt_statistics_vlabel, NOQUOTE))"
+76045    ! NumRole= "%sysfunc(sasmsg(sashelp.dmine, rpt_datarole_vlabel,   NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label Label = "Statistics" NumRole= "Data Role";
+76046      title9 "%sysfunc(sasmsg(sashelp.dmine, rpt_fittable_title, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title9 "Fit Statistics Table";
+76047      title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_target_title,   NOQUOTE, DepVar))";
+MPRINT(EM_DIAGRAM):   title10 "Target: DepVar";
+MPRINT(EM_DIAGRAM):   by NumRole;
+MPRINT(EM_DIAGRAM):   format NumRole RoleFmt.;
+MPRINT(EM_DIAGRAM):   run;
+76048      by NumRole;
+76049      format NumRole RoleFmt.;
+76050      run;
+
+NOTE: There were 61 observations read from the data set WORK.MODELSTATS.
+NOTE: The PROCEDURE PRINT printed page 29.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+76051      title9;
+MPRINT(EM_DIAGRAM):   title9;
+76052      title10;
+MPRINT(EM_DIAGRAM):   title10;
+76053      data EMWS1.MdlComp2_COMPAREFIT;
+MPRINT(EM_DIAGRAM):   data EMWS1.MdlComp2_COMPAREFIT;
+76054      length DataRole Target $32 targetlabel $200;
+MPRINT(EM_DIAGRAM):   length DataRole Target $32 targetlabel $200;
+76055      label DataRole = "%sysfunc(sasmsg(sashelp.dmine, rpt_datarole_vlabel,  NOQUOTE))"
+76055    ! STAT = "%sysfunc(sasmsg(sashelp.dmine, rpt_fitstat_vlabel,   NOQUOTE))" LABEL =
+76055    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_statlabel_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label DataRole = "Data Role" STAT = "Fit Statistics" LABEL = "Statistics 
+Label";
+76056      set work.modelstats;
+MPRINT(EM_DIAGRAM):   set work.modelstats;
+76057      DataRole = strip(put(NumRole, Rolefmt.));
+MPRINT(EM_DIAGRAM):   DataRole = strip(put(NumRole, Rolefmt.));
+76058      drop NumRole;
+MPRINT(EM_DIAGRAM):   drop NumRole;
+76059      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 61 observations read from the data set WORK.MODELSTATS.
+NOTE: The data set EMWS1.MDLCOMP2_COMPAREFIT has 61 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+76060      %macro ReportFit;
+76061      proc transpose data= EMWS1.MdlComp2_EMOUTFIT(obs=1) out=tempFit;
+76062      run;
+76063      data _null_;
+76064      set tempfit end=eof;
+76065      retain statCount 0;
+76066      if substr(_NAME_,1,2) ^in('_V', '_T', 'TK', 'VK') then do;
+76067      statCount + 1;
+76068      call symput('statName'!!strip(put(statCount,best.)), _NAME_);
+76069      call symput('statLabel'!!strip(put(statCount,best.)), scan(_LABEL_,2, ':'));
+76070      end;
+76071      if eof then do;
+76072      call symput('statCount', strip(put(statCount,best.)));
+76073      end;
+76074      run;
+76075      data EMWS1.MdlComp2_EMREPORTFIT;
+76076      set EMWS1.MdlComp2_EMOUTFIT;
+76077      length FitStat $41 Label $40;
+76078      label FitStat = "%sysfunc(sasmsg(sashelp.dmine, rpt_fitstat_vlabel,   NOQUOTE))"
+76078    ! LABEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_statlabel_vlabel, NOQUOTE))";
+76079      %do i=1 %to &statCount;
+76080      FitStat="&&StatName&i";
+76081      Label="&&StatLabel&i";
+76082      Train =&&StatName&i;
+76083      %if &&StatName&i= KS %then %do;
+76084      Validate = VKS;
+76085      Test = TKS;
+76086      %end;
+76087      %else %if &&StatName&i= BINNED_KS_PROB_CUTOFF %then %do;
+76088      Validate = _VBINNED_KS_PROB_CUTOFF_;
+76089      Test = _TBINNED_KS_PROB_CUTOFF_;
+76090      %end;
+76091      %else %do;
+76092      %let VstatName= _V%substr(&&StatName&i,2);
+76093      %let TstatName= _T%substr(&&StatName&i,2);
+76094      Validate=&VStatName;
+76095      Test=&TStatName;
+76096      %end;
+76097      output;
+76098      %end;
+76099      keep Parent Model Target TargetLabel FitStat Label Train Validate Test;
+76100      run;
+76101      %mend;
+76102      %reportFit;
+MPRINT(EM_DIAGRAM):   
+MPRINT(REPORTFIT):   proc transpose data= EMWS1.MdlComp2_EMOUTFIT(obs=1) out=tempFit;
+MPRINT(REPORTFIT):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMOUTFIT.
+NOTE: The data set WORK.TEMPFIT has 61 observations and 3 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(REPORTFIT):   data _null_;
+MPRINT(REPORTFIT):   set tempfit end=eof;
+MPRINT(REPORTFIT):   retain statCount 0;
+MPRINT(REPORTFIT):   if substr(_NAME_,1,2) ^in('_V', '_T', 'TK', 'VK') then do;
+MPRINT(REPORTFIT):   statCount + 1;
+MPRINT(REPORTFIT):   call symput('statName'!!strip(put(statCount,best.)), _NAME_);
+MPRINT(REPORTFIT):   call symput('statLabel'!!strip(put(statCount,best.)), scan(_LABEL_,2, 
+':'));
+MPRINT(REPORTFIT):   end;
+MPRINT(REPORTFIT):   if eof then do;
+MPRINT(REPORTFIT):   call symput('statCount', strip(put(statCount,best.)));
+MPRINT(REPORTFIT):   end;
+MPRINT(REPORTFIT):   run;
+
+NOTE: There were 61 observations read from the data set WORK.TEMPFIT.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(REPORTFIT):   data EMWS1.MdlComp2_EMREPORTFIT;
+MPRINT(REPORTFIT):   set EMWS1.MdlComp2_EMOUTFIT;
+MPRINT(REPORTFIT):   length FitStat $41 Label $40;
+MPRINT(REPORTFIT):   label FitStat = "Fit Statistics" LABEL = "Statistics Label";
+MPRINT(REPORTFIT):   FitStat="_CRITERION_             ";
+MPRINT(REPORTFIT):   Label=" Valid";
+MPRINT(REPORTFIT):   Train =_CRITERION_ ;
+MPRINT(REPORTFIT):   Validate=_VCRITERION_;
+MPRINT(REPORTFIT):   Test=_TCRITERION_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_DFT_                   ";
+MPRINT(REPORTFIT):   Label=" Total Degrees of Freedom                               ";
+MPRINT(REPORTFIT):   Train =_DFT_ ;
+MPRINT(REPORTFIT):   Validate=_VDFT_;
+MPRINT(REPORTFIT):   Test=_TDFT_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_DFE_                   ";
+MPRINT(REPORTFIT):   Label=" Degrees of Freedom for Error                           ";
+MPRINT(REPORTFIT):   Train =_DFE_ ;
+MPRINT(REPORTFIT):   Validate=_VDFE_;
+MPRINT(REPORTFIT):   Test=_TDFE_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_DFM_                   ";
+MPRINT(REPORTFIT):   Label=" Model Degrees of Freedom                               ";
+MPRINT(REPORTFIT):   Train =_DFM_ ;
+MPRINT(REPORTFIT):   Validate=_VDFM_;
+MPRINT(REPORTFIT):   Test=_TDFM_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_NW_                    ";
+MPRINT(REPORTFIT):   Label=" Number of Estimated Weights                            ";
+MPRINT(REPORTFIT):   Train =_NW_ ;
+MPRINT(REPORTFIT):   Validate=_VNW_;
+MPRINT(REPORTFIT):   Test=_TNW_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_AIC_                   ";
+MPRINT(REPORTFIT):   Label=" Akaike's Information Criterion                         ";
+MPRINT(REPORTFIT):   Train =_AIC_ ;
+MPRINT(REPORTFIT):   Validate=_VAIC_;
+MPRINT(REPORTFIT):   Test=_TAIC_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_SBC_                   ";
+MPRINT(REPORTFIT):   Label=" Schwarz's Bayesian Criterion                           ";
+MPRINT(REPORTFIT):   Train =_SBC_ ;
+MPRINT(REPORTFIT):   Validate=_VSBC_;
+MPRINT(REPORTFIT):   Test=_TSBC_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_ASE_                   ";
+MPRINT(REPORTFIT):   Label=" Average Squared Error                                  ";
+MPRINT(REPORTFIT):   Train =_ASE_ ;
+MPRINT(REPORTFIT):   Validate=_VASE_;
+MPRINT(REPORTFIT):   Test=_TASE_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_MAX_                   ";
+MPRINT(REPORTFIT):   Label=" Maximum Absolute Error                                 ";
+MPRINT(REPORTFIT):   Train =_MAX_ ;
+MPRINT(REPORTFIT):   Validate=_VMAX_;
+MPRINT(REPORTFIT):   Test=_TMAX_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_DIV_                   ";
+MPRINT(REPORTFIT):   Label=" Divisor for ASE                                        ";
+MPRINT(REPORTFIT):   Train =_DIV_ ;
+MPRINT(REPORTFIT):   Validate=_VDIV_;
+MPRINT(REPORTFIT):   Test=_TDIV_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_NOBS_                  ";
+MPRINT(REPORTFIT):   Label=" Sum of Frequencies                                     ";
+MPRINT(REPORTFIT):   Train =_NOBS_ ;
+MPRINT(REPORTFIT):   Validate=_VNOBS_;
+MPRINT(REPORTFIT):   Test=_TNOBS_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_RASE_                  ";
+MPRINT(REPORTFIT):   Label=" Root Average Squared Error                             ";
+MPRINT(REPORTFIT):   Train =_RASE_ ;
+MPRINT(REPORTFIT):   Validate=_VRASE_;
+MPRINT(REPORTFIT):   Test=_TRASE_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_SSE_                   ";
+MPRINT(REPORTFIT):   Label=" Sum of Squared Errors                                  ";
+MPRINT(REPORTFIT):   Train =_SSE_ ;
+MPRINT(REPORTFIT):   Validate=_VSSE_;
+MPRINT(REPORTFIT):   Test=_TSSE_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_SUMW_                  ";
+MPRINT(REPORTFIT):   Label=" Sum of Case Weights Times Freq                         ";
+MPRINT(REPORTFIT):   Train =_SUMW_ ;
+MPRINT(REPORTFIT):   Validate=_VSUMW_;
+MPRINT(REPORTFIT):   Test=_TSUMW_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_FPE_                   ";
+MPRINT(REPORTFIT):   Label=" Final Prediction Error                                 ";
+MPRINT(REPORTFIT):   Train =_FPE_ ;
+MPRINT(REPORTFIT):   Validate=_VFPE_;
+MPRINT(REPORTFIT):   Test=_TFPE_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_MSE_                   ";
+MPRINT(REPORTFIT):   Label=" Mean Squared Error                                     ";
+MPRINT(REPORTFIT):   Train =_MSE_ ;
+MPRINT(REPORTFIT):   Validate=_VMSE_;
+MPRINT(REPORTFIT):   Test=_TMSE_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_RFPE_                  ";
+MPRINT(REPORTFIT):   Label=" Root Final Prediction Error                            ";
+MPRINT(REPORTFIT):   Train =_RFPE_ ;
+MPRINT(REPORTFIT):   Validate=_VRFPE_;
+MPRINT(REPORTFIT):   Test=_TRFPE_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_RMSE_                  ";
+MPRINT(REPORTFIT):   Label=" Root Mean Squared Error                                ";
+MPRINT(REPORTFIT):   Train =_RMSE_ ;
+MPRINT(REPORTFIT):   Validate=_VRMSE_;
+MPRINT(REPORTFIT):   Test=_TRMSE_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_AVERR_                 ";
+MPRINT(REPORTFIT):   Label=" Average Error Function                                 ";
+MPRINT(REPORTFIT):   Train =_AVERR_ ;
+MPRINT(REPORTFIT):   Validate=_VAVERR_;
+MPRINT(REPORTFIT):   Test=_TAVERR_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_ERR_                   ";
+MPRINT(REPORTFIT):   Label=" Error Function                                         ";
+MPRINT(REPORTFIT):   Train =_ERR_ ;
+MPRINT(REPORTFIT):   Validate=_VERR_;
+MPRINT(REPORTFIT):   Test=_TERR_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_MISC_                  ";
+MPRINT(REPORTFIT):   Label=" Misclassification Rate                                 ";
+MPRINT(REPORTFIT):   Train =_MISC_ ;
+MPRINT(REPORTFIT):   Validate=_VMISC_;
+MPRINT(REPORTFIT):   Test=_TMISC_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_WRONG_                 ";
+MPRINT(REPORTFIT):   Label=" Number of Wrong Classifications                        ";
+MPRINT(REPORTFIT):   Train =_WRONG_ ;
+MPRINT(REPORTFIT):   Validate=_VWRONG_;
+MPRINT(REPORTFIT):   Test=_TWRONG_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_AUR_                   ";
+MPRINT(REPORTFIT):   Label=" Roc Index                                              ";
+MPRINT(REPORTFIT):   Train =_AUR_ ;
+MPRINT(REPORTFIT):   Validate=_VAUR_;
+MPRINT(REPORTFIT):   Test=_TAUR_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_GINI_                  ";
+MPRINT(REPORTFIT):   Label=" Gini Coefficient                                       ";
+MPRINT(REPORTFIT):   Train =_GINI_ ;
+MPRINT(REPORTFIT):   Validate=_VGINI_;
+MPRINT(REPORTFIT):   Test=_TGINI_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="KS                      ";
+MPRINT(REPORTFIT):   Label=" Kolmogorov-Smirnov Statistic                           ";
+MPRINT(REPORTFIT):   Train =KS ;
+MPRINT(REPORTFIT):   Validate = VKS;
+MPRINT(REPORTFIT):   Test = TKS;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_KS_PROB_CUTOFF         ";
+MPRINT(REPORTFIT):   Label=" Kolmogorov-Smirnov Probability Cutoff                  ";
+MPRINT(REPORTFIT):   Train =_KS_PROB_CUTOFF ;
+MPRINT(REPORTFIT):   Validate=_VKS_PROB_CUTOFF;
+MPRINT(REPORTFIT):   Test=_TKS_PROB_CUTOFF;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_KS_BIN_                ";
+MPRINT(REPORTFIT):   Label=" Bin-Based Two-Way Kolmogorov-Smirnov Statistic         ";
+MPRINT(REPORTFIT):   Train =_KS_BIN_ ;
+MPRINT(REPORTFIT):   Validate=_VKS_BIN_;
+MPRINT(REPORTFIT):   Test=_TKS_BIN_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="BINNED_KS_PROB_CUTOFF   ";
+MPRINT(REPORTFIT):   Label=" Bin-Based Two-Way Kolmogorov-Smirnov Probability Cutoff";
+MPRINT(REPORTFIT):   Train =BINNED_KS_PROB_CUTOFF ;
+MPRINT(REPORTFIT):   Validate = _VBINNED_KS_PROB_CUTOFF_;
+MPRINT(REPORTFIT):   Test = _TBINNED_KS_PROB_CUTOFF_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_GAIN_                  ";
+MPRINT(REPORTFIT):   Label=" Gain                                                   ";
+MPRINT(REPORTFIT):   Train =_GAIN_ ;
+MPRINT(REPORTFIT):   Validate=_VGAIN_;
+MPRINT(REPORTFIT):   Test=_TGAIN_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_LIFT_                  ";
+MPRINT(REPORTFIT):   Label=" Lift                                                   ";
+MPRINT(REPORTFIT):   Train =_LIFT_ ;
+MPRINT(REPORTFIT):   Validate=_VLIFT_;
+MPRINT(REPORTFIT):   Test=_TLIFT_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_LIFTC_                 ";
+MPRINT(REPORTFIT):   Label=" Cumulative Lift                                        ";
+MPRINT(REPORTFIT):   Train =_LIFTC_ ;
+MPRINT(REPORTFIT):   Validate=_VLIFTC_;
+MPRINT(REPORTFIT):   Test=_TLIFTC_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_RESP_                  ";
+MPRINT(REPORTFIT):   Label=" Percent Response                                       ";
+MPRINT(REPORTFIT):   Train =_RESP_ ;
+MPRINT(REPORTFIT):   Validate=_VRESP_;
+MPRINT(REPORTFIT):   Test=_TRESP_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_RESPC_                 ";
+MPRINT(REPORTFIT):   Label=" Cumulative Percent Response                            ";
+MPRINT(REPORTFIT):   Train =_RESPC_ ;
+MPRINT(REPORTFIT):   Validate=_VRESPC_;
+MPRINT(REPORTFIT):   Test=_TRESPC_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_CAP_                   ";
+MPRINT(REPORTFIT):   Label=" Percent Captured Response                              ";
+MPRINT(REPORTFIT):   Train =_CAP_ ;
+MPRINT(REPORTFIT):   Validate=_VCAP_;
+MPRINT(REPORTFIT):   Test=_TCAP_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   FitStat="_CAPC_                  ";
+MPRINT(REPORTFIT):   Label=" Cumulative Percent Captured Response                   ";
+MPRINT(REPORTFIT):   Train =_CAPC_ ;
+MPRINT(REPORTFIT):   Validate=_VCAPC_;
+MPRINT(REPORTFIT):   Test=_TCAPC_;
+MPRINT(REPORTFIT):   output;
+MPRINT(REPORTFIT):   keep Parent Model Target TargetLabel FitStat Label Train Validate Test;
+MPRINT(REPORTFIT):   run;
+
+NOTE: Variable _VCRITERION_ is uninitialized.
+NOTE: Variable _TCRITERION_ is uninitialized.
+NOTE: Variable _VDFT_ is uninitialized.
+NOTE: Variable _TDFT_ is uninitialized.
+NOTE: Variable _VDFE_ is uninitialized.
+NOTE: Variable _TDFE_ is uninitialized.
+NOTE: Variable _VDFM_ is uninitialized.
+NOTE: Variable _TDFM_ is uninitialized.
+NOTE: Variable _VNW_ is uninitialized.
+NOTE: Variable _TNW_ is uninitialized.
+NOTE: Variable _VAIC_ is uninitialized.
+NOTE: Variable _TAIC_ is uninitialized.
+NOTE: Variable _VSBC_ is uninitialized.
+NOTE: Variable _TSBC_ is uninitialized.
+NOTE: Variable _TASE_ is uninitialized.
+NOTE: Variable _TMAX_ is uninitialized.
+NOTE: Variable _TDIV_ is uninitialized.
+NOTE: Variable _TNOBS_ is uninitialized.
+NOTE: Variable _TRASE_ is uninitialized.
+NOTE: Variable _TSSE_ is uninitialized.
+NOTE: Variable _TSUMW_ is uninitialized.
+NOTE: Variable _VFPE_ is uninitialized.
+NOTE: Variable _TFPE_ is uninitialized.
+NOTE: Variable _TMSE_ is uninitialized.
+NOTE: Variable _VRFPE_ is uninitialized.
+NOTE: Variable _TRFPE_ is uninitialized.
+NOTE: Variable _TRMSE_ is uninitialized.
+NOTE: Variable _TAVERR_ is uninitialized.
+NOTE: Variable _TERR_ is uninitialized.
+NOTE: Variable _TMISC_ is uninitialized.
+NOTE: Variable _TWRONG_ is uninitialized.
+NOTE: Variable _TAUR_ is uninitialized.
+NOTE: Variable _TGINI_ is uninitialized.
+NOTE: Variable TKS is uninitialized.
+NOTE: Variable _VKS_PROB_CUTOFF is uninitialized.
+NOTE: Variable _TKS_PROB_CUTOFF is uninitialized.
+NOTE: Variable _TKS_BIN_ is uninitialized.
+NOTE: Variable _TBINNED_KS_PROB_CUTOFF_ is uninitialized.
+NOTE: Variable _TGAIN_ is uninitialized.
+NOTE: Variable _TLIFT_ is uninitialized.
+NOTE: Variable _TLIFTC_ is uninitialized.
+NOTE: Variable _TRESP_ is uninitialized.
+NOTE: Variable _TRESPC_ is uninitialized.
+NOTE: Variable _TCAP_ is uninitialized.
+NOTE: Variable _TCAPC_ is uninitialized.
+NOTE: There were 1 observations read from the data set EMWS1.MDLCOMP2_EMOUTFIT.
+NOTE: The data set EMWS1.MDLCOMP2_EMREPORTFIT has 35 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):  ;
+
+76103      proc print data=EMWS1.MdlComp2_EMEVENTREPORT(drop=PARENT) noobs label;
+MPRINT(EM_DIAGRAM):    proc print data=EMWS1.MdlComp2_EMEVENTREPORT(drop=PARENT) noobs label;
+76104      title9 "%sysfunc(sasmsg(sashelp.dmine, rpt_eventtable_title ,    NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title9 "Event Classification Table";
+76105      title10 "Model Selection based on Valid: Misclassification Rate (_VMISC_)";
+MPRINT(EM_DIAGRAM):   title10 "Model Selection based on Valid: Misclassification Rate 
+(_VMISC_)";
+MPRINT(EM_DIAGRAM):   run;
+76106      run;
+
+NOTE: There were 2 observations read from the data set EMWS1.MDLCOMP2_EMEVENTREPORT.
+NOTE: The PROCEDURE PRINT printed page 30.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+76107      title9;
+MPRINT(EM_DIAGRAM):   title9;
+76108      title10;
+MPRINT(EM_DIAGRAM):   title10;
+76109      proc datasets library=EMWS1 nolist;
+MPRINT(EM_DIAGRAM):    proc datasets library=EMWS1 nolist;
+76110      modify MdlComp2_EMRANK;
+MPRINT(EM_DIAGRAM):   modify MdlComp2_EMRANK;
+76111      label PARENT = "%sysfunc(sasmsg(sashelp.dmine, rpt_parent_vlabel  ,  NOQUOTE))"
+76111    ! MODEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_modelnode_vlabel, NOQUOTE))" DATAROLE =
+76111    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_datarole_vlabel,  NOQUOTE))" TARGET =
+76112         "%sysfunc(sasmsg(sashelp.dmine, rpt_targetvar_vlabel, NOQUOTE))" TARGETLABEL =
+76112    ! "%sysfunc(sasmsg(sashelp.dmine, meta_targetlabel_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label PARENT = "Predecessor Node" MODEL = "Model Node" DATAROLE = "Data 
+Role" TARGET = "Target Variable" TARGETLABEL = "Target Label";
+MPRINT(EM_DIAGRAM):   run;
+76113      run;
+
+NOTE: MODIFY was successful for EMWS1.MDLCOMP2_EMRANK.DATA.
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.07 seconds
+      
+
+76114      proc sort data=EMWS1.MdlComp2_EMRANK NOTHREADS;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS1.MdlComp2_EMRANK NOTHREADS;
+76115      by descending model target;
+MPRINT(EM_DIAGRAM):   by descending model target;
+76116      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 40 observations read from the data set EMWS1.MDLCOMP2_EMRANK.
+NOTE: The data set EMWS1.MDLCOMP2_EMRANK has 40 observations and 38 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+76117      proc datasets library=EMWS1 nolist;
+MPRINT(EM_DIAGRAM):    proc datasets library=EMWS1 nolist;
+76118      modify MdlComp2_EMSCOREDIST;
+MPRINT(EM_DIAGRAM):   modify MdlComp2_EMSCOREDIST;
+76119      label PARENT = "%sysfunc(sasmsg(sashelp.dmine, rpt_parent_vlabel  ,  NOQUOTE))"
+76119    ! MODEL = "%sysfunc(sasmsg(sashelp.dmine, rpt_modelnode_vlabel, NOQUOTE))" DATAROLE =
+76119    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_datarole_vlabel,  NOQUOTE))" TARGET =
+76120         "%sysfunc(sasmsg(sashelp.dmine, rpt_targetvar_vlabel, NOQUOTE))" TARGETLABEL =
+76120    ! "%sysfunc(sasmsg(sashelp.dmine, meta_targetlabel_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label PARENT = "Predecessor Node" MODEL = "Model Node" DATAROLE = "Data 
+Role" TARGET = "Target Variable" TARGETLABEL = "Target Label";
+MPRINT(EM_DIAGRAM):   run;
+76121      run;
+
+NOTE: MODIFY was successful for EMWS1.MDLCOMP2_EMSCOREDIST.DATA.
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.07 seconds
+      
+
+76122      proc sort data=EMWS1.MdlComp2_EMSCOREDIST NOTHREADS;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS1.MdlComp2_EMSCOREDIST NOTHREADS;
+76123      by descending model target;
+MPRINT(EM_DIAGRAM):   by descending model target;
+76124      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 40 observations read from the data set EMWS1.MDLCOMP2_EMSCOREDIST.
+NOTE: The data set EMWS1.MDLCOMP2_EMSCOREDIST has 40 observations and 24 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+76125      proc sort data=EMWS1.MdlComp2_EMROC NOTHREADS;
+MPRINT(EM_DIAGRAM):    proc sort data=EMWS1.MdlComp2_EMROC NOTHREADS;
+76126      by descending model target;
+MPRINT(EM_DIAGRAM):   by descending model target;
+76127      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 206 observations read from the data set EMWS1.MDLCOMP2_EMROC.
+NOTE: The data set EMWS1.MDLCOMP2_EMROC has 206 observations and 18 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

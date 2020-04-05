@@ -1,0 +1,16 @@
+*------------------------------------------------------------*;
+* Variable Attributes for DATA;
+*------------------------------------------------------------*;
+if upcase(NAME) = "CHILDHOME" then NEWROLE="REJECTED";
+if upcase(NAME) = "COMPLAIN" then NEWROLE="REJECTED";
+if upcase(NAME) = "EDUCATION" then NEWROLE="REJECTED";
+if upcase(NAME) = "IMP_MNTBRANDA__MATERIAL" then NEWROLE="REJECTED";
+if upcase(NAME) = "IMP_MNTSCENARIO" then NEWROLE="REJECTED";
+if upcase(NAME) = "MNTMINIATURES" then NEWROLE="REJECTED";
+if upcase(NAME) = "MNTPAINTING_MATERIAL" then NEWROLE="REJECTED";
+if upcase(NAME) = "NUMSTOREPURCHASES" then NEWROLE="REJECTED";
+if upcase(NAME) = "RANGE_IMP_INCOME" then NEWROLE="REJECTED";
+if upcase(NAME) = "RANGE_MNT" then NEWROLE="REJECTED";
+if upcase(NAME) = "RANGE_NUMWEBVISITSMONTH" then NEWROLE="REJECTED";
+if upcase(NAME) = "RANGE_AGE" then NEWROLE="REJECTED";
+if upcase(NAME) = "RANGE_LOYALTY" then NEWROLE="REJECTED";

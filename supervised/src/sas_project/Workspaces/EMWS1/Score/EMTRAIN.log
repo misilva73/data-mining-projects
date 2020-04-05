@@ -1,0 +1,1276 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "17:19:10 o'clock" 
+);
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Training Log
+Date:                02 June 2018
+Time:                17:19:10 o'clock
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O0CY2Q_0 "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Score\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O0CY2Q_0 new;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOG "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Score\EMLOG.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "17:19:11 o'clock" 
+);
+MPRINT(EM_DIAGRAM):   file _LOG;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                misil";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "Site:                70107571";
+MPRINT(EM_DIAGRAM):   put "Platform:            X64_10PRO";
+MPRINT(EM_DIAGRAM):   put "Maintenance Release: 9.04.01M4P110916";
+MPRINT(EM_DIAGRAM):   put "EM Version:          14.2";
+MPRINT(EM_DIAGRAM):   put "* ";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Score\EMTRAIN.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _LOG MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_LOGIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _LOGIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Score\EMSCORE.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Score\EMREPORT.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    filename _LOG;
+MPRINT(EM_DIAGRAM):    filename _OUT "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Score\EMOUTPUT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "17:19:11 o'clock" 
+);
+MPRINT(EM_DIAGRAM):   file _OUT;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                misil";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Score\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _OUT MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_OUTIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Score\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Report Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Score\EMREPORT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    filename _OUT;
+MPRINT(EM_DIAGRAM):    filename _emtool_ 'C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Score\EMRUNSTATUS.xml' encoding="UTF-8" 
+NOBOM;
+76006      proc freq data=EMWS1.Score_VariableSet noprint;
+MPRINT(EM_DIAGRAM):    proc freq data=EMWS1.Score_VariableSet noprint;
+76007      table ROLE*LEVEL/out=WORK.ScoreMETA;
+MPRINT(EM_DIAGRAM):   table ROLE*LEVEL/out=WORK.ScoreMETA;
+76008      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.SCORE_VARIABLESET.
+NOTE: The data set WORK.SCOREMETA has 1 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.01 seconds
+      
+
+76009      proc print data=WORK.ScoreMETA label noobs;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.ScoreMETA label noobs;
+76010      var ROLE LEVEL COUNT;
+MPRINT(EM_DIAGRAM):   var ROLE LEVEL COUNT;
+76011      label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL =
+76011    ! "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT =
+76011    ! "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label ROLE = "Role" LEVEL = "Measurement Level" COUNT = "Frequency 
+Count";
+76012      title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+76013      title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Variable Summary";
+MPRINT(EM_DIAGRAM):   run;
+76014      run;
+
+NOTE: There were 1 observations read from the data set WORK.SCOREMETA.
+NOTE: The PROCEDURE PRINT printed page 27.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+76015      title10;
+MPRINT(EM_DIAGRAM):   title10;
+76016      %let groupid =;
+76017      %let endGroupid =;
+76018      %let prescoreid =;
+76019      %let idsTable =;
+76020      %let hpdmTable =;
+76021      %let lasthptm =;
+76022      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+76023      set EMWS1.Neural6_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS1.Neural6_EMINFO;
+76024      where upcase(key) in('LASTHPTM', 'IDSTABLE', 'HPDMSAMPLE',
+76024    ! 'PRESCORECODE','ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 'TARGETINFO',
+76024    ! 'INDEXINFO');
+MPRINT(EM_DIAGRAM):   where upcase(key) in('LASTHPTM', 'IDSTABLE', 'HPDMSAMPLE', 
+'PRESCORECODE','ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 'TARGETINFO', 'INDEXINFO');
+76025      select(upcase(key));
+MPRINT(EM_DIAGRAM):   select(upcase(key));
+76026      when('LASTHPTM') call symput('lasthptm', DATA);
+MPRINT(EM_DIAGRAM):   when('LASTHPTM') call symput('lasthptm', DATA);
+76027      when('IDSTABLE') call symput('idsTable', DATA);
+MPRINT(EM_DIAGRAM):   when('IDSTABLE') call symput('idsTable', DATA);
+76028      when('HPDMSAMPLE') call symput('hpdmSample', DATA);
+MPRINT(EM_DIAGRAM):   when('HPDMSAMPLE') call symput('hpdmSample', DATA);
+76029      when('PRESCORECODE') call symput('prescoreId', DATA);
+MPRINT(EM_DIAGRAM):   when('PRESCORECODE') call symput('prescoreId', DATA);
+76030      when('ENDGROUP') call symput('endGroupId', DATA);
+MPRINT(EM_DIAGRAM):   when('ENDGROUP') call symput('endGroupId', DATA);
+76031      otherwise call symput('groupId', DATA);
+MPRINT(EM_DIAGRAM):   otherwise call symput('groupId', DATA);
+76032      end;
+MPRINT(EM_DIAGRAM):   end;
+76033      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 0 observations read from the data set EMWS1.NEURAL6_EMINFO.
+      WHERE UPCASE(key) in ('BAGINFO', 'BOOSTINFO', 'ENDGROUP', 'GROUPINFO', 'HPDMSAMPLE', 
+      'IDSTABLE', 'INDEXINFO', 'LASTHPTM', 'PRESCORECODE', 'TARGETINFO');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+76034      %let lastModelid =;
+76035      data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+76036      set EMWS1.Neural6_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS1.Neural6_EMINFO;
+76037      where upcase(key) = 'MODEL' and TARGET = "DepVar";
+MPRINT(EM_DIAGRAM):   where upcase(key) = 'MODEL' and TARGET = "DepVar";
+76038      call symput('lastModelID', DATA);
+MPRINT(EM_DIAGRAM):   call symput('lastModelID', DATA);
+76039      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.NEURAL6_EMINFO.
+      WHERE (UPCASE(key)='MODEL') and (TARGET='DepVar');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+NOTE: There were 1 observations read from the data set EMWS1.NEURAL6_EMINFO.
+      WHERE (TARGET='DepVar') and (KEY='MODEL');
+NOTE: The data set WORK.EMINFO41HWEJRP has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL NUMELEMENTS >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+NOTE: There were 1 observations read from the data set EMWS1.NEURAL6_EMINFO.
+      WHERE (TARGET='DepVar') and (KEY='DECMETA');
+NOTE: The data set WORK.EMINFO43MIEIPB has 1 observations and 3 variables.
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+MPRINT(EM_DIAGRAM):    data EMWS1.Score_SCORE;
+MPRINT(EM_DIAGRAM):   set EMWS1.FIMPORT2_train;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * EM SCORE CODE;
+MPRINT(EM_DIAGRAM):   * EM Version: 14.2;
+MPRINT(EM_DIAGRAM):   * SAS Release: 9.04.01M4P110916;
+MPRINT(EM_DIAGRAM):   * Host: DESKTOP-61HCQ9U;
+MPRINT(EM_DIAGRAM):   * Encoding: wlatin1;
+MPRINT(EM_DIAGRAM):   * Locale: en_GB;
+MPRINT(EM_DIAGRAM):   * Project Path: C:\Users\misil\Desktop\DM 2\Project;
+MPRINT(EM_DIAGRAM):   * Project Name: WarGameStore_sasProject;
+MPRINT(EM_DIAGRAM):   * Diagram Id: EMWS1;
+MPRINT(EM_DIAGRAM):   * Diagram Name: WarGame classification;
+MPRINT(EM_DIAGRAM):   * Generated by: misil;
+MPRINT(EM_DIAGRAM):   * Date: 02JUN2018:17:19:11;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TOOL: Extension Class;
+MPRINT(EM_DIAGRAM):   * TYPE: SAMPLE;
+MPRINT(EM_DIAGRAM):   * NODE: FIMPORT;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TOOL: Filtering;
+MPRINT(EM_DIAGRAM):   * TYPE: MODIFY;
+MPRINT(EM_DIAGRAM):   * NODE: Filter;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   if ( Income eq . or (Income<=147000)) and ( MntCard_Games eq . or 
+(MntCard_Games<=1500)) and ( NumCatalogPurchases eq . or (NumCatalogPurchases<=20)) and ( 
+NumDealsPurchases eq . or (NumDealsPurchases<=14)) and ( NumWebVisitsMonth eq . or 
+(NumWebVisitsMonth<=13)) then do;
+MPRINT(EM_DIAGRAM):   if M_FILTER eq . then M_FILTER = 0;
+MPRINT(EM_DIAGRAM):   else M_FILTER = M_FILTER + 0;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else M_FILTER = 1;
+MPRINT(EM_DIAGRAM):   label M_FILTER = 'Filtered Indicator';
+MPRINT(EM_DIAGRAM):   length M_FILTER 8;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TOOL: Imputation;
+MPRINT(EM_DIAGRAM):   * TYPE: MODIFY;
+MPRINT(EM_DIAGRAM):   * NODE: Impt;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   * TREE IMPUTATION;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   * IMPUTE VARIABLE: Income;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   length IMP_Income 8;
+MPRINT(EM_DIAGRAM):   format IMP_Income BEST.;
+MPRINT(EM_DIAGRAM):   label IMP_Income = 'Imputed: Income';
+MPRINT(EM_DIAGRAM):   IMP_Income = Income;
+MPRINT(EM_DIAGRAM):   if missing(IMP_Income) then do;
+MPRINT(EM_DIAGRAM):   ****************************************************************;
+MPRINT(EM_DIAGRAM):   ****** DECISION TREE SCORING CODE ******;
+MPRINT(EM_DIAGRAM):   ****************************************************************;
+MPRINT(EM_DIAGRAM):   ****** LENGTHS OF NEW CHARACTER VARIABLES ******;
+MPRINT(EM_DIAGRAM):   LENGTH _WARN_ $ 4;
+MPRINT(EM_DIAGRAM):   ****** LABELS FOR NEW VARIABLES ******;
+MPRINT(EM_DIAGRAM):   label P_Income = 'Predicted: Income';
+MPRINT(EM_DIAGRAM):   label _WARN_ = 'Warnings';
+MPRINT(EM_DIAGRAM):   ****** TEMPORARY VARIABLES FOR FORMATTED VALUES ******;
+MPRINT(EM_DIAGRAM):   LENGTH _ARBFMT_12 $ 12;
+MPRINT(EM_DIAGRAM):   DROP _ARBFMT_12;
+MPRINT(EM_DIAGRAM):   _ARBFMT_12 = ' ';
+MPRINT(EM_DIAGRAM):   ****** ASSIGN OBSERVATION TO NODE ******;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMiniatures ) AND MntMiniatures < 118 THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMiniatures ) AND 29.5 <= MntMiniatures THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumWebVisitsMonth ) AND NumWebVisitsMonth < 3.5 THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntScenario ) AND MntScenario < 31 THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 60000.8461538461;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 76444.05;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumWebVisitsMonth ) AND 7.5 <= NumWebVisitsMonth THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(Teenhome ) AND 0.5 <= Teenhome THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 45831.2195121951;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 38620.1702127659;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(Teenhome ) AND Teenhome < 0.5 THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 46564.9333333333;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 53181.4938271605;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(Teenhome ) AND 0.5 <= Teenhome THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumDealsPurchases ) AND NumDealsPurchases < 1.5 THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMiniatures ) AND MntMiniatures < 9.5 THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntCard_Games ) AND MntCard_Games < 7 THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 33113.3125;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 46363.2727272727;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 51717.8305084745;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMiniatures ) AND MntMiniatures < 14.5 THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntBrandA__Material ) AND MntBrandA__Material < 16.5 THEN 
+DO;
+MPRINT(EM_DIAGRAM):   P_Income = 37886.1666666666;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 22242.4375;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 42230.343283582;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMiniatures ) AND 7.5 <= MntMiniatures THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumDealsPurchases ) AND 2.5 <= NumDealsPurchases THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntCard_Games ) AND 83.5 <= MntCard_Games THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 41775.4;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 24694.6578947368;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 35662.2312138728;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumDealsPurchases ) AND 1.5 <= NumDealsPurchases THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 23288.9175257731;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 29123.7272727272;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumDealsPurchases ) AND NumDealsPurchases < 1.5 THEN DO;
+MPRINT(EM_DIAGRAM):   _ARBFMT_12 = PUT( AcceptedCmp4 , BEST.);
+MPRINT(DMNORMIP):   call dmnorm(_ARBFMT_12,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   IF _ARBFMT_12 IN ('1' ) THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumDealsPurchases ) AND NumDealsPurchases < 0.5 THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 107467.655172413;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumWebVisitsMonth ) AND 4.5 <= NumWebVisitsMonth THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 92015;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 100853.071942446;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntCard_Games ) AND MntCard_Games < 415.5 THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumCatalogPurchases ) AND NumCatalogPurchases < 4.5 THEN 
+DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(Dt_Customer ) AND Dt_Customer < 20351 THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 58836.6666666666;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 73054.05;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 82572.3583333333;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumWebVisitsMonth ) AND 4.5 <= NumWebVisitsMonth THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 84319.7037037037;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 92504.211469534;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntCard_Games ) AND 251.5 <= MntCard_Games THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMiniatures ) AND 627.5 <= MntMiniatures THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(Kidhome ) AND 0.5 <= Kidhome THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 93983.4545454545;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 83167.046875;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumWebVisitsMonth ) AND 5.5 <= NumWebVisitsMonth THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(Teenhome ) AND Teenhome < 0.5 THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 56632.6842105263;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 72954.6666666666;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumWebPurchases ) AND 11.5 <= NumWebPurchases THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 86293.95;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 76749.7590361445;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMiniatures ) AND 359.5 <= MntMiniatures THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumWebVisitsMonth ) AND NumWebVisitsMonth < 6.5 THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntCard_Games ) AND 158.5 <= MntCard_Games THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 78231.0909090909;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 70671.2916666666;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMiniatures ) AND 779 <= MntMiniatures THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 74626.5;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 64728.6708860759;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumWebVisitsMonth ) AND 7.5 <= NumWebVisitsMonth THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(Teenhome ) AND 0.5 <= Teenhome THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 55256.8918918919;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 44871.9729729729;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumWebVisitsMonth ) AND 5.5 <= NumWebVisitsMonth THEN DO;
+MPRINT(EM_DIAGRAM):   P_Income = 59564.0693069307;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_Income = 66927.3461538461;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ****************************************************************;
+MPRINT(EM_DIAGRAM):   ****** END OF DECISION TREE SCORING CODE ******;
+MPRINT(EM_DIAGRAM):   ****************************************************************;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   * ASSIGN VALUE TO: Income;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   IMP_Income = P_INCOME;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   * IMPUTE VARIABLE: MntBrandA__Material;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   length IMP_MntBrandA__Material 8;
+MPRINT(EM_DIAGRAM):   label IMP_MntBrandA__Material = 'Imputed: MntBrandA _Material';
+MPRINT(EM_DIAGRAM):   IMP_MntBrandA__Material = MntBrandA__Material;
+MPRINT(EM_DIAGRAM):   if missing(IMP_MntBrandA__Material) then do;
+MPRINT(EM_DIAGRAM):   ****************************************************************;
+MPRINT(EM_DIAGRAM):   ****** DECISION TREE SCORING CODE ******;
+MPRINT(EM_DIAGRAM):   ****************************************************************;
+MPRINT(EM_DIAGRAM):   ****** LENGTHS OF NEW CHARACTER VARIABLES ******;
+MPRINT(EM_DIAGRAM):   LENGTH _WARN_ $ 4;
+MPRINT(EM_DIAGRAM):   ****** LABELS FOR NEW VARIABLES ******;
+MPRINT(EM_DIAGRAM):   label P_MntBrandA__Material = 'Predicted: MntBrandA__Material';
+MPRINT(EM_DIAGRAM):   label _WARN_ = 'Warnings';
+MPRINT(EM_DIAGRAM):   ****** TEMPORARY VARIABLES FOR FORMATTED VALUES ******;
+MPRINT(EM_DIAGRAM):   LENGTH _ARBFMT_10 $ 10;
+MPRINT(EM_DIAGRAM):   DROP _ARBFMT_10;
+MPRINT(EM_DIAGRAM):   _ARBFMT_10 = ' ';
+MPRINT(EM_DIAGRAM):   LENGTH _ARBFMT_12 $ 12;
+MPRINT(EM_DIAGRAM):   DROP _ARBFMT_12;
+MPRINT(EM_DIAGRAM):   _ARBFMT_12 = ' ';
+MPRINT(EM_DIAGRAM):   ****** ASSIGN OBSERVATION TO NODE ******;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntCard_Games ) AND MntCard_Games < 79 THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumCatalogPurchases ) AND 3.5 <= NumCatalogPurchases THEN 
+DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumCatalogPurchases ) AND 6.5 <= NumCatalogPurchases THEN 
+DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 132.833333333333;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(Dt_Customer ) AND Dt_Customer < 19962 THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 150;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 49.0892857142857;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumCatalogPurchases ) AND 2.5 <= NumCatalogPurchases THEN 
+DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntScenario ) AND 9 <= MntScenario THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntPainting_Material ) AND 37 <= MntPainting_Material 
+THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 72;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMiniatures ) AND 176.5 <= MntMiniatures THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 62.3636363636363;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 30.8018018018018;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumWebPurchases ) AND 6.5 <= NumWebPurchases THEN DO;
+MPRINT(EM_DIAGRAM):   _ARBFMT_12 = PUT( AcceptedCmp2 , BEST.);
+MPRINT(DMNORMIP):   call dmnorm(_ARBFMT_12,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   IF _ARBFMT_12 IN ('1' ) THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 52.2222222222222;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 24.1688311688311;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMagazines ) AND 5.5 <= MntMagazines THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 26.3181818181818;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 14.9663865546218;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntScenario ) AND 13 <= MntScenario THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(Dt_Customer ) AND Dt_Customer < 19972.5 THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 49.1666666666666;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 21.2022471910112;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMagazines ) AND 4.5 <= MntMagazines THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMiniatures ) AND 50 <= MntMiniatures THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 39.1666666666666;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 15.2258064516129;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumWebPurchases ) AND 5.5 <= NumWebPurchases THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 10.6716417910447;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 5.79116465863453;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   _ARBFMT_10 = PUT( Education , $10.);
+MPRINT(DMNORMIP):   call dmnorm(_ARBFMT_10,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   IF _ARBFMT_10 IN ('BASIC' ,'2N CYCLE' ) THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 106.692098092643;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   _ARBFMT_12 = PUT( AcceptedCmp2 , BEST.);
+MPRINT(DMNORMIP):   call dmnorm(_ARBFMT_12,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   IF _ARBFMT_12 IN ('1' ) THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 118.571428571428;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntPainting_Material ) AND 68.5 <= MntPainting_Material 
+THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(Dt_Customer ) AND 20437.5 <= Dt_Customer THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 57.2727272727272;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 102.050632911392;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumCatalogPurchases ) AND NumCatalogPurchases < 4.5 THEN 
+DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntCard_Games ) AND 320 <= MntCard_Games THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 87.48;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 44.4663461538461;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntBrandA__Material = 68.2479108635097;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ****************************************************************;
+MPRINT(EM_DIAGRAM):   ****** END OF DECISION TREE SCORING CODE ******;
+MPRINT(EM_DIAGRAM):   ****************************************************************;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   * ASSIGN VALUE TO: MntBrandA__Material;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   IMP_MntBrandA__Material = P_MNTBRANDA__MATERIAL;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   * IMPUTE VARIABLE: MntScenario;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   length IMP_MntScenario 8;
+MPRINT(EM_DIAGRAM):   format IMP_MntScenario BEST.;
+MPRINT(EM_DIAGRAM):   label IMP_MntScenario = 'Imputed: MntScenario';
+MPRINT(EM_DIAGRAM):   IMP_MntScenario = MntScenario;
+MPRINT(EM_DIAGRAM):   if missing(IMP_MntScenario) then do;
+MPRINT(EM_DIAGRAM):   ****************************************************************;
+MPRINT(EM_DIAGRAM):   ****** DECISION TREE SCORING CODE ******;
+MPRINT(EM_DIAGRAM):   ****************************************************************;
+MPRINT(EM_DIAGRAM):   ****** LENGTHS OF NEW CHARACTER VARIABLES ******;
+MPRINT(EM_DIAGRAM):   LENGTH _WARN_ $ 4;
+MPRINT(EM_DIAGRAM):   ****** LABELS FOR NEW VARIABLES ******;
+MPRINT(EM_DIAGRAM):   label P_MntScenario = 'Predicted: MntScenario';
+MPRINT(EM_DIAGRAM):   label _WARN_ = 'Warnings';
+MPRINT(EM_DIAGRAM):   ****** TEMPORARY VARIABLES FOR FORMATTED VALUES ******;
+MPRINT(EM_DIAGRAM):   LENGTH _ARBFMT_10 $ 10;
+MPRINT(EM_DIAGRAM):   DROP _ARBFMT_10;
+MPRINT(EM_DIAGRAM):   _ARBFMT_10 = ' ';
+MPRINT(EM_DIAGRAM):   ****** ASSIGN OBSERVATION TO NODE ******;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntCard_Games ) AND 146.5 <= MntCard_Games THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntPainting_Material ) AND 172 <= MntPainting_Material 
+THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 190.855072463768;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMagazines ) AND MntMagazines < 33.5 THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntPainting_Material ) AND 58 <= MntPainting_Material 
+THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 108.4;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(Income ) AND Income < 85245 THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntPainting_Material ) AND 28 <= MntPainting_Material 
+THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 53.2428571428571;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 29.3509933774834;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 79.8842105263158;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMagazines ) AND 71.5 <= MntMagazines THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 141.806034482758;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 104.139344262295;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntPainting_Material ) AND 34 <= MntPainting_Material 
+THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumCatalogPurchases ) AND 4.5 <= NumCatalogPurchases THEN 
+DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 96.7777777777777;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 46.48;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMagazines ) AND 6.5 <= MntMagazines THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMagazines ) AND 29.5 <= MntMagazines THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 53.8666666666666;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntPainting_Material ) AND 17.5 <= MntPainting_Material 
+THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 26.2857142857142;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 15.7768924302788;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntPainting_Material ) AND 7 <= MntPainting_Material THEN 
+DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntPainting_Material ) AND 22 <= MntPainting_Material 
+THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 26.1;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntCard_Games ) AND 113 <= MntCard_Games THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 24.5;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 11.4846625766871;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMagazines ) AND 1.5 <= MntMagazines THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 5.89010989010989;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   _ARBFMT_10 = PUT( Education , $10.);
+MPRINT(DMNORMIP):   call dmnorm(_ARBFMT_10,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   IF _ARBFMT_10 IN ('BASIC' ) THEN DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 9.08333333333333;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_MntScenario = 2.44278606965174;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ****************************************************************;
+MPRINT(EM_DIAGRAM):   ****** END OF DECISION TREE SCORING CODE ******;
+MPRINT(EM_DIAGRAM):   ****************************************************************;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   * ASSIGN VALUE TO: MntScenario;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   IMP_MntScenario = P_MNTSCENARIO;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   * Drop prediction variables since they are for INPUTS not TARGETS;
+MPRINT(EM_DIAGRAM):   * Replace _NODE_ by _XODE_ so it can be safely dropped;
+MPRINT(EM_DIAGRAM):   *;
+MPRINT(EM_DIAGRAM):   drop P_Income P_MntBrandA__Material P_MntScenario ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TOOL: SASHELP.EMCORE.EMCODETOOL.CLASS;
+MPRINT(EM_DIAGRAM):   * TYPE: UTILITY;
+MPRINT(EM_DIAGRAM):   * NODE: EMCODE2;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   campaign_acceptance = AcceptedCmp1 + AcceptedCmp2 + AcceptedCmp3 + 
+AcceptedCmp4 + AcceptedCmp5;
+MPRINT(EM_DIAGRAM):   Childhome = 1*((Kidhome=1) | (Teenhome=1));
+MPRINT(EM_DIAGRAM):   Mnt = IMP_MntScenario + MntMiniatures + MntCard_Games + MntMagazines + 
+MntPainting_Material;
+MPRINT(EM_DIAGRAM):   IMP_MntScenario = IMP_MntScenario/Mnt;
+MPRINT(EM_DIAGRAM):   MntMiniatures = MntMiniatures/Mnt;
+MPRINT(EM_DIAGRAM):   MntCard_Games = MntCard_Games/Mnt;
+MPRINT(EM_DIAGRAM):   MntMagazines = MntMagazines/Mnt;
+MPRINT(EM_DIAGRAM):   MntPainting_Material = MntPainting_Material/Mnt;
+MPRINT(EM_DIAGRAM):   IMP_MntBrandA__Material = IMP_MntBrandA__Material/Mnt;
+MPRINT(EM_DIAGRAM):   Frq = NumCatalogPurchases + NumStorePurchases + NumWebPurchases;
+MPRINT(EM_DIAGRAM):   NumCatalogPurchases = NumCatalogPurchases/Frq;
+MPRINT(EM_DIAGRAM):   NumStorePurchases = NumStorePurchases/Frq;
+MPRINT(EM_DIAGRAM):   NumWebPurchases = NumWebPurchases/Frq;
+MPRINT(EM_DIAGRAM):   NumDealsPurchases = NumDealsPurchases/Frq;
+MPRINT(EM_DIAGRAM):   average_purchase = Mnt / Frq;
+MPRINT(EM_DIAGRAM):   age = year(today())-Year_Birth;
+MPRINT(EM_DIAGRAM):   loyalty = 12*(year(today()) - year(Dt_Customer)) + 
+month(today())-month(Dt_Customer);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TOOL: Metadata Node;
+MPRINT(EM_DIAGRAM):   * TYPE: UTILITY;
+MPRINT(EM_DIAGRAM):   * NODE: Meta2;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TOOL: SASHELP.EMCORE.EMCODETOOL.CLASS;
+MPRINT(EM_DIAGRAM):   * TYPE: UTILITY;
+MPRINT(EM_DIAGRAM):   * NODE: EMCODE3;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TOOL: Transform;
+MPRINT(EM_DIAGRAM):   * TYPE: MODIFY;
+MPRINT(EM_DIAGRAM):   * NODE: Trans;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Computed Code;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TRANSFORM: Frq , (Frq - 10) / (40-10);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   label RANGE_Frq = 'Transformed Frq';
+MPRINT(EM_DIAGRAM):   length RANGE_Frq 8;
+MPRINT(EM_DIAGRAM):   if Frq eq . then RANGE_Frq = .;
+MPRINT(EM_DIAGRAM):   else RANGE_Frq = (Frq - 10) / (40-10);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TRANSFORM: IMP_Income , (IMP_Income - 9000) / (123230-9000);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   label RANGE_IMP_Income = 'Transformed: Imputed: Income';
+MPRINT(EM_DIAGRAM):   length RANGE_IMP_Income 8;
+MPRINT(EM_DIAGRAM):   if IMP_Income eq . then RANGE_IMP_Income = .;
+MPRINT(EM_DIAGRAM):   else RANGE_IMP_Income = (IMP_Income - 9000) / (123230-9000);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TRANSFORM: Mnt , (Mnt - 9) / (3260-9);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   label RANGE_Mnt = 'Transformed Mnt';
+MPRINT(EM_DIAGRAM):   length RANGE_Mnt 8;
+MPRINT(EM_DIAGRAM):   if Mnt eq . then RANGE_Mnt = .;
+MPRINT(EM_DIAGRAM):   else RANGE_Mnt = (Mnt - 9) / (3260-9);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TRANSFORM: NumWebVisitsMonth , (NumWebVisitsMonth - 4) / (15-4);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   label RANGE_NumWebVisitsMonth = 'Transformed: NumWebVisitsMonth';
+MPRINT(EM_DIAGRAM):   length RANGE_NumWebVisitsMonth 8;
+MPRINT(EM_DIAGRAM):   if NumWebVisitsMonth eq . then RANGE_NumWebVisitsMonth = .;
+MPRINT(EM_DIAGRAM):   else RANGE_NumWebVisitsMonth = (NumWebVisitsMonth - 4) / (15-4);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TRANSFORM: Recency , (Recency - 0) / (99-0);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   label RANGE_Recency = 'Transformed: Recency';
+MPRINT(EM_DIAGRAM):   length RANGE_Recency 8;
+MPRINT(EM_DIAGRAM):   if Recency eq . then RANGE_Recency = .;
+MPRINT(EM_DIAGRAM):   else RANGE_Recency = (Recency - 0) / (99-0);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TRANSFORM: age , (age - 19) / (74-19);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   label RANGE_age = 'Transformed age';
+MPRINT(EM_DIAGRAM):   length RANGE_age 8;
+MPRINT(EM_DIAGRAM):   if age eq . then RANGE_age = .;
+MPRINT(EM_DIAGRAM):   else RANGE_age = (age - 19) / (74-19);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TRANSFORM: average_purchase , (average_purchase - 0.9) / 
+(139.66666667-0.9);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   label RANGE_average_purchase = 'Transformed average_purchase';
+MPRINT(EM_DIAGRAM):   length RANGE_average_purchase 8;
+MPRINT(EM_DIAGRAM):   if average_purchase eq . then RANGE_average_purchase = .;
+MPRINT(EM_DIAGRAM):   else RANGE_average_purchase = (average_purchase - 0.9) / 
+(139.66666667-0.9);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TRANSFORM: campaign_acceptance , (campaign_acceptance - 0) / (4-0);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   label RANGE_campaign_acceptance = 'Transformed campaign_acceptance';
+MPRINT(EM_DIAGRAM):   length RANGE_campaign_acceptance 8;
+MPRINT(EM_DIAGRAM):   if campaign_acceptance eq . then RANGE_campaign_acceptance = .;
+MPRINT(EM_DIAGRAM):   else RANGE_campaign_acceptance = (campaign_acceptance - 0) / (4-0);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TRANSFORM: loyalty , (loyalty - 24) / (47-24);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   label RANGE_loyalty = 'Transformed loyalty';
+MPRINT(EM_DIAGRAM):   length RANGE_loyalty 8;
+MPRINT(EM_DIAGRAM):   if loyalty eq . then RANGE_loyalty = .;
+MPRINT(EM_DIAGRAM):   else RANGE_loyalty = (loyalty - 24) / (47-24);
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TOOL: Metadata Node;
+MPRINT(EM_DIAGRAM):   * TYPE: UTILITY;
+MPRINT(EM_DIAGRAM):   * NODE: Meta;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TOOL: Partition Class;
+MPRINT(EM_DIAGRAM):   * TYPE: SAMPLE;
+MPRINT(EM_DIAGRAM):   * NODE: Part;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TOOL: Neural;
+MPRINT(EM_DIAGRAM):   * TYPE: MODEL;
+MPRINT(EM_DIAGRAM):   * NODE: Neural6;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   ***********************************;
+MPRINT(EM_DIAGRAM):   *** Begin Scoring Code for Neural;
+MPRINT(EM_DIAGRAM):   ***********************************;
+MPRINT(EM_DIAGRAM):   DROP _DM_BAD _EPS _NOCL_ _MAX_ _MAXP_ _SUM_ _NTRIALS;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 0;
+MPRINT(EM_DIAGRAM):   _NOCL_ = .;
+MPRINT(EM_DIAGRAM):   _MAX_ = .;
+MPRINT(EM_DIAGRAM):   _MAXP_ = .;
+MPRINT(EM_DIAGRAM):   _SUM_ = .;
+MPRINT(EM_DIAGRAM):   _NTRIALS = .;
+MPRINT(EM_DIAGRAM):   _EPS = 1E-10;
+MPRINT(EM_DIAGRAM):   LENGTH _WARN_ $4 ;
+MPRINT(EM_DIAGRAM):   label S_MntCard_Games = 'Standard: MntCard_Games' ;
+MPRINT(EM_DIAGRAM):   label S_MntMagazines = 'Standard: MntMagazines' ;
+MPRINT(EM_DIAGRAM):   label S_NumCatalogPurchases = 'Standard: NumCatalogPurchases' ;
+MPRINT(EM_DIAGRAM):   label S_NumDealsPurchases = 'Standard: NumDealsPurchases' ;
+MPRINT(EM_DIAGRAM):   label S_NumWebPurchases = 'Standard: NumWebPurchases' ;
+MPRINT(EM_DIAGRAM):   label S_RANGE_Frq = 'Standard: RANGE_Frq' ;
+MPRINT(EM_DIAGRAM):   label S_RANGE_Recency = 'Standard: RANGE_Recency' ;
+MPRINT(EM_DIAGRAM):   label S_RANGE_average_purchase = 'Standard: RANGE_average_purchase' ;
+MPRINT(EM_DIAGRAM):   label S_RANGE_campaign_acceptance = 'Standard: 
+RANGE_campaign_acceptance' ;
+MPRINT(EM_DIAGRAM):   label Marital_StatusDivorced = 'Dummy: Marital_Status=Divorced' ;
+MPRINT(EM_DIAGRAM):   label Marital_StatusMarried = 'Dummy: Marital_Status=Married' ;
+MPRINT(EM_DIAGRAM):   label Marital_StatusSingle = 'Dummy: Marital_Status=Single' ;
+MPRINT(EM_DIAGRAM):   label Marital_StatusTogether = 'Dummy: Marital_Status=Together' ;
+MPRINT(EM_DIAGRAM):   label H11 = 'Hidden: H1=1' ;
+MPRINT(EM_DIAGRAM):   label H12 = 'Hidden: H1=2' ;
+MPRINT(EM_DIAGRAM):   label H13 = 'Hidden: H1=3' ;
+MPRINT(EM_DIAGRAM):   label H14 = 'Hidden: H1=4' ;
+MPRINT(EM_DIAGRAM):   label H15 = 'Hidden: H1=5' ;
+MPRINT(EM_DIAGRAM):   label H16 = 'Hidden: H1=6' ;
+MPRINT(EM_DIAGRAM):   label H17 = 'Hidden: H1=7' ;
+MPRINT(EM_DIAGRAM):   label H18 = 'Hidden: H1=8' ;
+MPRINT(EM_DIAGRAM):   label I_DepVar = 'Into: DepVar' ;
+MPRINT(EM_DIAGRAM):   label U_DepVar = 'Unnormalized Into: DepVar' ;
+MPRINT(EM_DIAGRAM):   label P_DepVar1 = 'Predicted: DepVar=1' ;
+MPRINT(EM_DIAGRAM):   label P_DepVar0 = 'Predicted: DepVar=0' ;
+MPRINT(EM_DIAGRAM):   label _WARN_ = "Warnings";
+MPRINT(EM_DIAGRAM):   *** Generate dummy variables for Marital_Status ;
+MPRINT(EM_DIAGRAM):   drop Marital_StatusDivorced Marital_StatusMarried Marital_StatusSingle 
+Marital_StatusTogether ;
+MPRINT(EM_DIAGRAM):   *** encoding is sparse, initialize to zero;
+MPRINT(EM_DIAGRAM):   Marital_StatusDivorced = 0;
+MPRINT(EM_DIAGRAM):   Marital_StatusMarried = 0;
+MPRINT(EM_DIAGRAM):   Marital_StatusSingle = 0;
+MPRINT(EM_DIAGRAM):   Marital_StatusTogether = 0;
+MPRINT(EM_DIAGRAM):   if missing( Marital_Status ) then do;
+MPRINT(EM_DIAGRAM):   Marital_StatusDivorced = .;
+MPRINT(EM_DIAGRAM):   Marital_StatusMarried = .;
+MPRINT(EM_DIAGRAM):   Marital_StatusSingle = .;
+MPRINT(EM_DIAGRAM):   Marital_StatusTogether = .;
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else do;
+MPRINT(EM_DIAGRAM):   length _dm8 $ 8;
+MPRINT(EM_DIAGRAM):   drop _dm8 ;
+MPRINT(EM_DIAGRAM):   _dm8 = put( Marital_Status , $8. );
+MPRINT(DMNORMIP):   call dmnorm(_dm8,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):   _dm_find = 0;
+MPRINT(EM_DIAGRAM):   drop _dm_find;
+MPRINT(EM_DIAGRAM):   if _dm8 <= 'SINGLE' then do;
+MPRINT(EM_DIAGRAM):   if _dm8 <= 'MARRIED' then do;
+MPRINT(EM_DIAGRAM):   if _dm8 = 'DIVORCED' then do;
+MPRINT(EM_DIAGRAM):   Marital_StatusDivorced = 1;
+MPRINT(EM_DIAGRAM):   _dm_find = 1;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else do;
+MPRINT(EM_DIAGRAM):   if _dm8 = 'MARRIED' then do;
+MPRINT(EM_DIAGRAM):   Marital_StatusMarried = 1;
+MPRINT(EM_DIAGRAM):   _dm_find = 1;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else do;
+MPRINT(EM_DIAGRAM):   if _dm8 = 'SINGLE' then do;
+MPRINT(EM_DIAGRAM):   Marital_StatusSingle = 1;
+MPRINT(EM_DIAGRAM):   _dm_find = 1;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else do;
+MPRINT(EM_DIAGRAM):   if _dm8 = 'TOGETHER' then do;
+MPRINT(EM_DIAGRAM):   Marital_StatusTogether = 1;
+MPRINT(EM_DIAGRAM):   _dm_find = 1;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else do;
+MPRINT(EM_DIAGRAM):   if _dm8 = 'WIDOW' then do;
+MPRINT(EM_DIAGRAM):   Marital_StatusDivorced = -1;
+MPRINT(EM_DIAGRAM):   Marital_StatusMarried = -1;
+MPRINT(EM_DIAGRAM):   Marital_StatusSingle = -1;
+MPRINT(EM_DIAGRAM):   Marital_StatusTogether = -1;
+MPRINT(EM_DIAGRAM):   _dm_find = 1;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   if not _dm_find then do;
+MPRINT(EM_DIAGRAM):   Marital_StatusDivorced = .;
+MPRINT(EM_DIAGRAM):   Marital_StatusMarried = .;
+MPRINT(EM_DIAGRAM):   Marital_StatusSingle = .;
+MPRINT(EM_DIAGRAM):   Marital_StatusTogether = .;
+MPRINT(EM_DIAGRAM):   substr(_warn_,2,1) = 'U';
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   *** *************************;
+MPRINT(EM_DIAGRAM):   *** Checking missing input Interval *** *************************;
+MPRINT(EM_DIAGRAM):   IF NMISS( MntCard_Games , MntMagazines , NumCatalogPurchases , 
+NumDealsPurchases , NumWebPurchases , RANGE_Frq , RANGE_Recency , RANGE_average_purchase , 
+RANGE_campaign_acceptance ) THEN DO;
+MPRINT(EM_DIAGRAM):   SUBSTR(_WARN_, 1, 1) = 'M';
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   *** *************************;
+MPRINT(EM_DIAGRAM):   *** Writing the Node intvl ;
+MPRINT(EM_DIAGRAM):   *** *************************;
+MPRINT(EM_DIAGRAM):   IF _DM_BAD EQ 0 THEN DO;
+MPRINT(EM_DIAGRAM):   S_MntCard_Games = -2.29552053621136 + 6.58526682455081 * MntCard_Games ;
+MPRINT(EM_DIAGRAM):   S_MntMagazines = -0.82293757807429 + 17.2690037990877 * MntMagazines ;
+MPRINT(EM_DIAGRAM):   S_NumCatalogPurchases = -3.13390881283003 + 13.5906280879322 * 
+NumCatalogPurchases ;
+MPRINT(EM_DIAGRAM):   S_NumDealsPurchases = -1.41465463186291 + 11.0318603521921 * 
+NumDealsPurchases ;
+MPRINT(EM_DIAGRAM):   S_NumWebPurchases = -5.24785908864246 + 12.283402083256 * 
+NumWebPurchases ;
+MPRINT(EM_DIAGRAM):   S_RANGE_Frq = -1.36303513338452 + 4.21654196784367 * RANGE_Frq ;
+MPRINT(EM_DIAGRAM):   S_RANGE_Recency = -1.65915928443681 + 3.37794970549188 * RANGE_Recency ;
+MPRINT(EM_DIAGRAM):   S_RANGE_average_purchase = -1.0387883165722 + 5.11361054117627 * 
+RANGE_average_purchase ;
+MPRINT(EM_DIAGRAM):   S_RANGE_campaign_acceptance = -0.4736186337401 + 5.76461537066529 * 
+RANGE_campaign_acceptance ;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   IF MISSING( MntCard_Games ) THEN S_MntCard_Games = . ;
+MPRINT(EM_DIAGRAM):   ELSE S_MntCard_Games = -2.29552053621136 + 6.58526682455081 * 
+MntCard_Games ;
+MPRINT(EM_DIAGRAM):   IF MISSING( MntMagazines ) THEN S_MntMagazines = . ;
+MPRINT(EM_DIAGRAM):   ELSE S_MntMagazines = -0.82293757807429 + 17.2690037990877 * 
+MntMagazines ;
+MPRINT(EM_DIAGRAM):   IF MISSING( NumCatalogPurchases ) THEN S_NumCatalogPurchases = . ;
+MPRINT(EM_DIAGRAM):   ELSE S_NumCatalogPurchases = -3.13390881283003 + 13.5906280879322 * 
+NumCatalogPurchases ;
+MPRINT(EM_DIAGRAM):   IF MISSING( NumDealsPurchases ) THEN S_NumDealsPurchases = . ;
+MPRINT(EM_DIAGRAM):   ELSE S_NumDealsPurchases = -1.41465463186291 + 11.0318603521921 * 
+NumDealsPurchases ;
+MPRINT(EM_DIAGRAM):   IF MISSING( NumWebPurchases ) THEN S_NumWebPurchases = . ;
+MPRINT(EM_DIAGRAM):   ELSE S_NumWebPurchases = -5.24785908864246 + 12.283402083256 * 
+NumWebPurchases ;
+MPRINT(EM_DIAGRAM):   IF MISSING( RANGE_Frq ) THEN S_RANGE_Frq = . ;
+MPRINT(EM_DIAGRAM):   ELSE S_RANGE_Frq = -1.36303513338452 + 4.21654196784367 * RANGE_Frq ;
+MPRINT(EM_DIAGRAM):   IF MISSING( RANGE_Recency ) THEN S_RANGE_Recency = . ;
+MPRINT(EM_DIAGRAM):   ELSE S_RANGE_Recency = -1.65915928443681 + 3.37794970549188 * 
+RANGE_Recency ;
+MPRINT(EM_DIAGRAM):   IF MISSING( RANGE_average_purchase ) THEN S_RANGE_average_purchase = . ;
+MPRINT(EM_DIAGRAM):   ELSE S_RANGE_average_purchase = -1.0387883165722 + 5.11361054117627 * 
+RANGE_average_purchase ;
+MPRINT(EM_DIAGRAM):   IF MISSING( RANGE_campaign_acceptance ) THEN S_RANGE_campaign_acceptance 
+= . ;
+MPRINT(EM_DIAGRAM):   ELSE S_RANGE_campaign_acceptance = -0.4736186337401 + 5.76461537066529 * 
+RANGE_campaign_acceptance ;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   *** *************************;
+MPRINT(EM_DIAGRAM):   *** Writing the Node nom ;
+MPRINT(EM_DIAGRAM):   *** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+MPRINT(EM_DIAGRAM):   *** Writing the Node H1 ;
+MPRINT(EM_DIAGRAM):   *** *************************;
+MPRINT(EM_DIAGRAM):   IF _DM_BAD EQ 0 THEN DO;
+MPRINT(EM_DIAGRAM):   H11 = 0.20972421718057 * S_MntCard_Games + -0.10519753218003 * 
+S_MntMagazines + 0.15656734847629 * S_NumCatalogPurchases + 0.63057160324877 * 
+S_NumDealsPurchases + -0.00737690936149 * S_NumWebPurchases + 0.20053768659238 * S_RANGE_Frq + 
+-1.12557480034141 * S_RANGE_Recency + -0.22476100695688 * S_RANGE_average_purchase + 
+0.28567577425134 * S_RANGE_campaign_acceptance ;
+MPRINT(EM_DIAGRAM):   H12 = 0.07368864080416 * S_MntCard_Games + -0.4223767992421 * 
+S_MntMagazines + 0.17487060799852 * S_NumCatalogPurchases + -0.16663103701637 * 
+S_NumDealsPurchases + 0.4469410823334 * S_NumWebPurchases + 0.07351068357053 * S_RANGE_Frq + 
+0.2764433150472 * S_RANGE_Recency + 0.25947059452403 * S_RANGE_average_purchase + 
+0.12894202604451 * S_RANGE_campaign_acceptance ;
+MPRINT(EM_DIAGRAM):   H13 = 0.31080135867348 * S_MntCard_Games + 0.18451282806391 * 
+S_MntMagazines + 0.1127627139197 * S_NumCatalogPurchases + 0.24603022042835 * 
+S_NumDealsPurchases + -0.28013448748239 * S_NumWebPurchases + 0.12933786524903 * S_RANGE_Frq + 
+0.34733298788257 * S_RANGE_Recency + 0.51115383261532 * S_RANGE_average_purchase + 
+-0.26437219931513 * S_RANGE_campaign_acceptance ;
+MPRINT(EM_DIAGRAM):   H14 = -0.57033383655748 * S_MntCard_Games + -0.33054700873328 * 
+S_MntMagazines + -1.02671397545134 * S_NumCatalogPurchases + -0.41228604651309 * 
+S_NumDealsPurchases + -0.21819906644753 * S_NumWebPurchases + 0.60269025654631 * S_RANGE_Frq + 
+0.6046180501819 * S_RANGE_Recency + -0.42162410945573 * S_RANGE_average_purchase + 
+-0.20008993427643 * S_RANGE_campaign_acceptance ;
+MPRINT(EM_DIAGRAM):   H15 = 0.6093862111979 * S_MntCard_Games + 0.18205906140977 * 
+S_MntMagazines + 0.49639052978093 * S_NumCatalogPurchases + 0.61953955047886 * 
+S_NumDealsPurchases + -0.23923372893571 * S_NumWebPurchases + -0.19964591826134 * S_RANGE_Frq 
++ -0.20354696929195 * S_RANGE_Recency + 0.54178001423516 * S_RANGE_average_purchase + 
+0.82116084363342 * S_RANGE_campaign_acceptance ;
+MPRINT(EM_DIAGRAM):   H16 = -0.89765621146319 * S_MntCard_Games + 0.18624358536157 * 
+S_MntMagazines + -0.41426005837921 * S_NumCatalogPurchases + -0.63819825018964 * 
+S_NumDealsPurchases + -0.75564857992734 * S_NumWebPurchases + -0.24431914212986 * S_RANGE_Frq 
++ 1.47078024332987 * S_RANGE_Recency + -0.08214840144887 * S_RANGE_average_purchase + 
+-0.87167436264292 * S_RANGE_campaign_acceptance ;
+MPRINT(EM_DIAGRAM):   H17 = 0.03824306532902 * S_MntCard_Games + 0.09162051848061 * 
+S_MntMagazines + 0.25990341633612 * S_NumCatalogPurchases + -0.58632763415232 * 
+S_NumDealsPurchases + -0.02683058882616 * S_NumWebPurchases + 0.36070453911153 * S_RANGE_Frq + 
+-0.46706817985413 * S_RANGE_Recency + 0.03188715672586 * S_RANGE_average_purchase + 
+0.27713598915972 * S_RANGE_campaign_acceptance ;
+MPRINT(EM_DIAGRAM):   H18 = -0.35178879490005 * S_MntCard_Games + -0.2853720173945 * 
+S_MntMagazines + 0.36904553501501 * S_NumCatalogPurchases + 0.49484726303534 * 
+S_NumDealsPurchases + -0.51224257122634 * S_NumWebPurchases + 0.31503193306354 * S_RANGE_Frq + 
+-0.24985277238677 * S_RANGE_Recency + 0.061397741924 * S_RANGE_average_purchase + 
+0.24571810164181 * S_RANGE_campaign_acceptance ;
+MPRINT(EM_DIAGRAM):   H11 = H11 + 0.27684891699167 * Marital_StatusDivorced + 
+-0.33031859213239 * Marital_StatusMarried + 0.61699559997992 * Marital_StatusSingle + 
+-0.16243553104357 * Marital_StatusTogether ;
+MPRINT(EM_DIAGRAM):   H12 = H12 + -0.50397359271861 * Marital_StatusDivorced + 
+-0.23570256235163 * Marital_StatusMarried + 0.18671782880144 * Marital_StatusSingle + 
+0.0300664326928 * Marital_StatusTogether ;
+MPRINT(EM_DIAGRAM):   H13 = H13 + -0.10864645717505 * Marital_StatusDivorced + 
+-0.20555700211504 * Marital_StatusMarried + 0.1648370262569 * Marital_StatusSingle + 
+-0.03166337233879 * Marital_StatusTogether ;
+MPRINT(EM_DIAGRAM):   H14 = H14 + -0.25764039105044 * Marital_StatusDivorced + 
+0.05281900768859 * Marital_StatusMarried + -0.28955714634595 * Marital_StatusSingle + 
+0.1811608851228 * Marital_StatusTogether ;
+MPRINT(EM_DIAGRAM):   H15 = H15 + 0.16052554933853 * Marital_StatusDivorced + 0.01235369787171 
+* Marital_StatusMarried + 0.1227747816279 * Marital_StatusSingle + -0.78421505074531 * 
+Marital_StatusTogether ;
+MPRINT(EM_DIAGRAM):   H16 = H16 + -0.09636185034972 * Marital_StatusDivorced + 
+0.49379263355192 * Marital_StatusMarried + 0.11693446659268 * Marital_StatusSingle + 
+0.39504907373164 * Marital_StatusTogether ;
+MPRINT(EM_DIAGRAM):   H17 = H17 + 0.63607617128916 * Marital_StatusDivorced + 
+-0.69233427848009 * Marital_StatusMarried + 0.85408778865978 * Marital_StatusSingle + 
+-0.23854465330987 * Marital_StatusTogether ;
+MPRINT(EM_DIAGRAM):   H18 = H18 + 0.28535498096797 * Marital_StatusDivorced + 
+-0.22088583509449 * Marital_StatusMarried + -0.10230118240769 * Marital_StatusSingle + 
+-0.41427540923153 * Marital_StatusTogether ;
+MPRINT(EM_DIAGRAM):   H11 = 0.29714961909337 + H11 ;
+MPRINT(EM_DIAGRAM):   H12 = 2.28692305168248 + H12 ;
+MPRINT(EM_DIAGRAM):   H13 = 1.04684893652896 + H13 ;
+MPRINT(EM_DIAGRAM):   H14 = -0.27835769163672 + H14 ;
+MPRINT(EM_DIAGRAM):   H15 = -1.48853670189635 + H15 ;
+MPRINT(EM_DIAGRAM):   H16 = 2.02040716755866 + H16 ;
+MPRINT(EM_DIAGRAM):   H17 = -2.1402631431051 + H17 ;
+MPRINT(EM_DIAGRAM):   H18 = -1.77285171982666 + H18 ;
+MPRINT(EM_DIAGRAM):   H11 = TANH(H11 );
+MPRINT(EM_DIAGRAM):   H12 = TANH(H12 );
+MPRINT(EM_DIAGRAM):   H13 = TANH(H13 );
+MPRINT(EM_DIAGRAM):   H14 = TANH(H14 );
+MPRINT(EM_DIAGRAM):   H15 = TANH(H15 );
+MPRINT(EM_DIAGRAM):   H16 = TANH(H16 );
+MPRINT(EM_DIAGRAM):   H17 = TANH(H17 );
+MPRINT(EM_DIAGRAM):   H18 = TANH(H18 );
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   H11 = .;
+MPRINT(EM_DIAGRAM):   H12 = .;
+MPRINT(EM_DIAGRAM):   H13 = .;
+MPRINT(EM_DIAGRAM):   H14 = .;
+MPRINT(EM_DIAGRAM):   H15 = .;
+MPRINT(EM_DIAGRAM):   H16 = .;
+MPRINT(EM_DIAGRAM):   H17 = .;
+MPRINT(EM_DIAGRAM):   H18 = .;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   *** *************************;
+MPRINT(EM_DIAGRAM):   *** Writing the Node DepVar ;
+MPRINT(EM_DIAGRAM):   *** *************************;
+MPRINT(EM_DIAGRAM):   IF _DM_BAD EQ 0 THEN DO;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 2.28155484960035 * H11 + 0.37558662649004 * H12 + 
+-0.01491883215668 * H13 + -1.79896740790015 * H14 + 1.54972455239658 * H15 + -2.83834486141497 
+* H16 + 1.56015981413604 * H17 + 1.15123166934324 * H18 ;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = -1.56259640307401 + P_DepVar1 ;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0;
+MPRINT(EM_DIAGRAM):   _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
+MPRINT(EM_DIAGRAM):   _SUM_ = 0.;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = EXP(P_DepVar1 - _MAX_);
+MPRINT(EM_DIAGRAM):   _SUM_ = _SUM_ + P_DepVar1 ;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = EXP(P_DepVar0 - _MAX_);
+MPRINT(EM_DIAGRAM):   _SUM_ = _SUM_ + P_DepVar0 ;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = P_DepVar1 / _SUM_;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = P_DepVar0 / _SUM_;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = .;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = .;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   IF _DM_BAD EQ 1 THEN DO;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.13673708920187;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.86326291079812;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   *** *************************;
+MPRINT(EM_DIAGRAM):   *** Writing the I_DepVar AND U_DepVar ;
+MPRINT(EM_DIAGRAM):   *** *************************;
+MPRINT(EM_DIAGRAM):   _MAXP_ = P_DepVar1 ;
+MPRINT(EM_DIAGRAM):   I_DepVar = "1           " ;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+MPRINT(EM_DIAGRAM):   IF( _MAXP_ LT P_DepVar0 ) THEN DO;
+MPRINT(EM_DIAGRAM):   _MAXP_ = P_DepVar0 ;
+MPRINT(EM_DIAGRAM):   I_DepVar = "0           " ;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+MPRINT(EM_DIAGRAM):   END;
+MPRINT(EM_DIAGRAM):   ********************************;
+MPRINT(EM_DIAGRAM):   *** End Scoring Code for Neural;
+MPRINT(EM_DIAGRAM):   ********************************;
+MPRINT(EM_DIAGRAM):   drop S_MntCard_Games S_MntMagazines S_NumCatalogPurchases 
+S_NumDealsPurchases S_NumWebPurchases S_RANGE_Frq S_RANGE_Recency S_RANGE_average_purchase 
+S_RANGE_campaign_acceptance H11 H12 H13 H14 H15 H16 H17 H18 ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * TOOL: Score Node;
+MPRINT(EM_DIAGRAM):   * TYPE: ASSESS;
+MPRINT(EM_DIAGRAM):   * NODE: Score;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Score: Creating Fixed Names;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   LENGTH EM_EVENTPROBABILITY 8;
+MPRINT(EM_DIAGRAM):   LABEL EM_EVENTPROBABILITY = 'Probability for level 1 of DepVar';
+MPRINT(EM_DIAGRAM):   EM_EVENTPROBABILITY = P_DepVar1;
+MPRINT(EM_DIAGRAM):   LENGTH EM_PROBABILITY 8;
+MPRINT(EM_DIAGRAM):   LABEL EM_PROBABILITY = 'Probability of Classification';
+MPRINT(EM_DIAGRAM):   EM_PROBABILITY = max( P_DepVar1 , P_DepVar0 );
+MPRINT(EM_DIAGRAM):   LENGTH EM_CLASSIFICATION
+MPRINT(DMNORLEN):   $32
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   LABEL EM_CLASSIFICATION = "Prediction for DepVar";
+MPRINT(EM_DIAGRAM):   EM_CLASSIFICATION = I_DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

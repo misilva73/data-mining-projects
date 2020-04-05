@@ -1,0 +1,128 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "17:18:45 o'clock" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Score Log
+Date:                02 June 2018
+Time:                17:18:45 o'clock
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O2GMIWD9 "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Meta2\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O2GMIWD9 new;
+MPRINT(EM_DIAGRAM):   run;
+29555      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+29556      * Meta2: Scoring DATA data;
+MPRINT(EM_DIAGRAM):   * Meta2: Scoring DATA data;
+29557      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+29558      data EMWS1.Meta2_TRAIN
+29559      / view=EMWS1.Meta2_TRAIN
+29560      ;
+MPRINT(EM_DIAGRAM):   data EMWS1.Meta2_TRAIN / view=EMWS1.Meta2_TRAIN ;
+29561      set EMWS1.EMCODE2_TRAIN
+29562      ;
+MPRINT(EM_DIAGRAM):   set EMWS1.EMCODE2_TRAIN ;
+29563      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA STEP view saved on file EMWS1.META2_TRAIN.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+29564      quit;
+
+29565      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+29566      * Meta2: Computing metadata for TRAIN data;
+MPRINT(EM_DIAGRAM):   * Meta2: Computing metadata for TRAIN data;
+29567      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+
+29568      data _TEMP;
+MPRINT(EM_DIAGRAM):    data _TEMP;
+29569      set EMWS1.EMCODE2_CMeta_TRAIN;
+MPRINT(EM_DIAGRAM):   set EMWS1.EMCODE2_CMeta_TRAIN;
+29570      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+29571      * Metadata Changes;
+MPRINT(EM_DIAGRAM):   * Metadata Changes;
+29572      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+29573      if upcase(NAME) = "ACCEPTEDCMP1" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "ACCEPTEDCMP1" then ROLE="REJECTED";
+29574      if upcase(NAME) = "ACCEPTEDCMP2" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "ACCEPTEDCMP2" then ROLE="REJECTED";
+29575      if upcase(NAME) = "ACCEPTEDCMP3" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "ACCEPTEDCMP3" then ROLE="REJECTED";
+29576      if upcase(NAME) = "ACCEPTEDCMP4" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "ACCEPTEDCMP4" then ROLE="REJECTED";
+29577      if upcase(NAME) = "ACCEPTEDCMP5" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "ACCEPTEDCMP5" then ROLE="REJECTED";
+29578      if upcase(NAME) = "CHILDHOME" then LEVEL="BINARY";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "CHILDHOME" then LEVEL="BINARY";
+29579      if upcase(NAME) = "DT_CUSTOMER" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "DT_CUSTOMER" then ROLE="REJECTED";
+29580      if upcase(NAME) = "KIDHOME" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "KIDHOME" then ROLE="REJECTED";
+29581      if upcase(NAME) = "TEENHOME" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "TEENHOME" then ROLE="REJECTED";
+29582      if upcase(NAME) = "YEAR_BIRTH" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "YEAR_BIRTH" then ROLE="REJECTED";
+29583      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 43 observations read from the data set EMWS1.EMCODE2_CMETA_TRAIN.
+NOTE: The data set WORK._TEMP has 43 observations and 20 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+29584      proc sort data=_TEMP;
+MPRINT(EM_DIAGRAM):    proc sort data=_TEMP;
+29585      by NAME;
+MPRINT(EM_DIAGRAM):   by NAME;
+29586      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 43 observations read from the data set WORK._TEMP.
+NOTE: The data set WORK._TEMP has 43 observations and 20 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+29587      data EMWS1.Meta2_CMeta_TRAIN;
+MPRINT(EM_DIAGRAM):    data EMWS1.Meta2_CMeta_TRAIN;
+29588      set _TEMP;
+MPRINT(EM_DIAGRAM):   set _TEMP;
+29589      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 43 observations read from the data set WORK._TEMP.
+NOTE: The data set EMWS1.META2_CMETA_TRAIN has 43 observations and 20 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+NOTE: View EMWS1.META2_TRAIN.VIEW used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

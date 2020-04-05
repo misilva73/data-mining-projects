@@ -1,0 +1,70 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "30 May 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "21:46:04 o'clock" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Report Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Report Log
+Date:                30 May 2018
+Time:                21:46:04 o'clock
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O0YE04OH "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\EMSave2\EMREPORT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O0YE04OH new;
+MPRINT(EM_DIAGRAM):   run;
+49559      %let EMEXCEPTIONSTRING=;
+49560      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+49561      * REPORT: EMSave2;
+MPRINT(EM_DIAGRAM):   * REPORT: EMSave2;
+49562      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+49563      %let EM_ACTION = REPORT;
+49564      %let syscc = 0;
+49565      *** MAIN MACRO FOR EMSAVE EXTENSION NODE;
+MPRINT(EM_DIAGRAM):     *** MAIN MACRO FOR EMSAVE EXTENSION NODE;
+49566      
+49567      %macro EM_SAVEXT_MAIN;
+49568      
+49569         %if %upcase("&EM_ACTION") = "CREATE" %then %do;
+49570             filename _create catalog 'sashelp.emutil.savext_create.source';
+49571             %include _create;
+49572             filename _create;
+49573             %EM_SAVEXT_CREATE;
+49574         %end;
+49575         %else
+49576         %if %upcase("&EM_ACTION") = "TRAIN" %then %do;
+49577             filename _train catalog 'sashelp.emutil.savext_train.source';
+49578             %include _train;
+49579             filename _train;
+49580             %EM_SAVEXT_TRAIN;
+49581         %end;
+49582      
+49583      %mend EM_SAVEXT_MAIN;
+49584      
+49585      %EM_SAVEXT_MAIN;
+MPRINT(EM_DIAGRAM):  ;
+49586      
+49587      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+49588      * End REPORT: EMSave2;
+MPRINT(EM_DIAGRAM):   * End REPORT: EMSave2;
+49589      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+
+49590      /* Reset EM Options */
+49591      options formchar="|----|+|---+=|-/\<>*";
+MPRINT(EM_DIAGRAM):    options formchar="|----|+|---+=|-/\<>*";
+49592      options nocenter ls=256 ps=10000;
+MPRINT(EM_DIAGRAM):   options nocenter ls=256 ps=10000;
+49593      goptions reset=all device=GIF NODISPLAY;
+MPRINT(EM_DIAGRAM):   goptions reset=all device=GIF NODISPLAY;
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

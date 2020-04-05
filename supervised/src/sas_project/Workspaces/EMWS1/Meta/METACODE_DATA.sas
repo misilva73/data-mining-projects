@@ -1,0 +1,16 @@
+*------------------------------------------------------------*;
+* Metadata Changes;
+*------------------------------------------------------------*;
+if upcase(NAME) = "CHILDHOME" then ROLE="REJECTED";
+if upcase(NAME) = "COMPLAIN" then ROLE="REJECTED";
+if upcase(NAME) = "EDUCATION" then ROLE="REJECTED";
+if upcase(NAME) = "IMP_MNTBRANDA__MATERIAL" then ROLE="REJECTED";
+if upcase(NAME) = "IMP_MNTSCENARIO" then ROLE="REJECTED";
+if upcase(NAME) = "MNTMINIATURES" then ROLE="REJECTED";
+if upcase(NAME) = "MNTPAINTING_MATERIAL" then ROLE="REJECTED";
+if upcase(NAME) = "NUMSTOREPURCHASES" then ROLE="REJECTED";
+if upcase(NAME) = "RANGE_IMP_INCOME" then ROLE="REJECTED";
+if upcase(NAME) = "RANGE_MNT" then ROLE="REJECTED";
+if upcase(NAME) = "RANGE_NUMWEBVISITSMONTH" then ROLE="REJECTED";
+if upcase(NAME) = "RANGE_AGE" then ROLE="REJECTED";
+if upcase(NAME) = "RANGE_LOYALTY" then ROLE="REJECTED";

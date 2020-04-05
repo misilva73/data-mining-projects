@@ -1,0 +1,411 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "24 December 2017" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "10:04:33 o'clock" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Training Log
+Date:                24 December 2017
+Time:                10:04:33 o'clock
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O1_91PZZ "C:\Users\misil\Desktop\MIS\DM1_project\Workspaces\EMWS1\Clus7\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O1_91PZZ new;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOG "C:\Users\misil\Desktop\MIS\DM1_project\Workspaces\EMWS1\Clus7\EMLOG.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "24 December 2017" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "10:04:33 o'clock" );
+MPRINT(EM_DIAGRAM):   file _LOG;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                misil";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "Site:                70107571";
+MPRINT(EM_DIAGRAM):   put "Platform:            X64_10PRO";
+MPRINT(EM_DIAGRAM):   put "Maintenance Release: 9.04.01M4P110916";
+MPRINT(EM_DIAGRAM):   put "EM Version:          14.2";
+MPRINT(EM_DIAGRAM):   put "* ";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN "C:\Users\misil\Desktop\MIS\DM1_project\Workspaces\EMWS1\Clus7\EMTRAIN.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _LOG MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_LOGIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _LOGIN "C:\Users\misil\Desktop\MIS\DM1_project\Workspaces\EMWS1\Clus7\EMSCORE.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN "C:\Users\misil\Desktop\MIS\DM1_project\Workspaces\EMWS1\Clus7\EMREPORT.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    filename _LOG;
+MPRINT(EM_DIAGRAM):    filename _OUT "C:\Users\misil\Desktop\MIS\DM1_project\Workspaces\EMWS1\Clus7\EMOUTPUT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "24 December 2017" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "10:04:33 o'clock" );
+MPRINT(EM_DIAGRAM):   file _OUT;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                misil";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\MIS\DM1_project\Workspaces\EMWS1\Clus7\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _OUT MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_OUTIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\MIS\DM1_project\Workspaces\EMWS1\Clus7\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Report Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\MIS\DM1_project\Workspaces\EMWS1\Clus7\EMREPORT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    filename _OUT;
+MPRINT(EM_DIAGRAM):    filename _emtool_ 'C:\Users\misil\Desktop\MIS\DM1_project\Workspaces\EMWS1\Clus7\EMRUNSTATUS.xml' encoding="UTF-8" NOBOM;
+22340      proc freq data=EMWS1.Clus7_VariableSet noprint;
+MPRINT(EM_DIAGRAM):    proc freq data=EMWS1.Clus7_VariableSet noprint;
+22341      table ROLE*LEVEL/out=WORK.Clus7META;
+MPRINT(EM_DIAGRAM):   table ROLE*LEVEL/out=WORK.Clus7META;
+22342      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 10 observations read from the data set EMWS1.CLUS7_VARIABLESET.
+NOTE: The data set WORK.CLUS7META has 5 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.01 seconds
+      
+
+22343      proc print data=WORK.Clus7META label noobs;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.Clus7META label noobs;
+22344      var ROLE LEVEL COUNT;
+MPRINT(EM_DIAGRAM):   var ROLE LEVEL COUNT;
+22345      label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL = "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label ROLE = "Role" LEVEL = "Measurement Level" COUNT = "Frequency Count";
+22346      title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+22347      title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Variable Summary";
+MPRINT(EM_DIAGRAM):   run;
+22348      run;
+
+NOTE: There were 5 observations read from the data set WORK.CLUS7META.
+NOTE: The PROCEDURE PRINT printed page 1.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+22349      title10;
+MPRINT(EM_DIAGRAM):   title10;
+22350      data WORK.M2I8I08M;
+MPRINT(EM_DIAGRAM):    data WORK.M2I8I08M;
+22351      set WORK.M2I8I08M;
+MPRINT(EM_DIAGRAM):   set WORK.M2I8I08M;
+22352      if role eq 'REJECTED' then role = 'INPUT';
+MPRINT(EM_DIAGRAM):   if role eq 'REJECTED' then role = 'INPUT';
+22353      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 3 observations read from the data set WORK.M2I8I08M.
+NOTE: The data set WORK.M2I8I08M has 3 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Clus7: Preparing metadata for training;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   data WORK.M2I8I08M;
+MPRINT(EM_DIAGRAM):   set WORK.M2I8I08M;
+MPRINT(EM_DIAGRAM):   if role eq 'REJECTED' then role = 'INPUT';
+MPRINT(EM_DIAGRAM):   run;
+22362      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+22363      * Clus7: Training;
+MPRINT(EM_DIAGRAM):   * Clus7: Training;
+22364      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+22365      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+22366      * Clus7: DMDBClass Macro ;
+MPRINT(EM_DIAGRAM):   * Clus7: DMDBClass Macro ;
+22367      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+22368      %macro DMDBClass;
+22369      
+22370      %mend DMDBClass;
+22371      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+22372      * Clus7: DMDBVar Macro ;
+MPRINT(EM_DIAGRAM):   * Clus7: DMDBVar Macro ;
+22373      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+22374      %macro DMDBVar;
+22375          CustMonVal IMP_MonthSal policy_time
+22376      %mend DMDBVar;
+22377      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+22378      * Clus7: Create DMDB;
+MPRINT(EM_DIAGRAM):   * Clus7: Create DMDB;
+22379      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+22380      proc dmdb batch data=EMWS1.Filter4_TRAIN
+22381      dmdbcat=WORK.Clus7_DMDB
+22382      maxlevel = 513
+22383      out=WORK.Clus7_DMDB
+22384      ;
+MPRINT(EM_DIAGRAM):   proc dmdb batch data=EMWS1.Filter4_TRAIN dmdbcat=WORK.Clus7_DMDB maxlevel = 513 out=WORK.Clus7_DMDB ;
+MPRINT(EM_DIAGRAM):   var
+22385      var %DMDBVar;
+MPRINT(DMDBVAR):   CustMonVal IMP_MonthSal policy_time
+MPRINT(EM_DIAGRAM):  ;
+22386      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Records processed = 10266   Memory used = 511K.
+NOTE: There were 10296 observations read from the data set A2Z_INSU.A2Z_INSURANCE.
+NOTE: There were 10296 observations read from the data set EMWS1.IDS_DATA.
+NOTE: There were 10296 observations read from the data set EMWS1.IMPT_TRAIN.
+NOTE: There were 10296 observations read from the data set EMWS1.TRANS_TRAIN.
+NOTE: There were 10296 observations read from the data set EMWS1.TRANS2_TRAIN.
+NOTE: There were 10296 observations read from the data set EMWS1.TRANS3_TRAIN.
+NOTE: View EMWS1.FILTER4_TRAIN.VIEW used (Total process time):
+      real time           0.28 seconds
+      cpu time            0.26 seconds
+      
+NOTE: There were 10296 observations read from the data set EMWS1.DROP2_TRAIN.
+NOTE: There were 10266 observations read from the data set EMWS1.FILTER4_TRAIN.
+NOTE: The data set WORK.CLUS7_DMDB has 10266 observations and 3 variables.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.30 seconds
+      cpu time            0.28 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+MPRINT(EM_DIAGRAM):   *--- end code ---*;
+22387      quit;
+22388      *--- end code ---*;
+
+22389      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------* ;
+22390      * Clus7: Interval Inputs Macro ;
+MPRINT(EM_DIAGRAM):   * Clus7: Interval Inputs Macro ;
+22391      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+22392      %macro DMVQINTERVAL;
+22393          CustMonVal IMP_MonthSal policy_time
+22394      %mend DMVQINTERVAL;
+22395      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+22396      * Clus7: Run DMVQ procedure;
+MPRINT(EM_DIAGRAM):   * Clus7: Run DMVQ procedure;
+22397      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+22398      title;
+MPRINT(EM_DIAGRAM):   title;
+22399      options nodate;
+MPRINT(EM_DIAGRAM):   options nodate;
+22400      proc dmvq data=WORK.Clus7_DMDB dmdbcat=WORK.Clus7_DMDB std=STD nominal=GLM ordinal=RANK
+22401      ;
+MPRINT(EM_DIAGRAM):   proc dmvq data=WORK.Clus7_DMDB dmdbcat=WORK.Clus7_DMDB std=STD nominal=GLM ordinal=RANK ;
+NOTE: The training set WORK.CLUS7_DMDB.DATA has 3 variable(s).
+NOTE: The DMVQ statement has finished with return code=0 and status=begin.
+MPRINT(EM_DIAGRAM):   input
+22402      input %DMVQINTERVAL / level=interval;
+MPRINT(DMVQINTERVAL):   CustMonVal IMP_MonthSal policy_time
+MPRINT(EM_DIAGRAM):   / level=interval;
+NOTE: 3 input variable(s) defined for ID=I1.
+NOTE: The INPUT statement has finished with return code=0 and status=variables.
+22403      VQ maxc = 7 clusname=_SEGMENT_ CLUSLABEL="Segment Id" DISTLABEL="Distance";
+MPRINT(EM_DIAGRAM):   VQ maxc = 7 clusname=_SEGMENT_ CLUSLABEL="Segment Id" DISTLABEL="Distance";
+NOTE: A maximum of 7 clusters have been requested.
+NOTE: The VQ statement has finished with return code=0 and status=architecture.
+22404      MAKE outvar=EMWS1.Clus7_OUTVAR;
+MPRINT(EM_DIAGRAM):   MAKE outvar=EMWS1.Clus7_OUTVAR;
+
+NOTE: 3 input variable(s).
+NOTE: Number of cases=10266
+NOTE: Sum of frequencies=10266
+NOTE: Sum of weights=10266
+NOTE: VARDEF=DF      
+NOTE: Maximum number of categories=0
+NOTE: The total number of variables is 3 with dimensionality 3.
+NOTE: 3 variables will be used for clustering.
+NOTE: Open output data set EMWS1.CLUS7_OUTVAR.DATA with 4 variables.
+NOTE: The data set EMWS1.CLUS7_OUTVAR has 4 observations and 4 variables.
+NOTE: The MAKE statement has finished with return code=0 and status=made.
+22405      INITIAL radius=0
+22406      initial=PRINCOMP
+22407      ;
+MPRINT(EM_DIAGRAM):   INITIAL radius=0 initial=PRINCOMP ;
+NOTE: 7 seeds were selected from data set WORK.CLUS7_DMDB.DATA using the PRINCOMP algorithm.
+NOTE: The INITIAL statement has finished with return code=0 and status=initialized.
+22408      TRAIN tech=FORGY
+22409      ;
+MPRINT(EM_DIAGRAM):   TRAIN tech=FORGY ;
+WARNING: The limit of 10 iterations was reached without convergence.
+NOTE: The TRAIN statement has finished with return code=0 and status=trained.
+22410      SAVE outstat=EMWS1.Clus7_OUTSTAT outmean=EMWS1.Clus7_OUTMEAN;
+MPRINT(EM_DIAGRAM):   SAVE outstat=EMWS1.Clus7_OUTSTAT outmean=EMWS1.Clus7_OUTMEAN;
+NOTE: The data set EMWS1.CLUS7_OUTSTAT has 58 observations and 6 variables.
+NOTE: The data set EMWS1.CLUS7_OUTMEAN has 7 observations and 12 variables.
+NOTE: The SAVE statement has finished with return code=0 and status=statistics.
+22411      code file="C:\Users\misil\Desktop\MIS\DM1_project\Workspaces\EMWS1\Clus7\DMVQSCORECODE.sas"
+22412      group=Clus7
+22413      ;
+MPRINT(EM_DIAGRAM):   code file="C:\Users\misil\Desktop\MIS\DM1_project\Workspaces\EMWS1\Clus7\DMVQSCORECODE.sas" group=Clus7 ;
+NOTE: External file C:\Users\misil\Desktop\MIS\DM1_project\Workspaces\EMWS1\Clus7\DMVQSCORECODE.sas opened.
+NOTE: The CODE statement has finished with return code=0 and status=statistics.
+22414      run;
+MPRINT(EM_DIAGRAM):   run;
+
+22415      quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: There were 10266 observations read from the data set WORK.CLUS7_DMDB.
+NOTE: PROCEDURE DMVQ used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.07 seconds
+      
+
+22416      libname _spdslib;
+MPRINT(EM_DIAGRAM):    libname _spdslib;
+WARNING: Libref _SPDSLIB is not assigned.
+22417      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+22418      * Clus7: Cluster Label;
+MPRINT(EM_DIAGRAM):   * Clus7: Cluster Label;
+22419      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+22420      data EMWS1.Clus7_LABEL;
+MPRINT(EM_DIAGRAM):   data EMWS1.Clus7_LABEL;
+22421      length _SEGMENT_ 8 Label $80;
+MPRINT(EM_DIAGRAM):   length _SEGMENT_ 8 Label $80;
+22422      format _SEGMENT_ 4.;
+MPRINT(EM_DIAGRAM):   format _SEGMENT_ 4.;
+22423      label _SEGMENT_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_segmentName_vlabel,  NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _SEGMENT_ = "Segment Name";
+22424      label Label = "%sysfunc(sasmsg(sashelp.dmine, rpt_segmentLabel_vlabel,  NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label Label = "Segment Label";
+22425      _SEGMENT_= 1;
+MPRINT(EM_DIAGRAM):   _SEGMENT_= 1;
+22426      Label='Cluster1';
+MPRINT(EM_DIAGRAM):   Label='Cluster1';
+22427      output;
+MPRINT(EM_DIAGRAM):   output;
+22428      _SEGMENT_= 2;
+MPRINT(EM_DIAGRAM):   _SEGMENT_= 2;
+22429      Label='Cluster2';
+MPRINT(EM_DIAGRAM):   Label='Cluster2';
+22430      output;
+MPRINT(EM_DIAGRAM):   output;
+22431      _SEGMENT_= 3;
+MPRINT(EM_DIAGRAM):   _SEGMENT_= 3;
+22432      Label='Cluster3';
+MPRINT(EM_DIAGRAM):   Label='Cluster3';
+22433      output;
+MPRINT(EM_DIAGRAM):   output;
+22434      _SEGMENT_= 4;
+MPRINT(EM_DIAGRAM):   _SEGMENT_= 4;
+22435      Label='Cluster4';
+MPRINT(EM_DIAGRAM):   Label='Cluster4';
+22436      output;
+MPRINT(EM_DIAGRAM):   output;
+22437      _SEGMENT_= 5;
+MPRINT(EM_DIAGRAM):   _SEGMENT_= 5;
+22438      Label='Cluster5';
+MPRINT(EM_DIAGRAM):   Label='Cluster5';
+22439      output;
+MPRINT(EM_DIAGRAM):   output;
+22440      _SEGMENT_= 6;
+MPRINT(EM_DIAGRAM):   _SEGMENT_= 6;
+22441      Label='Cluster6';
+MPRINT(EM_DIAGRAM):   Label='Cluster6';
+22442      output;
+MPRINT(EM_DIAGRAM):   output;
+22443      _SEGMENT_= 7;
+MPRINT(EM_DIAGRAM):   _SEGMENT_= 7;
+22444      Label='Cluster7';
+MPRINT(EM_DIAGRAM):   Label='Cluster7';
+22445      output;
+MPRINT(EM_DIAGRAM):   output;
+22446      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The data set EMWS1.CLUS7_LABEL has 7 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

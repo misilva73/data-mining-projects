@@ -1,0 +1,2253 @@
+*------------------------------------------------------------*
+User:                misil
+Date:                02 June 2018
+Time:                16:56:17 o'clock
+Site:                70107571
+Platform:            X64_10PRO
+Maintenance Release: 9.04.01M4P110916
+EM Version:          14.2
+* 
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "16:56:14 o'clock" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Training Log
+Date:                02 June 2018
+Time:                16:56:14 o'clock
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O3MY8DRS "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O3MY8DRS new;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOG "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMGROUP\EMLOG_9.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "16:56:14 o'clock" );
+MPRINT(EM_DIAGRAM):   file _LOG;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                misil";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "Site:                70107571";
+MPRINT(EM_DIAGRAM):   put "Platform:            X64_10PRO";
+MPRINT(EM_DIAGRAM):   put "Maintenance Release: 9.04.01M4P110916";
+MPRINT(EM_DIAGRAM):   put "EM Version:          14.2";
+MPRINT(EM_DIAGRAM):   put "* ";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMTRAIN.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _LOG MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_LOGIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _LOGIN "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMSCORE.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMREPORT.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    filename _LOG;
+MPRINT(EM_DIAGRAM):    filename _OUT "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMGROUP\EMOUTPUT_9.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "16:56:14 o'clock" );
+MPRINT(EM_DIAGRAM):   file _OUT;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                misil";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _OUT MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_OUTIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Report Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMREPORT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    filename _OUT;
+MPRINT(EM_DIAGRAM):    filename _emtool_ 'C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMRUNSTATUS.xml' encoding="UTF-8" NOBOM;
+2739151    proc freq data=EMWS1.Grp13_VariableSet noprint;
+MPRINT(EM_DIAGRAM):    proc freq data=EMWS1.Grp13_VariableSet noprint;
+2739152    table ROLE*LEVEL/out=WORK.Grp13META;
+MPRINT(EM_DIAGRAM):   table ROLE*LEVEL/out=WORK.Grp13META;
+2739153    run;
+MPRINT(EM_DIAGRAM):   run;
+ 
+NOTE: There were 4 observations read from the data set EMWS1.GRP13_VARIABLESET.
+NOTE: The data set WORK.GRP13META has 4 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.03 seconds
+ 
+ 
+2739154    proc print data=WORK.Grp13META label noobs;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.Grp13META label noobs;
+2739155    var ROLE LEVEL COUNT;
+MPRINT(EM_DIAGRAM):   var ROLE LEVEL COUNT;
+2739156    label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL = "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label ROLE = "Role" LEVEL = "Measurement Level" COUNT = "Frequency Count";
+2739157    title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+2739158    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Variable Summary";
+MPRINT(EM_DIAGRAM):   run;
+2739159    run;
+ 
+NOTE: There were 4 observations read from the data set WORK.GRP13META.
+NOTE: The PROCEDURE PRINT printed page 1835.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+ 
+ 
+2739160    title10;
+MPRINT(EM_DIAGRAM):   title10;
+2739161    %let EMEXCEPTIONSTRING=;
+MPRINT(EM_DIAGRAM):     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Grp13: Generation of macros and macro variables;
+MPRINT(EM_DIAGRAM):   * To see the code generated, set the EM_DEBUG macro variable to SOURCE or _ALL_;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Grp13: EM Macro Variables and Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   * System Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   length string $2000;
+MPRINT(EM_DIAGRAM):   string = 'WarGameStore_sasProject';
+MPRINT(EM_DIAGRAM):   call symput('EM_PROJECTNAME', trim(string));
+MPRINT(EM_DIAGRAM):   string = 'WarGame classification';
+MPRINT(EM_DIAGRAM):   call symput('EM_WSNAME', trim(string));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   * Properties Macro Variables ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Files Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Import Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Export Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Decision Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Statement Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * General Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Target Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Input Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Rejected Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Misc Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * End Create EM Macro Variables and Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+2739484    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+2739485    * Grp13: Generation of macros and macro variables;
+MPRINT(EM_DIAGRAM):   * Grp13: Generation of macros and macro variables;
+2739486    * To see the code generated, set the EM_DEBUG macro variable to SOURCE or _ALL_;
+MPRINT(EM_DIAGRAM):   * To see the code generated, set the EM_DEBUG macro variable to SOURCE or _ALL_;
+2739487    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+ 
+2739488    %let EMEXCEPTIONSTRING=;
+2739489    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+2739490    * TRAIN: Grp13;
+MPRINT(EM_DIAGRAM):   * TRAIN: Grp13;
+2739491    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+2739492    %let EM_ACTION = TRAIN;
+2739493    %let syscc = 0;
+2739494    %macro main;
+2739495
+2739496       filename temp catalog 'sashelp.emutil.gp_macros.source';
+2739497       %include temp;
+2739498       filename temp;
+2739499
+2739500       %SetProperties;
+2739501
+2739502       %if %upcase(&EM_ACTION) = CREATE %then %do;
+2739503
+2739504           filename temp catalog 'sashelp.emutil.gp_create.source';
+2739505           %include temp;
+2739506           filename temp;
+2739507
+2739508           %create;
+2739509       %end;
+2739510       %else
+2739511       %if %upcase(&EM_ACTION) = TRAIN %then %do;
+2739512
+2739513           filename temp catalog 'sashelp.emutil.gp_train.source';
+2739514           %include temp;
+2739515           filename temp;
+2739516
+2739517           %train;
+2739518       %end;
+2739519       %else
+2739520       %if %upcase(&EM_ACTION) = SCORE %then %do;
+2739521
+2739522           filename temp catalog 'sashelp.emutil.gp_score.source';
+2739523           %include temp;
+2739524           filename temp;
+2739525
+2739526           %score;
+2739527       %end;
+2739528       %else
+2739529       %if %upcase(&EM_ACTION) = REPORT %then %do;
+2739530
+2739531           filename temp catalog 'sashelp.emutil.gp_report.source';
+2739532           %include temp;
+2739533           filename temp;
+2739534
+2739535           %report;
+2739536
+2739537       %end;
+2739538       %else
+2739539       %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+2739540
+2739541           filename temp catalog 'sashelp.emutil.gp_postloop.source';
+2739542           %include temp;
+2739543           filename temp;
+2739544
+2739545           %postloop;
+2739546
+2739547       %end;
+2739548
+2739549       %doendm:
+2739550    %mend main;
+2739551
+2739552    %main;
+MPRINT(EM_DIAGRAM):
+MPRINT(MAIN):   filename temp catalog 'sashelp.emutil.gp_macros.source';
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_MACROS.SOURCE.
+2739553   +%macro SetProperties;
+2739554   +   %em_checkmacro(name=EM_PROPERTY_MODE,            global=Y, value=STRATIFY);
+2739555   +   %em_checkmacro(name=EM_PROPERTY_TARGETGROUP,     global=Y, value=Y);
+2739556   +   %em_checkmacro(name=EM_PROPERTY_INDEXCOUNT,      global=Y, value=10);
+2739557   +   %em_checkmacro(name=EM_PROPERTY_MINIMUMOBS,      global=Y, value=10);
+2739558   +   %em_checkmacro(name=EM_PROPERTY_SIZETYPE,        global=Y, value=PERCENT);
+2739559   +   %em_checkmacro(name=EM_PROPERTY_SIZEOBS,         global=Y, value=.);
+2739560   +   %em_checkmacro(name=EM_PROPERTY_SIZEPERCENT,     global=Y, value=10);
+2739561   +%mend SetProperties;
+2739562   +
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(MAIN):   filename temp;
+NOTE: Fileref TEMP has been deassigned.
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(MAIN):  ;
+MPRINT(MAIN):   filename temp catalog 'sashelp.emutil.gp_train.source';
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_TRAIN.SOURCE.
+2739563   +%macro scoreValidTest(data=, out=);
+2739565   +   %if ("&data" ne "") and (%sysfunc(exist(&data, VIEW)) or %sysfunc(exist(&data))) %then %do;
+2739566   +       data &out / view = &out;
+2739567   +          retain _RESAMP_ 1;
+2739568   +          set &data;
+2739569   +       run;
+2739570   +   %end;
+2739572   +%mend scoreValidTest;
+2739574   +%macro getVariables;
+2739575   +   %if "&emloopnumber" = "1" %then %do;
+2739576   +       data _null_;
+2739577   +          retain numgoup 0;
+2739578   +          set &em_data_variableset end=eof;
+2739579   +          %if &em_num_target = 1 %then %do;
+2739580   +              %if &EM_PROPERTY_MODE = BOOSTING %then %do;
+2739581   +                  where (role = 'TARGET' and level ^= 'INTERVAL' and grouprole in('BOOST', 'DEFAULT'));
+2739582   +                  if role eq 'TARGET' then call symput('emboostvar', strip(NAME));
+2739583   +              %end;
+2739584   +              %else
+2739585   +              %if &EM_PROPERTY_MODE = BAGGING %then %do;
+2739586   +                  where (role = 'TARGET' and grouprole in('BAG', 'DEFAULT'));
+2739587   +                  if role eq 'TARGET' then call symput('embagvar', strip(NAME));
+2739588   +              %end;
+2739589   +          %end;
+2739590   +          %else %do;
+2739591   +              where (grouprole= 'GROUP' or (role = 'TARGET' and grouprole in('BAG', 'BOOST')) or (role = 'SEGMENT' and grouprole = 'DEFAULT'));
+2739592   +              if grouprole eq 'BAG' then call symput('embagvar', strip(NAME));
+2739593   +              else
+2739594   +              if grouprole eq 'BOOST' then call symput('emboostvar', strip(NAME));
+2739595   +          %end;
+2739596   +          if grouprole = 'GROUP' or (role = 'SEGMENT' and grouprole = 'DEFAULT') then do;
+2739597   +             call symput('emgroupvar', strip(symget('emgroupvar'))!!' '!!strip(NAME));
+2739598   +             numgroup + 1;
+2739599   +          end;
+2739600   +          if eof then call symput('emnumgroupvar', strip(put(numgroup, best.)));
+2739601   +       run;
+2739602   +    %end;
+2739603   +    %else %do;
+2739604   +          %if "&EM_PROPERTY_MODE" = "STRATIFY" or "&EM_PROPERTY_MODE" = "CROSSVALIDATION"  %then %do;
+2739605   +            data _null_;
+2739606   +               retain numgoup 0;
+2739607   +               set &em_data_variableset end=eof;
+2739608   +               where (grouprole= 'GROUP' or (role = 'SEGMENT' and grouprole = 'DEFAULT'));
+2739609   +               call symput('emgroupvar', strip(symget('emgroupvar'))!!' '!!strip(NAME));
+2739610   +               numgroup + 1;
+2739611   +               if eof then call symput('emnumgroupvar', strip(put(numgroup, best.)));
+2739612   +            run;
+2739613   +          %end;
+2739614   +            %else
+2739615   +        %if &EM_PROPERTY_MODE = BOOSTING %then %do;
+2739616   +            %em_getName(key=BOOSTINFO,   type=DATA);
+2739617   +            %if %sysfunc(exist(&em_user_boostinfo)) %then %do;
+2739618   +                data _null_;
+2739619   +                   set &em_user_boostinfo;
+2739620   +                   call symput('emboostvar', strip(_TARGET_));
+2739621   +                run;
+2739622   +            %end;
+2739623   +        %end;
+2739624   +        %else
+2739625   +            %if &EM_PROPERTY_MODE = BAGGING %then %do;
+2739626   +                %em_getName(key=BAGINFO,   type=DATA);
+2739627   +                %if %sysfunc(exist(&em_user_baginfo)) %then %do;
+2739628   +                    data _null_;
+2739629   +                       set &em_user_baginfo;
+2739630   +                      call symput('embagvar', strip(_TARGET_));
+2739631   +                    run;
+2739632   +                %end;
+2739633   +            %end;
+2739634   +    %end;
+2739635   +%mend getVariables;
+2739637   +%macro gp_bag(targetname=);
+2739638   +   %if %index(&EM_DEBUG, _ALL_) %then %do;
+2739639   +        %put LOOP MODE:   &emloopmode ;
+2739640   +        %put LOOP NUMBER: &emloopnumber;
+2739641   +        %put BAGGING TARGET: &targetname;
+2739642   +   %end;
+2739644   +   filename temp catalog 'sashelp.emutil.gp_boostmacros.source';
+2739645   +   %include temp;
+2739646   +   filename temp;
+2739648   +   %em_getName(key=BAGINFO,    type=DATA);
+2739649   +   %em_getName(key=EMLOOPINFO, type=DATA);
+2739651   +   %if &emloopnumber = 1 %then %do;
+2739652   +       filename gpDelta "&EM_FILE_CDELTA_TRAIN";
+2739653   +       data _null_;
+2739654   +          file gpdelta;
+2739655   +          put "if ROLE = 'TARGET' and NAME ne '&targetName' then delete;";
+2739656   +          put "else if upcase(NAME) eq '_RESAMP_' then do;";
+2739657   +          put "     LABEL='Bootstrap Frequency'; LEVEL='INTERVAL'; ROLE='FREQ';";
+2739658   +          put "end;";
+2739659   +       run;
+2739660   +       filename gpdelta;
+2739662   +       %if %sysfunc(exist(&em_user_baginfo)) %then %do;
+2739663   +           proc datasets lib=&em_lib nolist;
+2739664   +              delete &em_nodeid._baginfo;
+2739665   +           run;
+2739666   +       %end;
+2739668   +       %if "%em_freq" ne "" %then %do;
+2739669   +           proc means data=&em_import_data sum;
+2739670   +              var %em_freq;
+2739671   +              output out = _tempds sum=sumfreq;
+2739672   +           run;
+2739673   +           quit;
+2739674   +           data _null_;
+2739675   +              set _tempDs;
+2739676   +              call symput('_sumfreq', put(sumfreq, best12.));
+2739677   +           run;
+2739678   +       %end;
+2739679   +       %else %do;
+2739680   +           proc sql noprint;
+2739681   +              select count(*) into :_sumfreq
+2739682   +              from &em_import_data;
+2739683   +           quit;
+2739684   +       %end;
+2739686   +       %if "&em_property_SizeType" eq "PERCENT" %then %do;
+2739687   +           data _null_;
+2739688   +              call symput('_size', put(round(&_sumfreq*&em_property_sizepercent/100), best12.));
+2739689   +           run;
+2739690   +       %end;
+2739691   +       %else
+2739692   +           %let _size = &em_property_sizeobs;
+2739694   +       data &em_user_baginfo;
+2739695   +          length _LOOP_ 8 _TARGET_ $32 _SUMFREQ_ 8 _SIZE_ 8;
+2739696   +          _LOOP_     =&EM_PROPERTY_INDEXCOUNT;
+2739697   +          _TARGET_   ="&targetname";
+2739698   +          _SUMFREQ_  =&_sumfreq;
+2739699   +           _SIZE_    = &_size;
+2739700   +          output;
+2739701   +       run;
+2739702   +       data &em_user_emloopinfo;
+2739703   +          length MODE $8;
+2739704   +          label MODE     = "%sysfunc(sasmsg(sashelp.dmine, rpt_mode_vlabel,       NOQUOTE))"
+2739705   +                _LOOP_   = "%sysfunc(sasmsg(sashelp.dmine, rpt_groupIndex_vlabel, NOQUOTE))"
+2739706   +               _TARGET_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,     NOQUOTE))";
+2739707   +           set &em_user_baginfo(keep=_LOOP_ _TARGET_);
+2739708   +           MODE='Bagging';
+2739709   +       run;
+2739711   +       data &em_data_eminfo;
+2739712   +          length TARGET KEY $32  DATA $43;
+2739713   +          TARGET=''; KEY='BAGINFO'; DATA="&em_nodeid"; output;
+2739714   +       run;
+2739715   +   %end;
+2739716   +   %else %do;
+2739717   +      data _null_;
+2739718   +         set &em_user_baginfo;
+2739719   +         call symput('_sumfreq', put(_sumfreq_, best12.));
+2739720   +         call symput('_size', put(_size_, best12.));
+2739721   +      run;
+2739722   +   %end;
+2739724   +   %let bagsumFreq  = &_sumFreq;
+2739725   +   %let bagSize     = &_Size;
+2739727   +   %embag( _tra=&em_export_train, _train=&em_import_data, _seed=&em_property_randomseed, _freq=%em_freq,
+2739728   +           _sumfreq=&bagsumfreq, _size=&bagsize, _loop=&emloopnumber);
+2739730   +   %scoreValidTest(data=&em_import_validate, out=em_export_validate);
+2739731   +   %scoreValidTest(data=&em_import_test,     out=em_export_test);
+2739733   +   %doendbg:
+2739735   +%mend gp_bag;
+2739738   +%macro gp_boost(targetname=);
+2739739   +   %if %index(&EM_DEBUG, _ALL_) %then %do;
+2739740   +       %put LOOP MODE:   &emloopmode ;
+2739741   +       %put LOOP NUMBER: &emloopnumber;
+2739742   +        %put BAGGING TARGET: &targetname;
+2739743   +   %end;
+2739745   +   filename temp catalog 'sashelp.emutil.gp_boostmacros.source';
+2739746   +   %include temp;
+2739747   +   filename temp;
+2739749   +   %em_getname(key=EMLOOPINFO, type=DATA);
+2739750   +   %em_getname(key=BOOSTWEIGHT, type=DATA);
+2739751   +   %em_getname(key=BOOSTSCORE,  type=DATA);
+2739752   +   %em_getName(key=BOOSTINFO,   type=DATA);
+2739754   +   %if &emloopnumber = 1 %then %do;
+2739755   +       filename gpDelta "&EM_FILE_CDELTA_TRAIN";
+2739756   +       data _null_;
+2739757   +          file gpdelta;
+2739758   +          put "if ROLE = 'TARGET' and NAME ne '&targetName' then delete;";
+2739759   +          put "else if upcase(NAME) eq '_RESAMP_' then do;";
+2739760   +          put "     LABEL='Arcing Frequency'; LEVEL='INTERVAL'; ROLE='FREQ';";
+2739761   +          put "end;";
+2739762   +       run;
+2739763   +       filename gpdelta;
+2739765   +       %let deleteString =;
+2739766   +       %if %sysfunc(exist(&em_user_boostweight)) %then %let deleteString = &deleteString &em_nodeid._boostweight;
+2739767   +       %if %sysfunc(exist(&em_user_boostscore))  %then %let deleteString = &deleteString &em_nodeid._boostscore;
+2739768   +       %if "&deleteString" ne "" %then %do;
+2739769   +           proc datasets lib=&em_lib nolist;
+2739770   +              delete &deleteString;
+2739771   +           run;
+2739772   +       %end;
+2739774   +       %emboost0( _train=&em_import_data, _dmboods=&em_user_boostweight, _target=&targetname, _freq=%em_freq);
+2739776   +       data &em_user_boostinfo;
+2739777   +          length _LOOP_ 8 _TARGET_ $32 _DMBOOST_DIVISOR_ 8 _SUMFREQ_ 8;
+2739778   +          _LOOP_            =&EM_PROPERTY_INDEXCOUNT;
+2739779   +          _TARGET_          ="&targetname";
+2739780   +          _DMBOOST_DIVISOR_ =&_dmboodiv;
+2739781   +          _SUMFREQ_         =&_sumfreq;
+2739782   +       run;
+2739783   +       data &em_user_emloopinfo;
+2739784   +          length MODE $8;
+2739785   +          label MODE     = "%sysfunc(sasmsg(sashelp.dmine, rpt_mode_vlabel,       NOQUOTE))"
+2739786   +                _LOOP_   = "%sysfunc(sasmsg(sashelp.dmine, rpt_groupIndex_vlabel, NOQUOTE))"
+2739787   +               _TARGET_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,     NOQUOTE))";
+2739788   +           set &em_user_boostinfo(keep=_LOOP_ _TARGET_);
+2739789   +           MODE='Boosting';
+2739790   +       run;
+2739792   +       data &em_data_eminfo;
+2739793   +          length TARGET KEY $32  DATA $43;
+2739794   +          TARGET=''; KEY='BOOSTINFO'; DATA="&em_nodeid"; output;
+2739795   +       run;
+2739797   +   %end;
+2739798   +   %else %do;
+2739799   +       %global _dmboodiv;
+2739800   +       %let dmboosf = %upcase(&targetname);
+2739801   +       %if %sysfunc(length(&targetname))> 30 %then
+2739802   +           %let dmboosf =  %substr(&targetname, 1, 30);
+2739804   +       data _null_;
+2739805   +          set &em_user_boostinfo;
+2739806   +          call symput('_SUMFREQ',  strip(put(_sumfreq_,best12.)));
+2739807   +       run;
+2739809   +       %emboost2(_freq=%em_freq, _dmboods=&em_user_boostweight, _dmensds=&em_user_boostscore, _dmboosf=&dmboosf, _sumfreq=&_sumfreq);
+2739811   +       data &em_user_boostinfo;
+2739812   +          set &em_user_boostinfo;
+2739813   +          _DMBOOST_DIVISOR_ =&_dmboodiv;
+2739814   +       run;
+2739816   +       %emboost1(_tra=&em_export_train, _TRAIN=&em_import_data, _FREQ=%em_freq, _dmboods=&em_user_boostweight, _dmboodiv=&_dmboodiv);
+2739818   +   %end;
+2739820   +    %scoreValidTest(data=&em_import_validate, out=em_export_validate);
+2739821   +    %scoreValidTest(data=&em_import_test,     out=em_export_test);
+2739823   +   %doendbst:
+2739825   +%mend gp_boost;
+2739827   +%macro gp_group(numgroupvar=, groupvar=);
+2739828   +   %em_getname(key=GROUPINFO, type=DATA);
+2739829   +   %em_getName(key=LOOPINFO,  type=DATA);
+2739830   +   %em_getName(key=EMGROUPINFO, type=DATA);
+2739832   +   %if &emloopnumber=1 or ^%sysfunc(exist(&em_user_groupinfo)) %then %do;
+2739833   +       ods listing close;
+2739834   +       %if &numgroupvar = 1 %then %do;
+2739835   +           ods output onewayfreqs=temp;
+2739836   +       %end;
+2739837   +       %else %do;
+2739838   +           ods output crosstabfreqs=temp;
+2739839   +       %end;
+2739840   +       proc freq data=&em_import_data;
+2739841   +          table
+2739843   +          %let tableString =;
+2739844   +          %let freqString  =;
+2739845   +          %do i=1 %to &numgroupvar;
+2739846   +              %let tableString = &tableString %scan(&groupvar, &i, %str( ));
+2739847   +              %if &i<&numgroupvar %then %let tableString = &tableString *;
+2739848   +              %let freqString = &freqString.1;
+2739849   +          %end;
+2739850   +          &tableString / missing;
+2739851   +       run;
+2739852   +       ods listing;
+2739853   +       %if &numgroupvar = 1 %then %do;
+2739854   +           data _null_;
+2739855   +              retain totalobs 0;
+2739856   +              set temp end=eof;
+2739857   +              totalobs + frequency;
+2739858   +              if eof then
+2739859   +                 call symput('_totalObs_', put(totalobs, best.));
+2739860   +           run;
+2739862   +           proc sort data=temp out=loopinfo nodupkey;
+2739863   +              by &groupvar;
+2739864   +              where frequency>=&em_property_minimumObs;
+2739865   +           run;
+2739866   +       %end;
+2739867   +       %else %do;
+2739868   +           data _null_;
+2739869   +              set temp;
+2739870   +              where _type_='00';
+2739871   +              call symput('_totalObs_', put(frequency, best.));
+2739872   +           run;
+2739873   +           proc sort data=temp(drop=rowpercent colpercent) out=loopinfo nodupkey;
+2739874   +              by &groupvar;
+2739875   +              where _type_="&freqString" and frequency>=&em_property_minimumObs;
+2739876   +           run;
+2739877   +       %end;
+2739879   +       %em_getname(key=PRECODE, type=FILE, extension=sas);
+2739880   +       filename _pregrp "&em_user_precode";
+2739882   +       %let dsid = %sysfunc(open(loopinfo));
+2739883   +       %do i=1 %to &numgroupvar;
+2739884   +           %let varname = %scan(&groupvar, &i, %str( ));
+2739885   +           %let varnum  = %sysfunc(varnum(&dsid, &varname));
+2739886   +           %let varfmt  = %sysfunc(varfmt(&dsid, &varnum));
+2739887   +           %if %index(&varfmt, -) %then %do;
+2739888   +               %let varfmt = %sysfunc(scan(&varfmt, 1,-)).;
+2739889   +           %end;
+2739891   +           %let vartype = %sysfunc(vartype(&dsid, &varnum));
+2739892   +           %let varlen  = %sysfunc(varlen(&dsid, &varnum));
+2739893   +           %let fmttype&i = &vartype;
+2739894   +           %let fmtlen&i  = &varlen;
+2739896   +           %let fmtvar&i =;
+2739897   +           %let fmt&i    =;
+2739898   +           %if "&varfmt" ne "" %then %do;
+2739899   +              %let fmtvar&i  = _FORMAT&i._;
+2739900   +              %let fmt&i     = &varfmt;
+2739901   +           %end;
+2739902   +       %end;
+2739903   +       %let dsid = %sysfunc(close(&dsid));
+2739905   +       data _null_;
+2739906   +          %do i=1 %to &numgroupvar;
+2739907   +              %if "&&fmt&i" ne "" %then %do;
+2739908   +                  retain len_&i 0;
+2739909   +              %end;
+2739910   +          %end;
+2739912   +          set loopinfo end=eof;
+2739913   +          file _pregrp;
+2739915   +          %do i=1 %to &numgroupvar;
+2739916   +              %let varname = %scan(&groupvar, &i, %str( ));
+2739917   +              %if "&&fmt&i" ne "" %then %do;
+2739918   +                 if length(put(&varname, &&fmt&i)) > len_&i then
+2739919   +                    len_&i = length(put(&varname, &&fmt&i));
+2739920   +              %end;
+2739921   +          %end;
+2739923   +          if eof then do;
+2739924   +             %do i=1 %to &numgroupvar;
+2739925   +                 %let varname = %scan(&groupvar, &i, %str( ));
+2739926   +                 %if "&&fmt&i" ne "" %then %do;
+2739927   +                     put "length  &&fmtvar&i" len_&i "$" len_&i ";";
+2739928   +                     put "drop &&fmtvar&i" len_&i ";";
+2739929   +                     put "&&fmtvar&i" len_&i "= strip(put(&varname, &&fmt&i));";
+2739930   +                     call symput('fmtnewlen'!!"&i", put(len_&i, best.));
+2739931   +                     call symput('fmtnewvar'!!"&i", "&&fmtvar&i"!!strip(put(len_&i, best.)));
+2739932   +                 %end;
+2739933   +              %end;
+2739934   +          end;
+2739935   +      run;
+2739937   +      data loopinfo;
+2739938   +         set loopinfo;
+2739939   +         %do i=1 %to &numgroupvar;
+2739940   +             %let varname = %scan(&groupvar, &i, %str( ));
+2739941   +             %if "&&fmt&i" ne "" %then %do;
+2739942   +                 length  &&fmtnewvar&i $&&fmtnewlen&i;
+2739943   +                 &&fmtnewvar&i = strip(put(&varname, &&fmt&i));
+2739944   +             %end;
+2739945   +         %end;
+2739946   +      run;
+2739947   +      filename _pregrp;
+2739949   +      %if (&EM_PROPERTY_TARGETGROUP= Y and &EM_NUM_TARGET>1) %then %do;
+2739950   +          data temp;
+2739951   +             length _LOOP_ 8 _WHERE_  _WHEREDESC_ $2000;
+2739952   +             keep _LOOP_ _WHERE_ _WHEREDESC_ FREQUENCY;
+2739953   +      %end;
+2739954   +      %else %do;
+2739955   +          data &em_user_groupinfo;
+2739956   +             length _LOOP_ 8 _TARGET_ $32 _WHERE_  _WHEREDESC_ $2000;
+2739957   +             keep _LOOP_ _TARGET_  _WHERE_ _WHEREDESC_ FREQUENCY;
+2739958   +             retain _TARGET_ '';
+2739959   +      %end;
+2739961   +          set loopinfo;
+2739962   +          _LOOP_= _N_;
+2739963   +          _WHERE_ = '';
+2739964   +          _WHEREDESC_  = '';
+2739965   +          %do i=1 %to &numgroupvar;
+2739966   +              %let varname = %scan(&groupvar, &i, %str( ));
+2739967   +              %if "&&fmt&i" eq "" %then %do;
+2739968   +                  %if "&&fmtType&i" eq "N" %then %do;
+2739969   +                      _WHERE_     = strip(_WHERE_)!!" &Varname ="!!strip(put(&varname, best12.));
+2739970   +                      _WHEREDESC_ = strip(_WHEREDESC_)!!" &Varname ="!!strip(put(&varname, best12.));
+2739971   +                   %end;
+2739972   +                  %else %do;
+2739973   +                       _WHERE_ = strip(_WHERE_)!!" &Varname ='"!!tranwrd(strip(&varname), "'", "''")!!"'";
+2739974   +                       _WHEREDESC_ = strip(_WHEREDESC_)!!" &Varname ="!!strip(&varname);
+2739975   +                  %end;
+2739976   +              %end;
+2739977   +              %else %do;
+2739978   +                       _WHERE_ = strip(_WHERE_)!!" &&fmtnewvar&i ='"!!tranwrd(strip(&&fmtnewvar&i), "'", "''")!!"'";
+2739979   +                       _WHEREDESC_ = strip(_WHEREDESC_)!!" &VarName = "!!strip(&&fmtnewvar&i);
+2739980   +              %end;
+2739981   +              %if &i < &numgroupvar %then %do;
+2739982   +                  _WHERE_ = strip(_WHERE_)!!' and ';
+2739983   +                  _WHEREDESC_ = strip(_WHEREDESC_)!!' and ';
+2739984   +              %end;
+2739985   +          %end;
+2739986   +          %if "&EM_PROPERTY_MODE" = "CROSSVALIDATION"  %then %do;
+2739987   +              _WHERE_ = '^('!!strip(_WHERE_)!!')';
+2739988   +              _WHEREDESC_ = '^('!!strip(_WHEREDESC_)!!')';
+2739989   +              FREQUENCY = &_totalobs_ - FREQUENCY;
+2739990   +          %end;
+2739991   +      run;
+2739993   +      %if (&EM_PROPERTY_TARGETGROUP= Y and &EM_NUM_TARGET>1) %then %do;
+2739994   +          data target;
+2739995   +             length _TARGET_ $32;
+2739996   +              %do i=1 %to &em_num_target;
+2739997   +                  %let varname = %scan(%em_target, &i, %str( ));
+2739998   +                  _TARGET_ = "&varname";
+2739999   +                  output;
+2740000   +              %end;
+2740001   +          run;
+2740002   +          proc sql;
+2740003   +             create table &em_user_groupinfo as select * from  work.temp, work.target;
+2740004   +          quit;
+2740005   +          data &em_user_groupinfo;
+2740006   +             set &em_user_groupinfo;
+2740007   +             _LOOP_=_N_;
+2740008   +          run;
+2740009   +      %end;
+2740011   +      data &em_data_eminfo;
+2740012   +         length TARGET KEY $32  DATA $43;
+2740013   +         TARGET=''; KEY='GROUPINFO'; DATA="&em_nodeid"; output;
+2740014   +      run;
+2740016   +      data &em_user_emloopinfo;
+2740017   +         set &em_user_groupinfo;
+2740018   +         %if (&EM_PROPERTY_TARGETGROUP= Y and &EM_NUM_TARGET>1) %then %do;
+2740019   +             label _LOOP_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_groupIndex_vlabel, NOQUOTE))"
+2740020   +                   _TARGET_    = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,     NOQUOTE))"
+2740021   +                   _WHEREDESC_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_where_vlabel,      NOQUOTE))"
+2740022   +                   FREQUENCY   = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel,      NOQUOTE))";
+2740023   +             keep _LOOP_ _TARGET_ _WHEREDESC_ FREQUENCY;
+2740024   +         %end;
+2740025   +         %else %do;
+2740026   +             label _LOOP_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_groupIndex_vlabel, NOQUOTE))"
+2740027   +                   _TARGET_    = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,     NOQUOTE))"
+2740028   +                   _WHEREDESC_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_where_vlabel,      NOQUOTE))"
+2740029   +                   FREQUENCY   = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel,      NOQUOTE))";
+2740030   +             keep _LOOP_ _WHEREDESC_ FREQUENCY;
+2740031   +         %end;
+2740032   +      run;
+2740034   +      proc datasets lib=work nolist;
+2740035   +          delete temp loopinfo
+2740036   +          %if (&EM_PROPERTY_TARGETGROUP= Y and &EM_NUM_TARGET>1) %then %do;
+2740037   +              target
+2740038   +          %end;
+2740039   +          ;
+2740040   +      run;
+2740042   +   %end;
+2740044   +   filename gpDelta "&EM_FILE_CDELTA_TRAIN";
+2740045   +   %if (&EM_PROPERTY_TARGETGROUP= Y and &EM_NUM_TARGET>1) %then %do;
+2740046   +       data _null_;
+2740047   +          length quotedTarget $32;
+2740048   +          set &em_user_groupinfo;
+2740049   +          file gpdelta;
+2740050   +          if _N_ = &emloopnumber then do;
+2740051   +             quotedTarget = "'"!!strip(_TARGET_)!!"'";
+2740052   +             put "if ROLE = 'TARGET' and NAME ne " quotedTarget " then delete;";
+2740054   +             %do i=1 %to &numgroupvar;
+2740055   +                 %let gvar = %upcase(%scan(&groupvar, &i, %str( )));
+2740056   +                 put "if upcase(NAME)= '&gvar' then delete;";
+2740057   +             %end;
+2740058   +          end;
+2740059   +       run;
+2740060   +   %end;
+2740061   +   %else %do;
+2740062   +       data _null_;
+2740063   +          set &em_user_groupinfo;
+2740064   +          file gpdelta;
+2740065   +          if _N_ = &emloopnumber then do;
+2740066   +             %do i=1 %to &numgroupvar;
+2740067   +              %let gvar = %upcase(%scan(&groupvar, &i, %str( )));
+2740068   +                 put "if upcase(NAME)= '&gvar' then delete;";
+2740069   +             %end;
+2740070   +          end;
+2740071   +       run;
+2740072   +   %end;
+2740073   +   filename gpdelta;
+2740075   +   %let nobs=0;
+2740076   +   %let dsid = %sysfunc(open(&em_user_groupinfo));
+2740077   +   %if &dsid>0 %then %do;
+2740078   +       %let nobs = %sysfunc(attrn(&dsid, NOBS));
+2740079   +       %let dsid = %sysfunc(close(&dsid));
+2740080   +   %end;
+2740082   +   %if ^&nobs  %then
+2740083   +       %let emloopmode =;
+2740084   +   %else
+2740085   +       %if &nobs< &emloopnumber %then
+2740086   +           %let emloopmode = POSTLOOP;
+2740087   +        %else
+2740088   +        %let emloopmode = LOOP;
+2740089   +%mend gp_group;
+2740091   +%macro gp_Index;
+2740093   +   %em_getName(key=INDEXINFO,  type=DATA);
+2740094   +   %em_getName(key=EMLOOPINFO, type=DATA);
+2740096   +   %if &emloopnumber=1 or ^%sysfunc(exist(&em_user_indexinfo)) %then %do;
+2740097   +       data &em_user_indexinfo;
+2740098   +          length _LOOP_ 8 _TARGET_ $32 _WHERE_ $8;
+2740099   +          _LOOP_     =&EM_PROPERTY_INDEXCOUNT;
+2740100   +          _TARGET_   ="";
+2740101   +          _WHERE_    ="";
+2740102   +          output;
+2740103   +       run;
+2740104   +       data &em_data_eminfo;
+2740105   +          length TARGET KEY $32  DATA $43;
+2740106   +          TARGET=''; KEY='INDEXINFO'; DATA="&em_nodeid"; output;
+2740107   +       run;
+2740109   +       data &em_user_emloopinfo;
+2740110   +          length MODE $8;
+2740111   +          label MODE     = "%sysfunc(sasmsg(sashelp.dmine, rpt_mode_vlabel,       NOQUOTE))"
+2740112   +                _LOOP_   = "%sysfunc(sasmsg(sashelp.dmine, rpt_groupIndex_vlabel, NOQUOTE))"
+2740113   +          set &em_user_indexinfo(keep=_LOOP_ );
+2740114   +          MODE='Index';
+2740115   +       run;
+2740116   +   %end;
+2740118   +%mend gp_index;
+2740120   +%macro gp_Target;
+2740121   +   %let TargetName = %scan(%em_target, &emloopnumber);
+2740122   +   %if "&targetName" eq "" %then %do;
+2740123   +       %goto doendgpt;
+2740124   +   %end;
+2740126   +   %if %index(&EM_DEBUG, _ALL_) %then %do;
+2740127   +       %put GP_TARGET;
+2740128   +       %put &emLoopnumber &TargetName;
+2740129   +   %end;
+2740131   +   filename gpDelta "&EM_FILE_CDELTA_TRAIN";
+2740132   +   data _null_;
+2740133   +      file gpdelta;
+2740134   +      put "if ROLE = 'TARGET' and NAME ne '&targetName' then delete;";
+2740135   +   run;
+2740136   +   filename gpdelta;
+2740138   +   %if &emloopnumber eq 1 %then %do;
+2740139   +       %em_getName(key=TARGETINFO,  type=DATA);
+2740140   +       %em_getName(key=EMLOOPINFO,  type=DATA);
+2740142   +       data &em_user_targetinfo;
+2740143   +          length _LOOP_ 8 _TARGET_ $32 _WHERE_ $2000;
+2740144   +          retain _LOOP_;
+2740145   +          _WHERE_ = '';
+2740146   +          %do i=1 %to &em_num_target;
+2740147   +              %let varname = %scan(%em_target, &i, ' ');
+2740148   +              _TARGET_ = "&varname";
+2740149   +              _LOOP_+1;
+2740150   +              output;
+2740151   +           %end;
+2740152   +       run;
+2740153   +       data &em_user_emloopinfo;
+2740154   +         set &em_user_targetinfo(keep=_LOOP_ _TARGET_);
+2740155   +         label _LOOP_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_groupIndex_vlabel, NOQUOTE))"
+2740156   +               _TARGET_    = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,     NOQUOTE))";
+2740157   +      run;
+2740159   +       data &em_data_eminfo;
+2740160   +          length TARGET KEY $32  DATA $43;
+2740161   +          TARGET=''; KEY='TARGETINFO'; DATA="&em_nodeid"; output;
+2740162   +       run;
+2740163   +   %end;
+2740165   +   %doendgpt:
+2740166   +%mend gp_target;
+2740168   +%macro train;
+2740169   +   %if %index(&EM_DEBUG, _ALL_) %then %do;
+2740170   +       %put LOOP MODE:   &emloopmode ;
+2740171   +       %put LOOP NUMBER: &emloopnumber;
+2740172   +   %end;
+2740174   +   %if &emloopmode eq 'POSTLOOP' %then %goto doendmain;
+2740176   +   %if ("&EM_PROPERTY_MODE" = "BOOSTING") or ("&EM_PROPERTY_MODE" = "BAGGING") %then %do;
+2740178   +       %let hpdmFlag = 0;
+2740179   +       %if %symexist(em_import_DATA_eminfo) %then %do;
+2740180   +            data _null_;
+2740181   +               set &em_import_DATA_eminfo;
+2740182   +               where KEY = "HPDMSAMPLE";
+2740183   +               call symput('hpdmFlag', '1');
+2740184   +            run;
+2740185   +       %end;
+2740186   +       %if &hpdmFlag %then %do;
+2740187   +           %let emexceptionstring = exception.server.EMTOOL.HPNOBOOSTBAG;
+2740188   +           %goto doendmain;
+2740189   +       %end;
+2740190   +   %end;
+2740192   +   %em_getname(key=EMLOOPINFO,  type=DATA);
+2740193   +   %em_getname(key=GROUPINFO,  type=DATA);
+2740194   +   %em_getname(key=BOOSTINFO,  type=DATA);
+2740195   +   %em_getname(key=BAGINFO,    type=DATA);
+2740196   +   %em_getname(key=TARGETINFO, type=DATA);
+2740197   +   %em_getname(key=INDEXINFO,  type=DATA);
+2740198   +   %em_getname(key=EMINFO,  type=DATA);
+2740200   +   %if "&emloopnumber" = "1" %then %do;
+2740201   +       %em_getname(key=PRECODE, type=FILE, extension=sas);
+2740202   +       filename _pregrp "&em_user_precode";
+2740203   +       data _null_;
+2740204   +         rc = fdelete('_pregrp');
+2740205   +       run;
+2740206   +       filename _pregrp;
+2740208   +       %let members =;
+2740209   +       %if %sysfunc(exist(&em_user_emloopinfo)) %then %let members = &members %scan(&EM_USER_EMLOOPINFO,   2, .);
+2740210   +       %if %sysfunc(exist(&em_user_groupinfo))  %then %let members = &members %scan(&EM_USER_GROUPINFO,  2, .);
+2740211   +       %if %sysfunc(exist(&em_user_targetinfo)) %then %let members = &members %scan(&EM_USER_TARGETINFO, 2, .);
+2740212   +       %if %sysfunc(exist(&em_user_boostinfo))  %then %let members = &members %scan(&EM_USER_BOOSTINFO,  2, .);
+2740213   +       %if %sysfunc(exist(&em_user_baginfo))    %then %let members = &members %scan(&EM_USER_BAGINFO,    2, .);
+2740214   +       %if %sysfunc(exist(&em_user_indexinfo))  %then %let members = &members %scan(&EM_USER_INDEXINFO,  2, .);
+2740215   +       %if %sysfunc(exist(&em_user_eminfo))     %then %let members = &members %scan(&EM_USER_EMINFO,  2, .);
+2740217   +       %if "&members" ne "" %then %do;
+2740218   +           proc datasets lib=&em_lib nolist;
+2740219   +              delete &members;
+2740220   +           run;
+2740221   +      %end;
+2740222   +   %end;
+2740224   +   %let emboostvar    =;
+2740225   +   %let embagvar      =;
+2740226   +   %let emgroupvar    =;
+2740227   +   %let emnumgroupvar =;
+2740228   +   %getVariables;
+2740230   +   %if &EM_PROPERTY_MODE = TARGET %then %do;
+2740231   +       %if &EM_NUM_TARGET>=1 %then %do;
+2740232   +           %gp_target;
+2740233   +           %if &emLoopNumber <= &EM_NUM_TARGET %then
+2740234   +               %let emloopmode= LOOP;
+2740235   +           %else
+2740236   +              %let emloopmode = POSTLOOP;
+2740237   +       %end;
+2740238   +       %else %do;
+2740239   +           %let emloopmode = ;
+2740240   +           %let emexceptionstring = exception.server.METADATA.USE1TARGET;
+2740241   +           %goto doendmain;
+2740242   +       %end;
+2740243   +   %end;
+2740244   +   %else
+2740245   +   %if &EM_PROPERTY_MODE = NOGROUP %then %do;
+2740246   +       %let emloopmode=;
+2740247   +       %if %sysfunc(exist(&em_data_eminfo)) %then %do;
+2740248   +           proc delete data=&em_data_eminfo;
+2740249   +           run;
+2740250   +       %end;
+2740251   +   %end;
+2740252   +   %else
+2740253   +   %if &EM_PROPERTY_MODE = INDEX %then %do;
+2740254   +       %gp_index;
+2740255   +       %if  &emLoopNumber <= &EM_PROPERTY_INDEXCOUNT %then
+2740256   +           %let emloopmode= LOOP;
+2740257   +       %else
+2740258   +           %let emloopmode= POSTLOOP;
+2740259   +   %end;
+2740260   +   %else
+2740261   +   %if "&EM_PROPERTY_MODE" = "STRATIFY" or "&EM_PROPERTY_MODE" = "CROSSVALIDATION"  %then %do;
+2740262   +       %if "&emloopnumber"="1" and "&emgroupvar" eq "" %then %do;
+2740263   +           %let emloopmode = ;
+2740264   +           %let emexceptionstring = exception.server.METADATA.USE1GROUPVAR;
+2740265   +           %goto doendmain;
+2740266   +       %end;
+2740268   +       %gp_group(numgroupvar=&emnumgroupvar, groupvar=&emgroupvar);
+2740269   +   %end;
+2740270   +   %else
+2740271   +   %if &EM_PROPERTY_MODE = BOOSTING %then %do;
+2740272   +       %if "&emboostvar" eq "" %then %do;
+2740273   +           %let emloopmode = ;
+2740274   +           %let emexceptionstring = exception.server.METADATA.USE1BOOSTVAR;
+2740275   +           %goto doendmain;
+2740276   +       %end;
+2740278   +       %if  &emLoopNumber <= &EM_PROPERTY_INDEXCOUNT %then %do;
+2740279   +           %let emloopmode= LOOP;
+2740280   +           %gp_boost(targetname=&emboostvar);
+2740282   +       %end;
+2740283   +       %else
+2740284   +           %let emloopmode= POSTLOOP;
+2740285   +   %end;
+2740286   +   %else
+2740287   +   %if &EM_PROPERTY_MODE = BAGGING %then %do;
+2740288   +       %if "&embagvar" eq "" %then %do;
+2740289   +           %let emloopmode = ;
+2740290   +           %let emexceptionstring = exception.server.METADATA.USE1BAGVAR;
+2740291   +           %goto doendmain;
+2740292   +       %end;
+2740294   +        %if  &emLoopNumber <= &EM_PROPERTY_INDEXCOUNT %then %do;
+2740295   +           %let emloopmode= LOOP;
+2740296   +           %gp_bag(targetname=&embagvar);
+2740297   +       %end;
+2740298   +       %else
+2740299   +           %let emloopmode= POSTLOOP;
+2740300   +   %end;
+2740303   +   %if &emloopmode eq "" %then %do;
+2740304   +       %let lib    = %scan(&em_data_eminfo, 1, .);
+2740305   +       %let member = %scan(&em_data_eminfo, 2, .);
+2740306   +       proc datasets lib=&lib nolist;
+2740307   +          delete &member;
+2740308   +       run;
+2740309   +   %end;
+2740311   +   %doendmain:
+2740313   +   %if %index(&EM_DEBUG, _ALL_) %then %do;
+2740314   +       %put NEW LOOP MODE: &emloopmode;
+2740315   +   %end;
+2740317   +   %if "&emloopmode" eq "POSTLOOP" %then %do;
+2740318   +       filename temp catalog 'sashelp.emutil.gp_postloop.source';
+2740319   +       %include temp;
+2740320   +       filename temp;
+2740322   +       %postloop;
+2740323   +   %end;
+2740325   +%mend train;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(MAIN):   filename temp;
+NOTE: Fileref TEMP has been deassigned.
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):  ;
+MPRINT(GETVARIABLES):   data _null_;
+MPRINT(GETVARIABLES):   retain numgoup 0;
+MPRINT(GETVARIABLES):   set EMWS1.Grp13_VariableSet end=eof;
+MPRINT(GETVARIABLES):   where (grouprole= 'GROUP' or (role = 'SEGMENT' and grouprole = 'DEFAULT'));
+MPRINT(GETVARIABLES):   call symput('emgroupvar', strip(symget('emgroupvar'))!!' '!!strip(NAME));
+MPRINT(GETVARIABLES):   numgroup + 1;
+MPRINT(GETVARIABLES):   if eof then call symput('emnumgroupvar', strip(put(numgroup, best.)));
+MPRINT(GETVARIABLES):   run;
+ 
+NOTE: There were 1 observations read from the data set EMWS1.GRP13_VARIABLESET.
+      WHERE (grouprole='GROUP') or ((role='SEGMENT') and (grouprole='DEFAULT'));
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+MPRINT(TRAIN):  ;
+MPRINT(GP_GROUP):  ;
+MPRINT(GP_GROUP):  ;
+MPRINT(GP_GROUP):  ;
+MPRINT(GP_GROUP):   filename gpDelta "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\CDELTA_TRAIN.sas";
+MPRINT(GP_GROUP):   data _null_;
+MPRINT(GP_GROUP):   set EMWS1.Grp13_GROUPINFO;
+MPRINT(GP_GROUP):   file gpdelta;
+MPRINT(GP_GROUP):   if _N_ = 9 then do;
+MPRINT(GP_GROUP):   put "if upcase(NAME)= 'CV_VAR' then delete;";
+MPRINT(GP_GROUP):   end;
+MPRINT(GP_GROUP):   run;
+ 
+NOTE: The file GPDELTA is:
+      Filename=C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\CDELTA_TRAIN.sas,
+      RECFM=V,LRECL=32767,File Size (bytes)=0,
+      Last Modified=02 June 2018 16:56:15 o'clock,
+      Create Time=02 June 2018 16:26:04 o'clock
+ 
+NOTE: 1 record was written to the file GPDELTA.
+      The minimum record length was 38.
+      The maximum record length was 38.
+NOTE: There were 10 observations read from the data set EMWS1.GRP13_GROUPINFO.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+MPRINT(GP_GROUP):   filename gpdelta;
+NOTE: Fileref GPDELTA has been deassigned.
+MPRINT(TRAIN):  ;
+MPRINT(MAIN):  ;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * End TRAIN: Grp13;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+2740327    *------------------------------------------------------------*;
+2740328    * End TRAIN: Grp13;
+2740329    *------------------------------------------------------------*;
+2740330
+ 
+2740331    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+2740332    * Close any missing semi colons;
+MPRINT(EM_DIAGRAM):   * Close any missing semi colons;
+2740333    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+2740334    ;
+MPRINT(EM_DIAGRAM):   ;
+2740335    ;
+MPRINT(EM_DIAGRAM):   ;
+2740336    ;
+MPRINT(EM_DIAGRAM):   ;
+2740337    ;
+MPRINT(EM_DIAGRAM):   ;
+2740338    quit;
+MPRINT(EM_DIAGRAM):   quit;
+2740339    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+2740340    * Close any unbalanced quotes;
+MPRINT(EM_DIAGRAM):   * Close any unbalanced quotes;
+2740341    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+2740342    /*; *"; *'; */
+2740343    ;
+MPRINT(EM_DIAGRAM):   ;
+2740344    run;
+MPRINT(EM_DIAGRAM):   run;
+2740345    quit;
+MPRINT(EM_DIAGRAM):   quit;
+2740346    /* Reset EM Options */
+2740347    options formchar="|----|+|---+=|-/\<>*";
+MPRINT(EM_DIAGRAM):   options formchar="|----|+|---+=|-/\<>*";
+2740348    options nocenter ls=256 ps=10000;
+MPRINT(EM_DIAGRAM):   options nocenter ls=256 ps=10000;
+2740349    goptions reset=all device=GIF NODISPLAY;
+MPRINT(EM_DIAGRAM):   goptions reset=all device=GIF NODISPLAY;
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "16:56:16 o'clock" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Score Log
+Date:                02 June 2018
+Time:                16:56:16 o'clock
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O12PWO40 "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O12PWO40 new;
+MPRINT(EM_DIAGRAM):   run;
+2740451    %let EMEXCEPTIONSTRING=;
+2740452    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+2740453    * SCORE: Grp13;
+MPRINT(EM_DIAGRAM):   * SCORE: Grp13;
+2740454    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+2740455    %let EM_ACTION = SCORE;
+2740456    %let syscc = 0;
+2740457    %macro main;
+2740458
+2740459       filename temp catalog 'sashelp.emutil.gp_macros.source';
+2740460       %include temp;
+2740461       filename temp;
+2740462
+2740463       %SetProperties;
+2740464
+2740465       %if %upcase(&EM_ACTION) = CREATE %then %do;
+2740466
+2740467           filename temp catalog 'sashelp.emutil.gp_create.source';
+2740468           %include temp;
+2740469           filename temp;
+2740470
+2740471           %create;
+2740472       %end;
+2740473       %else
+2740474       %if %upcase(&EM_ACTION) = TRAIN %then %do;
+2740475
+2740476           filename temp catalog 'sashelp.emutil.gp_train.source';
+2740477           %include temp;
+2740478           filename temp;
+2740479
+2740480           %train;
+2740481       %end;
+2740482       %else
+2740483       %if %upcase(&EM_ACTION) = SCORE %then %do;
+2740484
+2740485           filename temp catalog 'sashelp.emutil.gp_score.source';
+2740486           %include temp;
+2740487           filename temp;
+2740488
+2740489           %score;
+2740490       %end;
+2740491       %else
+2740492       %if %upcase(&EM_ACTION) = REPORT %then %do;
+2740493
+2740494           filename temp catalog 'sashelp.emutil.gp_report.source';
+2740495           %include temp;
+2740496           filename temp;
+2740497
+2740498           %report;
+2740499
+2740500       %end;
+2740501       %else
+2740502       %if %upcase(&EM_ACTION) = POSTLOOP %then %do;
+2740503
+2740504           filename temp catalog 'sashelp.emutil.gp_postloop.source';
+2740505           %include temp;
+2740506           filename temp;
+2740507
+2740508           %postloop;
+2740509
+2740510       %end;
+2740511
+2740512       %doendm:
+2740513    %mend main;
+2740514
+2740515    %main;
+MPRINT(EM_DIAGRAM):
+MPRINT(MAIN):   filename temp catalog 'sashelp.emutil.gp_macros.source';
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_MACROS.SOURCE.
+2740516   +%macro SetProperties;
+2740517   +   %em_checkmacro(name=EM_PROPERTY_MODE,            global=Y, value=STRATIFY);
+2740518   +   %em_checkmacro(name=EM_PROPERTY_TARGETGROUP,     global=Y, value=Y);
+2740519   +   %em_checkmacro(name=EM_PROPERTY_INDEXCOUNT,      global=Y, value=10);
+2740520   +   %em_checkmacro(name=EM_PROPERTY_MINIMUMOBS,      global=Y, value=10);
+2740521   +   %em_checkmacro(name=EM_PROPERTY_SIZETYPE,        global=Y, value=PERCENT);
+2740522   +   %em_checkmacro(name=EM_PROPERTY_SIZEOBS,         global=Y, value=.);
+2740523   +   %em_checkmacro(name=EM_PROPERTY_SIZEPERCENT,     global=Y, value=10);
+2740524   +%mend SetProperties;
+2740525   +
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(MAIN):   filename temp;
+NOTE: Fileref TEMP has been deassigned.
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(MAIN):  ;
+MPRINT(MAIN):   filename temp catalog 'sashelp.emutil.gp_score.source';
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMUTIL.GP_SCORE.SOURCE.
+2740526   +%macro scoreTables(data=, out=, scoreref=, prefref=, keepnum=0);
+2740527   +
+2740528   +   %if ("&data" ne "") and (%sysfunc(exist(&data)) or %sysfunc(exist(&data, VIEW))) %then %do;
+2740529   +       data &out;
+2740530   +          set &data
+2740531   +          %if &keepNum %then %do;
+2740532   +              (keep=%emGrpKeep %emGrpRej)
+2740533   +          %end;
+2740534   +          ;
+2740535   +          %if %sysfunc(fexist(&prefref)) %then %do;
+2740536   +              %inc &prefref;
+2740537   +          %end;
+2740538   +          %inc &scoreref;
+2740539   +       run;
+2740540   +   %end;
+2740541   +
+2740542   +%mend scoretables;
+2740543   +
+2740544   +%macro makeExportCode;
+2740545   +   %em_getname(key=EXPORTCODE, type=FILE, extension=sas);
+2740546   +   %em_getName(key=GROUPINFO,  type=DATA);
+2740547   +
+2740548   +   filename x "&EM_USER_EXPORTCODE";
+2740549   +
+2740550   +   data _null_;
+2740551   +      file x;
+2740552   +       set &em_user_groupinfo;
+2740553   +       if _LOOP_ = &emloopnumber and _where_ ne '' then
+2740554   +          put 'if ' _where_ ' then output;';
+2740555   +   run;
+2740556   +
+2740557   +   %em_getname(key=PRECODE, type=FILE, extension=sas);
+2740558   +   filename _pregrp "&em_user_precode";
+2740559   +
+2740560   +   filename _grpdrp catalog 'sashelp.emutil.em_varmacro.source';
+2740561   +   %inc _grpdrp;
+2740562   +   filename _grpdrp;
+2740563   +   %em_varMacro(name=emGrpKeep, metadata=&EM_IMPORT_DATA_CMETA, where=%nrbquote(ROLE ne 'REJECTED'), key=NAME, nummacro=GrpKeep);
+2740564   +
+2740565   +    %em_varMacro(name=emGrpRej, metadata=&EM_DATA_VARIABLESET, where=%nrbquote(ROLE eq 'REJECTED' and GROUPROLE='GROUP'), key=NAME, nummacro=GrpRej);
+2740566   +
+2740567   +   %scoreTables(data=&em_import_data,        out=&em_export_train,       scoreref=x, prefref=_pregrp, keepnum=&GrpKeep);
+2740568   +   %scoreTables(data=&em_import_validate,    out=&em_export_validate,    scoreref=x, prefref=_pregrp, keepnum=&GrpKeep);
+2740569   +   %scoreTables(data=&em_import_test,        out=&em_export_test,        scoreref=x, prefref=_pregrp, keepnum=&GrpKeep);
+2740570   +   %scoreTables(data=&em_import_score,       out=&em_export_score,       scoreref=x, prefref=_pregrp, keepnum=&GrpKeep);
+2740571   +   %scoreTables(data=&em_import_transaction, out=&em_export_transaction, scoreref=x, prefref=_pregrp, keepnum=&GrpKeep);
+2740572   +
+2740573   +   filename x;
+2740574   +   filename _pregrp;
+2740575   +
+2740576   +%mend makeExportCode;
+2740577   +
+2740578   +%macro makeCode;
+2740579   +
+2740580   +   %if &emloopmode = LOOP %then %do;
+2740581   +       %em_getname(key=HPDMSCORE, type=FILE, extension=sas);
+2740582   +       filename x "&em_user_HPDMSCORE";
+2740583   +
+2740584   +       %em_getname(key=PRECODE, type=FILE, extension=sas);
+2740585   +       filename _pregrp "&em_user_precode";
+2740586   +       %em_copyfile(infref=_pregrp, outfref=x);
+2740587   +       filename _pregrp;
+2740588   +
+2740589   +       data _null_;
+2740590   +          file x mod;
+2740591   +          set &em_user_groupinfo;
+2740592   +          if _LOOP_ = &emloopnumber and _where_ ne '' then
+2740593   +             put 'if ^(' _where_ ') then return;';
+2740594   +       run;
+2740595   +       filename x;
+2740596   +
+2740597   +       filename x "&EM_FILE_EMFLOWSCORECODE";
+2740598   +
+2740599   +       %if "&emloopnumber" = "1" %then %do;
+2740600   +           %em_getname(key=PRECODE, type=FILE, extension=sas);
+2740601   +           filename _pregrp "&em_user_precode";
+2740602   +           %em_copyfile(infref=_pregrp, outfref=x);
+2740603   +           filename _pregrp;
+2740604   +       %end;
+2740605   +
+2740606   +       data _null_;
+2740607   +          file x
+2740608   +          %if &emloopnumber = 1 %then %do;
+2740609   +              mod
+2740610   +          %end;
+2740611   +          ;
+2740612   +          set &em_user_groupinfo;
+2740613   +          if _LOOP_ = &emloopnumber and _where_ ne '' then
+2740614   +             put 'if ' _where_ ' then do;';
+2740615   +       run;
+2740616   +
+2740617   +       filename y "&EM_FILE_EMPUBLISHSCORECODE";
+2740618   +       %if "&EM_PROPERTY_MODE" ne "CROSSVALIDATION"  %then %do;
+2740619   +           %em_copyfile(infref=x, outfref=y);
+2740620   +       %end;
+2740621   +       %else %do;
+2740622   +           %if "&emloopnumber" = "1" %then %do;
+2740623   +               %em_getname(key=PRECODE, type=FILE, extension=sas);
+2740624   +                filename _pregrp "&em_user_precode";
+2740625   +                %em_copyfile(infref=_pregrp, outfref=y);
+2740626   +               filename _pregrp;
+2740627   +           %end;
+2740628   +           data _null_;
+2740629   +             file y
+2740630   +             %if &emloopnumber = 1 %then %do;
+2740631   +                 mod
+2740632   +             %end;
+2740633   +             ;
+2740634   +             set &em_user_groupinfo;
+2740635   +             if _LOOP_ = &emloopnumber and _where_ ne '' then do;
+2740636   +                _where_ = tranwrd(_where_, '^(', '(');
+2740637   +                put 'if ' _where_ ' then do;';
+2740638   +                put '_XVAL_=' "&emloopnumber" ';' ;
+2740639   +             end;
+2740640   +           run;
+2740641   +       %end;
+2740642   +       filename Y ;
+2740643   +       filename x ;
+2740644   +   %end;
+2740645   +%mend makeCode;
+2740646   +
+2740647   +%macro score;
+2740648   +
+2740649   +   %if "&emloopmode" eq "LOOP" %then %do;
+2740650   +
+2740651   +       %em_getName(key=groupinfo,   type=DATA);
+2740652   +
+2740653   +       %if %sysfunc(exist(&em_user_groupinfo)) %then %do;
+2740654   +           %makeCode;
+2740655   +           %makeExportCode;
+2740656   +       %end;
+2740657   +   %end;
+2740658   +   %else
+2740659   +   %if "&emLoopmode" eq "POSTLOOP" %then %do;
+2740660   +       filename gpDelta "&EM_FILE_CDELTA_TRAIN";
+2740661   +       data _null_;
+2740662   +          rc = fdelete('gpdelta');
+2740663   +          run;
+2740664   +       filename gpdelta;
+2740665   +   %end;
+2740666   +%mend score;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(MAIN):   filename temp;
+NOTE: Fileref TEMP has been deassigned.
+MPRINT(SCORE):  ;
+MPRINT(MAKECODE):  ;
+MPRINT(MAKECODE):   filename x "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\HPDMSCORE.sas";
+MPRINT(MAKECODE):  ;
+MPRINT(MAKECODE):   filename _pregrp "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\PRECODE.sas";
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file x lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_pregrp",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+ 
+NOTE: The file X is:
+      Filename=C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\HPDMSCORE.sas,
+      RECFM=V,LRECL=20000,File Size (bytes)=0,
+      Last Modified=02 June 2018 16:56:16 o'clock,
+      Create Time=27 May 2018 00:29:48 o'clock
+ 
+NOTE: 0 records were written to the file X.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+MPRINT(MAKECODE):  ;
+MPRINT(MAKECODE):   filename _pregrp;
+NOTE: Fileref _PREGRP has been deassigned.
+MPRINT(MAKECODE):   data _null_;
+MPRINT(MAKECODE):   file x mod;
+MPRINT(MAKECODE):   set EMWS1.Grp13_groupinfo;
+MPRINT(MAKECODE):   if _LOOP_ = 9 and _where_ ne '' then put 'if ^(' _where_ ') then return;';
+MPRINT(MAKECODE):   run;
+ 
+NOTE: The file X is:
+      Filename=C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\HPDMSCORE.sas,
+      RECFM=V,LRECL=32767,File Size (bytes)=0,
+      Last Modified=02 June 2018 16:56:16 o'clock,
+      Create Time=27 May 2018 00:29:48 o'clock
+ 
+NOTE: 1 record was written to the file X.
+      The minimum record length was 32.
+      The maximum record length was 32.
+NOTE: There were 10 observations read from the data set EMWS1.GRP13_GROUPINFO.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+MPRINT(MAKECODE):   filename x;
+NOTE: Fileref X has been deassigned.
+MPRINT(MAKECODE):   filename x "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMFLOWSCORE.sas";
+MPRINT(MAKECODE):   data _null_;
+MPRINT(MAKECODE):   file x ;
+MPRINT(MAKECODE):   set EMWS1.Grp13_groupinfo;
+MPRINT(MAKECODE):   if _LOOP_ = 9 and _where_ ne '' then put 'if ' _where_ ' then do;';
+MPRINT(MAKECODE):   run;
+ 
+NOTE: The file X is:
+      Filename=C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMFLOWSCORE.sas,
+      RECFM=V,LRECL=32767,File Size (bytes)=0,
+      Last Modified=02 June 2018 16:56:16 o'clock,
+      Create Time=02 June 2018 16:26:04 o'clock
+ 
+NOTE: 1 record was written to the file X.
+      The minimum record length was 25.
+      The maximum record length was 25.
+NOTE: There were 10 observations read from the data set EMWS1.GRP13_GROUPINFO.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+MPRINT(MAKECODE):   filename y "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMPUBLISHSCORE.sas";
+MPRINT(MAKECODE):   data _null_;
+MPRINT(MAKECODE):   file y ;
+MPRINT(MAKECODE):   set EMWS1.Grp13_groupinfo;
+MPRINT(MAKECODE):   if _LOOP_ = 9 and _where_ ne '' then do;
+MPRINT(MAKECODE):   _where_ = tranwrd(_where_, '^(', '(');
+MPRINT(MAKECODE):   put 'if ' _where_ ' then do;';
+MPRINT(MAKECODE):   put '_XVAL_=' "9" ';' ;
+MPRINT(MAKECODE):   end;
+MPRINT(MAKECODE):   run;
+ 
+NOTE: The file Y is:
+      Filename=C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMPUBLISHSCORE.sas,
+      RECFM=V,LRECL=32767,File Size (bytes)=0,
+      Last Modified=02 June 2018 16:56:16 o'clock,
+      Create Time=02 June 2018 16:26:04 o'clock
+ 
+NOTE: 2 records were written to the file Y.
+      The minimum record length was 9.
+      The maximum record length was 24.
+NOTE: There were 10 observations read from the data set EMWS1.GRP13_GROUPINFO.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+MPRINT(MAKECODE):   filename Y ;
+NOTE: Fileref Y has been deassigned.
+MPRINT(MAKECODE):   filename x ;
+NOTE: Fileref X has been deassigned.
+MPRINT(SCORE):  ;
+MPRINT(MAKEEXPORTCODE):  ;
+MPRINT(MAKEEXPORTCODE):  ;
+MPRINT(MAKEEXPORTCODE):   filename x "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EXPORTCODE.sas";
+MPRINT(MAKEEXPORTCODE):   data _null_;
+MPRINT(MAKEEXPORTCODE):   file x;
+MPRINT(MAKEEXPORTCODE):   set EMWS1.Grp13_GROUPINFO;
+MPRINT(MAKEEXPORTCODE):   if _LOOP_ = 9 and _where_ ne '' then put 'if ' _where_ ' then output;';
+MPRINT(MAKEEXPORTCODE):   run;
+ 
+NOTE: The file X is:
+      Filename=C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EXPORTCODE.sas,
+      RECFM=V,LRECL=32767,File Size (bytes)=0,
+      Last Modified=02 June 2018 16:56:16 o'clock,
+      Create Time=27 May 2018 00:29:48 o'clock
+ 
+NOTE: 1 record was written to the file X.
+      The minimum record length was 29.
+      The maximum record length was 29.
+NOTE: There were 10 observations read from the data set EMWS1.GRP13_GROUPINFO.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+ 
+ 
+MPRINT(MAKEEXPORTCODE):  ;
+MPRINT(MAKEEXPORTCODE):   filename _pregrp "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\PRECODE.sas";
+MPRINT(MAKEEXPORTCODE):   filename _grpdrp catalog 'sashelp.emutil.em_varmacro.source';
+NOTE: %INCLUDE (level 1) file _GRPDRP is file SASHELP.EMUTIL.EM_VARMACRO.SOURCE.
+2740668   +%macro em_varMacro(name=emMacro, metadata=, where=, key=NAME, nummacro=, maxvar=-1);
+2740670   +   filename macFile catalog 'work.emutil.macro.source';
+2740671   +   %let _METAOBS = 0;
+2740672   +   %let _maxvar = &maxvar;
+2740673   +   %if "&_maxvar" eq "" %then %let maxvar = -1;
+2740675   +   %if (%sysfunc(exist(&metadata))<1 and %sysfunc(exist(&metadata, VIEW))<1)
+2740676   +                   or (&metadata eq ) %then %do;
+2740677   +       %put * No metadata data set defined;
+2740678   +       %goto doend;
+2740679   +   %end;
+2740681   +   data _null_;
+2740682   +      length _STRING_ $80;
+2740683   +      retain _STRING_ '' maxvar 0;
+2740684   +      set &metadata end=eof;
+2740685   +      file macFile;
+2740686   +      %if %nrbquote(&where) ne %then %do;
+2740687   +          %let whereClause = where (%nrbquote(&where));
+2740688   +          %unquote(&whereClause);
+2740689   +      %end;
+2740690   +      if _N_=1 then do;
+2740691   +         string = "%"!!"macro &name;";
+2740692   +         put string;
+2740693   +      end;
+2740694   +      maxvar +1;
+2740695   +      if (length(_STRING_) + length(trim(&key))+ 4 < 80) then do;
+2740696   +         _STRING_ = trim(_STRING_)!!' '!!trim(&key);
+2740697   +         if eof
+2740698   +            %if  %sysevalf(&_maxvar > 0) %then %do;
+2740699   +                or maxvar >= &maxvar
+2740700   +            %end;
+2740701   +            then do;
+2740702   +            put _STRING_;
+2740703   +            string = "%"!!"mend &name;";
+2740704   +            put string;
+2740705   +            string = strip(put(_N_, best.));
+2740706   +            call symput('_METAOBS', string);
+2740707   +            %if (&nummacro ne ) %then %do;
+2740708   +                put "%" "global &nummacro;";
+2740709   +                put "%" "let &nummacro = " string ";";
+2740710   +            %end;
+2740711   +            stop;
+2740712   +         end;
+2740713   +      end;
+2740714   +      else do;
+2740715   +         put _STRING_;
+2740716   +         _string_ = TRIM(&key);
+2740717   +         if eof
+2740718   +            %if  %sysevalf(&_maxvar > 0) %then %do;
+2740719   +              or maxvar >= &maxvar
+2740720   +           %end;
+2740721   +            then do;
+2740722   +            put _STRING_;
+2740723   +            string = "%"!!"mend &name;";
+2740724   +            put string;
+2740725   +        end;
+2740726   +      end;
+2740727   +      if eof
+2740728   +         %if  %sysevalf(&_maxvar > 0) %then %do;
+2740729   +             or maxvar >= &maxvar
+2740730   +         %end;
+2740731   +         then do;
+2740732   +         string = strip(put(_N_, best.));
+2740733   +         call symput('_METAOBS', string);
+2740734   +         %if (&nummacro ne ) %then %do;
+2740735   +             put "%" "global &nummacro;";
+2740736   +             put "%" "let &nummacro = " string ";";
+2740737   +         %end;
+2740738   +         stop;
+2740739   +      end;
+2740740   +   run;
+2740742   +   %doend:
+2740743   +   %if ^&_METAOBS %then %do;
+2740744   +       data _null_;
+2740745   +          file macFile;
+2740746   +          put "%" "macro &name;";
+2740747   +          put "%" "mend &name;";
+2740748   +          %if (&nummacro ne ) %then %do;
+2740749   +              put "%" "global &nummacro;";
+2740750   +              put "%" "let &nummacro = 0;";
+2740751   +          %end;
+2740752   +      run;
+2740753   +   %end;
+2740754   +   %inc macFile;
+2740755   +   filename macFile;
+2740756   +%mend em_varMacro;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(MAKEEXPORTCODE):   filename _grpdrp;
+NOTE: Fileref _GRPDRP has been deassigned.
+MPRINT(EM_VARMACRO):   filename macFile catalog 'work.emutil.macro.source';
+MPRINT(EM_VARMACRO):   data _null_;
+MPRINT(EM_VARMACRO):   length _STRING_ $80;
+MPRINT(EM_VARMACRO):   retain _STRING_ '' maxvar 0;
+MPRINT(EM_VARMACRO):   set EMWS1.Trans2_CMeta_TRAIN end=eof;
+MPRINT(EM_VARMACRO):   file macFile;
+MPRINT(EM_VARMACRO):   where (ROLE ne 'REJECTED');
+MPRINT(EM_VARMACRO):   if _N_=1 then do;
+MPRINT(EM_VARMACRO):   string = "%"!!"macro emGrpKeep;";
+MPRINT(EM_VARMACRO):   put string;
+MPRINT(EM_VARMACRO):   end;
+MPRINT(EM_VARMACRO):   maxvar +1;
+MPRINT(EM_VARMACRO):   if (length(_STRING_) + length(trim(NAME))+ 4 < 80) then do;
+MPRINT(EM_VARMACRO):   _STRING_ = trim(_STRING_)!!' '!!trim(NAME);
+MPRINT(EM_VARMACRO):   if eof then do;
+MPRINT(EM_VARMACRO):   put _STRING_;
+MPRINT(EM_VARMACRO):   string = "%"!!"mend emGrpKeep;";
+MPRINT(EM_VARMACRO):   put string;
+MPRINT(EM_VARMACRO):   string = strip(put(_N_, best.));
+MPRINT(EM_VARMACRO):   call symput('_METAOBS', string);
+MPRINT(EM_VARMACRO):   put "%" "global GrpKeep;";
+MPRINT(EM_VARMACRO):   put "%" "let GrpKeep = " string ";";
+MPRINT(EM_VARMACRO):   stop;
+MPRINT(EM_VARMACRO):   end;
+MPRINT(EM_VARMACRO):   end;
+MPRINT(EM_VARMACRO):   else do;
+MPRINT(EM_VARMACRO):   put _STRING_;
+MPRINT(EM_VARMACRO):   _string_ = TRIM(NAME);
+MPRINT(EM_VARMACRO):   if eof then do;
+MPRINT(EM_VARMACRO):   put _STRING_;
+MPRINT(EM_VARMACRO):   string = "%"!!"mend emGrpKeep;";
+MPRINT(EM_VARMACRO):   put string;
+MPRINT(EM_VARMACRO):   end;
+MPRINT(EM_VARMACRO):   end;
+MPRINT(EM_VARMACRO):   if eof then do;
+MPRINT(EM_VARMACRO):   string = strip(put(_N_, best.));
+MPRINT(EM_VARMACRO):   call symput('_METAOBS', string);
+MPRINT(EM_VARMACRO):   put "%" "global GrpKeep;";
+MPRINT(EM_VARMACRO):   put "%" "let GrpKeep = " string ";";
+MPRINT(EM_VARMACRO):   stop;
+MPRINT(EM_VARMACRO):   end;
+MPRINT(EM_VARMACRO):   run;
+ 
+NOTE: The file MACFILE is:
+      Catalog Name=WORK.EMUTIL.MACRO.SOURCE,
+      Catalog Page Size=4096,
+      Number of Catalog Pages=5,
+      Created=Saturday,  2 June 2018 16:26:01,
+      Last Modified=Saturday,  2 June 2018 16:56:12,
+      Filename=C:\Users\misil\AppData\Local\Temp\SAS Temporary Files\_TD7712_DESKTOP-61HCQ9U_\Prc2\emutil.sas7bcat,
+      Release Created=9.0401M4,
+      Host Created=X64_10PRO,
+      Owner Name=DESKTOP-61HCQ9U\misil,
+      File Size=            21KB,
+      File Size (bytes)=21504
+ 
+NOTE: 7 records were written to the file MACFILE.
+      The minimum record length was 16.
+      The maximum record length was 76.
+NOTE: There were 14 observations read from the data set EMWS1.TRANS2_CMETA_TRAIN.
+      WHERE ROLE not = 'REJECTED';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+ 
+ 
+NOTE: %INCLUDE (level 1) file MACFILE is file WORK.EMUTIL.MACRO.SOURCE.
+2740757   +%macro emGrpKeep;
+2740758   +Custid DepVar Marital_Status MntCard_Games MntMagazines
+2740759   +NumCatalogPurchases NumDealsPurchases NumWebPurchases RANGE_Frq
+2740760   +RANGE_Recency RANGE_average_purchase RANGE_campaign_acceptance _WARN_ cv_var
+2740761   +%mend emGrpKeep;
+2740762   +%global GrpKeep;
+2740763   +%let GrpKeep = 14 ;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(EM_VARMACRO):   filename macFile;
+NOTE: Fileref MACFILE has been deassigned.
+MPRINT(MAKEEXPORTCODE):  ;
+MPRINT(EM_VARMACRO):   filename macFile catalog 'work.emutil.macro.source';
+MPRINT(EM_VARMACRO):   data _null_;
+MPRINT(EM_VARMACRO):   length _STRING_ $80;
+MPRINT(EM_VARMACRO):   retain _STRING_ '' maxvar 0;
+MPRINT(EM_VARMACRO):   set EMWS1.Grp13_VariableSet end=eof;
+MPRINT(EM_VARMACRO):   file macFile;
+MPRINT(EM_VARMACRO):   where (ROLE eq 'REJECTED' and GROUPROLE='GROUP');
+MPRINT(EM_VARMACRO):   if _N_=1 then do;
+MPRINT(EM_VARMACRO):   string = "%"!!"macro emGrpRej;";
+MPRINT(EM_VARMACRO):   put string;
+MPRINT(EM_VARMACRO):   end;
+MPRINT(EM_VARMACRO):   maxvar +1;
+MPRINT(EM_VARMACRO):   if (length(_STRING_) + length(trim(NAME))+ 4 < 80) then do;
+MPRINT(EM_VARMACRO):   _STRING_ = trim(_STRING_)!!' '!!trim(NAME);
+MPRINT(EM_VARMACRO):   if eof then do;
+MPRINT(EM_VARMACRO):   put _STRING_;
+MPRINT(EM_VARMACRO):   string = "%"!!"mend emGrpRej;";
+MPRINT(EM_VARMACRO):   put string;
+MPRINT(EM_VARMACRO):   string = strip(put(_N_, best.));
+MPRINT(EM_VARMACRO):   call symput('_METAOBS', string);
+MPRINT(EM_VARMACRO):   put "%" "global GrpRej;";
+MPRINT(EM_VARMACRO):   put "%" "let GrpRej = " string ";";
+MPRINT(EM_VARMACRO):   stop;
+MPRINT(EM_VARMACRO):   end;
+MPRINT(EM_VARMACRO):   end;
+MPRINT(EM_VARMACRO):   else do;
+MPRINT(EM_VARMACRO):   put _STRING_;
+MPRINT(EM_VARMACRO):   _string_ = TRIM(NAME);
+MPRINT(EM_VARMACRO):   if eof then do;
+MPRINT(EM_VARMACRO):   put _STRING_;
+MPRINT(EM_VARMACRO):   string = "%"!!"mend emGrpRej;";
+MPRINT(EM_VARMACRO):   put string;
+MPRINT(EM_VARMACRO):   end;
+MPRINT(EM_VARMACRO):   end;
+MPRINT(EM_VARMACRO):   if eof then do;
+MPRINT(EM_VARMACRO):   string = strip(put(_N_, best.));
+MPRINT(EM_VARMACRO):   call symput('_METAOBS', string);
+MPRINT(EM_VARMACRO):   put "%" "global GrpRej;";
+MPRINT(EM_VARMACRO):   put "%" "let GrpRej = " string ";";
+MPRINT(EM_VARMACRO):   stop;
+MPRINT(EM_VARMACRO):   end;
+MPRINT(EM_VARMACRO):   run;
+ 
+NOTE: The file MACFILE is:
+      Catalog Name=WORK.EMUTIL.MACRO.SOURCE,
+      Catalog Page Size=4096,
+      Number of Catalog Pages=5,
+      Created=Saturday,  2 June 2018 16:26:01,
+      Last Modified=Saturday,  2 June 2018 16:56:16,
+      Filename=C:\Users\misil\AppData\Local\Temp\SAS Temporary Files\_TD7712_DESKTOP-61HCQ9U_\Prc2\emutil.sas7bcat,
+      Release Created=9.0401M4,
+      Host Created=X64_10PRO,
+      Owner Name=DESKTOP-61HCQ9U\misil,
+      File Size=            21KB,
+      File Size (bytes)=21504
+ 
+NOTE: 0 records were written to the file MACFILE.
+NOTE: There were 0 observations read from the data set EMWS1.GRP13_VARIABLESET.
+      WHERE (ROLE='REJECTED') and (GROUPROLE='GROUP');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+ 
+ 
+MPRINT(EM_VARMACRO):   data _null_;
+MPRINT(EM_VARMACRO):   file macFile;
+MPRINT(EM_VARMACRO):   put "%" "macro emGrpRej;";
+MPRINT(EM_VARMACRO):   put "%" "mend emGrpRej;";
+MPRINT(EM_VARMACRO):   put "%" "global GrpRej;";
+MPRINT(EM_VARMACRO):   put "%" "let GrpRej = 0;";
+MPRINT(EM_VARMACRO):   run;
+ 
+NOTE: The file MACFILE is:
+      Catalog Name=WORK.EMUTIL.MACRO.SOURCE,
+      Catalog Page Size=4096,
+      Number of Catalog Pages=5,
+      Created=Saturday,  2 June 2018 16:26:01,
+      Last Modified=Saturday,  2 June 2018 16:56:16,
+      Filename=C:\Users\misil\AppData\Local\Temp\SAS Temporary Files\_TD7712_DESKTOP-61HCQ9U_\Prc2\emutil.sas7bcat,
+      Release Created=9.0401M4,
+      Host Created=X64_10PRO,
+      Owner Name=DESKTOP-61HCQ9U\misil,
+      File Size=            21KB,
+      File Size (bytes)=21504
+ 
+NOTE: 4 records were written to the file MACFILE.
+      The minimum record length was 15.
+      The maximum record length was 16.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+ 
+ 
+NOTE: %INCLUDE (level 1) file MACFILE is file WORK.EMUTIL.MACRO.SOURCE.
+2740764   +%macro emGrpRej;
+2740765   +%mend emGrpRej;
+2740766   +%global GrpRej;
+2740767   +%let GrpRej = 0;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(EM_VARMACRO):   filename macFile;
+NOTE: Fileref MACFILE has been deassigned.
+MPRINT(MAKEEXPORTCODE):  ;
+MPRINT(SCORETABLES):   data EMWS1.Grp13_TRAIN;
+MPRINT(SCORETABLES):   set EMWS1.Trans2_TRAIN (keep
+MPRINT(SCORETABLES):  =Custid DepVar Marital_Status MntCard_Games MntMagazines NumCatalogPurchases NumDealsPurchases NumWebPurchases RANGE_Frq RANGE_Recency RANGE_average_purchase RANGE_campaign_acceptance _WARN_ cv_var) ;
+NOTE: %INCLUDE (level 1) file _PREGRP is file C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\PRECODE.sas.
+NOTE: %INCLUDE (level 1) ending.
+NOTE: %INCLUDE (level 1) file X is file C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EXPORTCODE.sas.
+2740768   +if ^(cv_var =9)  then output;
+MPRINT(SCORETABLES):   if ^(cv_var =9) then output;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(SCORETABLES):   run;
+NOTE: There were 2437 observations read from the data set EMWS1.EMCODE3_TRAIN.
+NOTE: There were 2437 observations read from the data set EMWS1.TRANS_TRAIN.
+NOTE: View EMWS1.TRANS2_TRAIN.VIEW used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.10 seconds
+ 
+NOTE: There were 2437 observations read from the data set EMWS1.META_TRAIN.
+NOTE: There were 2437 observations read from the data set EMWS1.TRANS2_TRAIN.
+NOTE: The data set EMWS1.GRP13_TRAIN has 2205 observations and 14 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.12 seconds
+ 
+ 
+MPRINT(MAKEEXPORTCODE):  ;
+MPRINT(MAKEEXPORTCODE):  ;
+MPRINT(MAKEEXPORTCODE):  ;
+MPRINT(MAKEEXPORTCODE):  ;
+MPRINT(MAKEEXPORTCODE):  ;
+MPRINT(MAKEEXPORTCODE):   filename x;
+NOTE: Fileref X has been deassigned.
+MPRINT(MAKEEXPORTCODE):   filename _pregrp;
+NOTE: Fileref _PREGRP has been deassigned.
+MPRINT(SCORE):  ;
+MPRINT(MAIN):  ;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * End SCORE: Grp13;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+2740769    *------------------------------------------------------------*;
+2740770    * End SCORE: Grp13;
+2740771    *------------------------------------------------------------*;
+2740772
+ 
+2740774    filename emflow "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMFLOWSCORE.sas";
+MPRINT(EM_DIAGRAM):     filename emflow "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMFLOWSCORE.sas";
+2740775    filename lpflow catalog "EMWS1.Grp13_LOOP.EMFLOWCODE_9.source";
+MPRINT(EM_DIAGRAM):   filename lpflow catalog "EMWS1.Grp13_LOOP.EMFLOWCODE_9.source";
+2740776    %em_copyfile(infref=emflow, outfref=lpflow);
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file lpflow lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("emflow",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+ 
+NOTE: The file LPFLOW is:
+      Catalog Name=EMWS1.GRP13_LOOP.EMFLOWCODE_9.SOURCE,
+      Catalog Page Size=4096,
+      Number of Catalog Pages=22,
+      Created=Saturday,  2 June 2018 16:26:05,
+      Last Modified=Saturday,  2 June 2018 16:52:14,
+      Filename=C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\grp13_loop.sas7bcat,
+      Release Created=9.0401M4,
+      Host Created=X64_10PRO,
+      Owner Name=DESKTOP-61HCQ9U\misil,
+      File Size=            85KB,
+      File Size (bytes)=87040
+ 
+NOTE: 1 record was written to the file LPFLOW.
+      The minimum record length was 25.
+      The maximum record length was 25.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+ 
+ 
+MPRINT(EM_DIAGRAM):  ;
+2740777    filename lpflow;
+MPRINT(EM_DIAGRAM):   filename lpflow;
+NOTE: Fileref LPFLOW has been deassigned.
+2740778    filename emflow;
+MPRINT(EM_DIAGRAM):   filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+2740779    filename empub "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMPUBLISHSCORE.sas";
+MPRINT(EM_DIAGRAM):    filename empub "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMPUBLISHSCORE.sas";
+2740780    filename lppub catalog "EMWS1.Grp13_LOOP.EMPUBLISHCODE_9.source";
+MPRINT(EM_DIAGRAM):   filename lppub catalog "EMWS1.Grp13_LOOP.EMPUBLISHCODE_9.source";
+2740781    %em_copyfile(infref=empub, outfref=lppub);
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file lppub lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("empub",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+ 
+NOTE: The file LPPUB is:
+      Catalog Name=EMWS1.GRP13_LOOP.EMPUBLISHCODE_9.SOURCE,
+      Catalog Page Size=4096,
+      Number of Catalog Pages=23,
+      Created=Saturday,  2 June 2018 16:26:05,
+      Last Modified=Saturday,  2 June 2018 16:56:16,
+      Filename=C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\grp13_loop.sas7bcat,
+      Release Created=9.0401M4,
+      Host Created=X64_10PRO,
+      Owner Name=DESKTOP-61HCQ9U\misil,
+      File Size=            89KB,
+      File Size (bytes)=91136
+ 
+NOTE: 2 records were written to the file LPPUB.
+      The minimum record length was 9.
+      The maximum record length was 24.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+ 
+ 
+MPRINT(EM_DIAGRAM):  ;
+2740782    filename lppub;
+MPRINT(EM_DIAGRAM):   filename lppub;
+NOTE: Fileref LPPUB has been deassigned.
+2740783    filename empub;
+MPRINT(EM_DIAGRAM):   filename empub;
+NOTE: Fileref EMPUB has been deassigned.
+2740784    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+2740785    * Grp13: Computing metadata for TRAIN data;
+MPRINT(EM_DIAGRAM):   * Grp13: Computing metadata for TRAIN data;
+2740786    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+ 
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * &nodeid: Computing Metadata for TRAIN data;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   filename _delta "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\CDELTA_TRAIN.sas";
+MPRINT(EMADVISECOLUMNS):   proc display c=sashelp.emmeta.advisecolumns.scl;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    options validvarname=any;
+MPRINT(EMADVISECOLUMNS):   proc contents data=EMWS1.Grp13_TRAIN out=_tempAdvisor noprint;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):   options validvarname=V7;
+MPRINT(EMADVISECOLUMNS):    data _null_;
+MPRINT(EMADVISECOLUMNS):   dsid = open('EMWS1.Grp13_TRAIN');
+MPRINT(EMADVISECOLUMNS):   call symput('_dsidTable', strip(put(dsid, best.)));
+MPRINT(EMADVISECOLUMNS):   if dsid then do;
+MPRINT(EMADVISECOLUMNS):   call symput('_engineTable', attrc(dsid, 'ENGINE'));
+MPRINT(EMADVISECOLUMNS):   dsid = close(dsid);
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    options fmterr;
+MPRINT(EMADVISECOLUMNS):   data _metaTestView;
+MPRINT(EMADVISECOLUMNS):   set EMWS1.Grp13_TRAIN;
+MPRINT(EMADVISECOLUMNS):   if _N_=1 then do;
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   stop;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    proc contents data=EMWS1.Grp13_TRAIN out=WORK.M24Q2I8B noprint;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M24Q2I8B;
+MPRINT(EMADVISECOLUMNS):   length NAME $ 64 TYPE $ 1 LABEL $ 200 FORMAT $ 36 INFORMAT $36 INDEX $ 1 INDEXTYPE $ 9;
+MPRINT(EMADVISECOLUMNS):   label NAME =;
+MPRINT(EMADVISECOLUMNS):   set WORK.M24Q2I8B(keep=name type length label format formatl formatd informat informl informd idxusage rename=(type=itype));
+MPRINT(EMADVISECOLUMNS):   if itype = 1 then type = 'N';
+MPRINT(EMADVISECOLUMNS):   else type = 'C';
+MPRINT(EMADVISECOLUMNS):   if formatl > 0 then do;
+MPRINT(EMADVISECOLUMNS):   if format ne '' then do;
+MPRINT(EMADVISECOLUMNS):   if type='N' then format = strip(format)!!strip(put(formatl, best12.))!!'.'!!strip(put(formatd, best12.));
+MPRINT(EMADVISECOLUMNS):   else format = strip(format)!!strip(put(formatl, best12.))!!'.';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else format = strip(put(formatl, best12.))!!'.'!!strip(put(formatd, best12.));
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if format ne '' then format = strip(format)!!'.';
+MPRINT(EMADVISECOLUMNS):   if informl > 0 then do;
+MPRINT(EMADVISECOLUMNS):   if informat ne ' ' then do;
+MPRINT(EMADVISECOLUMNS):   if type='N' then informat = strip(informat)!!strip(put(informl, best12.))!!'.'!!strip(put(informd, best12.));
+MPRINT(EMADVISECOLUMNS):   else informat = strip(informat)!!strip(put(informl, best12.))!!'.';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else informat = strip(put(informl, best12.))!!'.'!!strip(put(informd, best12.));
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if informat ne '' then informat = strip(informat)!!'.';
+MPRINT(EMADVISECOLUMNS):   if idxusage = 'NONE' then index ="N";
+MPRINT(EMADVISECOLUMNS):   else index = "Y";
+MPRINT(EMADVISECOLUMNS):   indextype = idxusage;
+MPRINT(EMADVISECOLUMNS):   drop idxusage itype formatl formatd informl informd;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M24Q2I8B;
+MPRINT(EMADVISECOLUMNS):   length UNAME $64;
+MPRINT(EMADVISECOLUMNS):   set WORK.M24Q2I8B;
+MPRINT(EMADVISECOLUMNS):   UNAME = upcase(NAME);
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    proc sort data=WORK.M39BRT1Q NOTHREADS;
+MPRINT(EMADVISECOLUMNS):   by UNAME;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M39BRT1Q;
+MPRINT(EMADVISECOLUMNS):   drop UNAME;
+MPRINT(EMADVISECOLUMNS):   set WORK.M39BRT1Q;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M2BOMTQ4(keep=NAME ATTR);
+MPRINT(EMADVISECOLUMNS):   length ATTR $ 20;
+MPRINT(EMADVISECOLUMNS):   set WORK.M39BRT1Q;
+MPRINT(EMADVISECOLUMNS):   if level ne "INTERVAL" then do;
+MPRINT(EMADVISECOLUMNS):   if order = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'ORDER';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if format ne ' ' and formattype = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'FORMATTYPE';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if role = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'ROLE';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if level = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'LEVEL';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if type = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'TYPE';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if index = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'INDEX';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if report = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'REPORT';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):   proc sort NOTHREADS;
+MPRINT(EMADVISECOLUMNS):   by attr;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M39BRT1Q;
+MPRINT(EMADVISECOLUMNS):   length NAME $64 ROLE $ 32 LEVEL $ 10 ORDER $ 8 CREATOR $32 FORMATTYPE $ 10 FAMILY $ 10 LOWERLIMIT 8 UPPERLIMIT 8 REPORT $1 DISTRIBUTION $ 20 COMMENT $64;
+MPRINT(EMADVISECOLUMNS):   length levelAssigned 8 roleAssigned 8 PRICE 8;
+MPRINT(EMADVISECOLUMNS):   set WORK.M39BRT1Q;
+MPRINT(EMADVISECOLUMNS):   if formattype = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   if format ne ' ' then do;
+MPRINT(EMADVISECOLUMNS):   if type = 'N' then do;
+MPRINT(EMADVISECOLUMNS):   pos = indexc(format,'.1234567890');
+MPRINT(EMADVISECOLUMNS):   if pos > 1 then tempfmt = substr(format,1, pos-1);
+MPRINT(EMADVISECOLUMNS):   else tempfmt = ' ';
+MPRINT(EMADVISECOLUMNS):   flen = length(tempfmt);
+MPRINT(EMADVISECOLUMNS):   select;
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("DATE" "DAY" "DDMMYY" "DOWNAME" "JULDAY" "JULIAN" "MMDDYY" "MMDDYYD" "MMDDYYC" "MMDDYYN" "MMDDYYP" "MMDDYYS" "MONNAME" "MONTH" "MONYY" "NENGO" "QTR" "QTRR" "WEEKDATE" "WEEKDATX" "WEEKDAY" "WORDDATE" "WORDDATX"
+"YEAR" "YYMMDD" "YYMON" "YYMMDDC" "YYMMDDD" "YYMMDDN" "YYMMDDP" "YYMMDDS" "EURDFDE" "NJDATE" "NLDATE" "EURDFDD" "EURDFDWN" "EURDFMN" "EURDFMY" "EURDFWK" "EURDFWKX" "EURDFWDX" "EURDFDN" "EURDFDE" )) formattype = 'DATE';
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("DATETIME" "EURDFDT" "TOD" )) formattype = "DATETIME";
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("HHMM" "HOUR" "MMSS" "TIME" "TIMEAMPM" )) formattype = "TIME";
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("COMMA" "COMMAX" "DOLLAR" "DOLLARX" "E" "FRACT" "NEGPAREN" "PERCENT")) formattype="QUANTITY";
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("BINARY" "HEX" "IB" "OCTAL" "PD" "PIB" "PK" "RB" "SSN" "Z" "ZD")) formattype = "CODING";
+MPRINT(EMADVISECOLUMNS):   otherwise do;
+MPRINT(EMADVISECOLUMNS):   formattype = "USER";
+MPRINT(EMADVISECOLUMNS):   if compress(tempfmt, '0123456789.', '') = '' then formattype='NUM';
+MPRINT(EMADVISECOLUMNS):   else if substr(tempfmt, 1, 6)='NLDATE' then formattype = "DATE";
+MPRINT(EMADVISECOLUMNS):   else if substr(tempfmt, 1, 6)='NLDATM' then formattype = "DATETIME";
+MPRINT(EMADVISECOLUMNS):   else if substr(tempfmt, 1, 4)='NLTIM' then formattype = "TIME";
+MPRINT(EMADVISECOLUMNS):   else if flen >= 4 then do;
+MPRINT(EMADVISECOLUMNS):   str = substr(tempfmt,1,4);
+MPRINT(EMADVISECOLUMNS):   if str in ("MMYY" "YYMM" "YYQR") then formattype ="DATE";
+MPRINT(EMADVISECOLUMNS):   else if str = "S370" then formattype = "CODING";
+MPRINT(EMADVISECOLUMNS):   else if str = "BEST" then formattype = "NUM";
+MPRINT(EMADVISECOLUMNS):   drop str;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if flen >=3 and substr(tempfmt,1,3) = "YYQ" then formatType = "DATE";
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   drop flen tempfmt pos;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else do;
+MPRINT(EMADVISECOLUMNS):   formatType = "CATEGORY";
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if formatType = "NUM" then do;
+MPRINT(EMADVISECOLUMNS):   if index = "Y" then formatType = "DISCRETE";
+MPRINT(EMADVISECOLUMNS):   else formatType = "QUANTITY";
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if level = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   if formatType in ("CATEGORY", "CODING", "ID") or type = "C" then level = "NOMINAL";
+MPRINT(EMADVISECOLUMNS):   else level = "INTERVAL";
+MPRINT(EMADVISECOLUMNS):   levelAssigned = 1;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else level = upcase(level);
+MPRINT(EMADVISECOLUMNS):   if role = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   length name_prefix $8 _uname $64;
+MPRINT(EMADVISECOLUMNS):   drop name_prefix _uname _freqflag;
+MPRINT(EMADVISECOLUMNS):   retain _freqflag;
+MPRINT(EMADVISECOLUMNS):   if LENGTH> 80 then ROLE = 'TEXT';
+MPRINT(EMADVISECOLUMNS):   _uname = upcase(NAME);
+MPRINT(EMADVISECOLUMNS):   select(_uname);
+MPRINT(EMADVISECOLUMNS):   when('_PARTIND_') do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'ID';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   when('_WARN_') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_SEGMENT') do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'SEGMENT';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   when('_NODE_') do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'SEGMENT';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   when('EM_CLASSTARGET') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_VALUETARGET') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_PREDICTION') ROLE = 'PREDICT';
+MPRINT(EMADVISECOLUMNS):   when('EM_PROBABILITY') ROLE = 'PREDICT';
+MPRINT(EMADVISECOLUMNS):   when('EM_EVENTPROBABILITY') ROLE = 'PREDICT';
+MPRINT(EMADVISECOLUMNS):   when('EM_CLASSIFICATION') ROLE = 'CLASSIFICATION';
+MPRINT(EMADVISECOLUMNS):   when('EM_DECISION') ROLE = 'DECISION';
+MPRINT(EMADVISECOLUMNS):   when('EM_PROFIT') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_LOSS') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_ROI') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('URI') ROLE = 'URL';
+MPRINT(EMADVISECOLUMNS):   when('FILTERED') ROLE = 'TEXTLOC';
+MPRINT(EMADVISECOLUMNS):   otherwise do;
+MPRINT(EMADVISECOLUMNS):   if upcase(NAME) =: 'ZIP' then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'REJECTED';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   COMMENT = 'Rejected by: Exceed the maximum class level of %s';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if upcase(NAME) in('FREQ', 'FREQUENCY') then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'FREQ';
+MPRINT(EMADVISECOLUMNS):   if TYPE = 'C' then ROLE = 'INPUT';
+MPRINT(EMADVISECOLUMNS):   else if _freqflag =1 then ROLE='REJECTED';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else do;
+MPRINT(EMADVISECOLUMNS):   name_prefix = scan(_uname, 1, '_');
+MPRINT(EMADVISECOLUMNS):   if scan(_uname, 2, '_') = '' then name_prefix='';
+MPRINT(EMADVISECOLUMNS):   if name_prefix in('F', 'I', 'U') then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'CLASSIFICATION';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if name_prefix in('Q') then ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   else if name_prefix in('P', 'V') then ROLE = 'PREDICT';
+MPRINT(EMADVISECOLUMNS):   else if name_prefix in('R', 'RS', 'RT', 'RD', 'RDS', 'RDT', 'RA', 'RAS', 'RAT') then ROLE = 'RESIDUAL';
+MPRINT(EMADVISECOLUMNS):   else if name_prefix ='D' then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'DECISION';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if name_prefix ='B' then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'SEGMENT';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if name_prefix in('EP', 'BP', 'CP', 'EL', 'CL', 'BL', 'W', 'ROI', 'IC') then ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   else do;
+MPRINT(EMADVISECOLUMNS):   array _ROLE_ (19) $32 _TEMPORARY_ ('ASSESS','CLASSIFICATION','CENSOR', 'COST', 'CROSSID', 'DECISION', 'ID','INPUT', 'LABEL', 'MISSING','PREDICT','REFERRER','REJECTED', 'RESIDUAL','SEGMENT', 'SEQUENCE','TARGET', 'TEXT', 'TIMEID');
+MPRINT(EMADVISECOLUMNS):   drop _found_ i;
+MPRINT(EMADVISECOLUMNS):   _found_=0;
+MPRINT(EMADVISECOLUMNS):   do i=1 to 19 until(_found_=1);
+MPRINT(EMADVISECOLUMNS):   if index(_uname, trim(_ROLE_{i}))=1 then do;
+MPRINT(EMADVISECOLUMNS):   ROLE=_ROLE_{i};
+MPRINT(EMADVISECOLUMNS):   if ROLE = 'ID' then LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   else if ROLE = 'SEGMENT' then LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   else if ROLE = 'TIMEID' and TYPE='N' then LEVEL = 'INTERVAL';
+MPRINT(EMADVISECOLUMNS):   _found_=1;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if length(_uname)>2 then do;
+MPRINT(EMADVISECOLUMNS):   if substr(reverse(trim(_uname)), 1, 3) = 'DI_' then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'ID';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if ROLE='FREQ' then _freqflag=1;
+MPRINT(EMADVISECOLUMNS):   else if ROLE = 'CLASSIFICATION' then LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   if symexist('RATEMKG_ROLE') then do;
+MPRINT(EMADVISECOLUMNS):   if upcase(symget('RATEMKG_ROLE')) in('Y', 'YES') then do;
+MPRINT(EMADVISECOLUMNS):   if _uname =: 'POLICY' then ROLE = 'POLICYID';
+MPRINT(EMADVISECOLUMNS):   else if _uname in ('PARTITION', '_PARTIND_') then ROLE = 'PARTITION';
+MPRINT(EMADVISECOLUMNS):   else if type = 'N' then do;
+MPRINT(EMADVISECOLUMNS):   if _uname = 'EXPOSURE' then ROLE = 'EXPOSURE';
+MPRINT(EMADVISECOLUMNS):   else if _uname = 'YEAR' then ROLE = 'YEAR';
+MPRINT(EMADVISECOLUMNS):   else if _uname = 'WEIGHT' then ROLE = 'WEIGHT';
+MPRINT(EMADVISECOLUMNS):   else if _uname = 'OFFSET' then ROLE = 'OFFSET';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if role = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   if formattype in('DATE', 'DATETIME', 'TIME') then role = 'TIMEID';
+MPRINT(EMADVISECOLUMNS):   else role = 'INPUT';
+MPRINT(EMADVISECOLUMNS):   roleAssigned = 1;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else role = upcase(role);
+MPRINT(EMADVISECOLUMNS):   if REPORT = '' then REPORT = 'N';
+MPRINT(EMADVISECOLUMNS):   if symexist('dmwb_product') then do;
+MPRINT(EMADVISECOLUMNS):   if upcase(symget('dmwb_product')) = 'FACTORYMINER_DATASOURCE' then do;
+MPRINT(EMADVISECOLUMNS):   if ROLE ^in('INPUT', 'TARGET', 'REJECTED', 'SEGMENT', 'FREQ', 'ID', 'KEY') then ROLE='REJECTED';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M39BRT1Q;
+MPRINT(EMADVISECOLUMNS):   set WORK.M39BRT1Q;
+MPRINT(EMADVISECOLUMNS):   label NAME = "Variable Name" TYPE = "Type" ROLE = "Role" LEVEL= "Measurement Level" ORDER= "Order" CREATOR= "Creator" FORMATTYPE= "Format Type" FAMILY= "Family" DISTRIBUTION= "Distribution" PRICE= "Price" LOWERLIMIT= "Lower
+limit" UPPERLIMIT= "Upper Limit" REPORT= "Report" COMMENT= "Comment" INDEX= "Index" INDEXTYPE= "IndexType" LABEL= "Label" LENGTH= "Length";
+MPRINT(EMADVISECOLUMNS):   drop levelAssigned roleAssigned;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   proc sort data=WORK.COLUMNMETA;
+MPRINT(EM_DIAGRAM):   by NAME;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * &nodeid: Merge incoming metadata;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   proc contents data=EMWS1.Trans2_TRAIN noprint out=_temp2(keep=NAME);
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=_temp2;
+MPRINT(EM_DIAGRAM):   by NAME;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS1.Trans2_CMeta_TRAIN out=_temp;
+MPRINT(EM_DIAGRAM):   by NAME;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data EMWS1.Grp13_CMeta_TRAIN;
+MPRINT(EM_DIAGRAM):   merge WORK.COLUMNMETA(in=_a) _temp2(in=_b) _temp(drop=FORMAT INFORMAT LENGTH INDEX INDEXTYPE in=_c) end=_eof_;
+MPRINT(EM_DIAGRAM):   by NAME;
+MPRINT(EM_DIAGRAM):   if (^_a and _b) or (^_c and _a and _b) then delete;
+MPRINT(EM_DIAGRAM):   if ^_b then CREATOR = "Grp13";
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Grp13: Apply Delta Code;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   if upcase(NAME)= 'CV_VAR' then delete;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _delta;
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "16:56:17 o'clock" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Report Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Report Log
+Date:                02 June 2018
+Time:                16:56:17 o'clock
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O2YUK2QB "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Grp13\EMREPORT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O2YUK2QB new;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

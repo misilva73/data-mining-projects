@@ -1,0 +1,13 @@
+*------------------------------------------------------------*;
+* Metadata Changes;
+*------------------------------------------------------------*;
+if upcase(NAME) = "ACCEPTEDCMP1" then ROLE="REJECTED";
+if upcase(NAME) = "ACCEPTEDCMP2" then ROLE="REJECTED";
+if upcase(NAME) = "ACCEPTEDCMP3" then ROLE="REJECTED";
+if upcase(NAME) = "ACCEPTEDCMP4" then ROLE="REJECTED";
+if upcase(NAME) = "ACCEPTEDCMP5" then ROLE="REJECTED";
+if upcase(NAME) = "CHILDHOME" then LEVEL="BINARY";
+if upcase(NAME) = "DT_CUSTOMER" then ROLE="REJECTED";
+if upcase(NAME) = "KIDHOME" then ROLE="REJECTED";
+if upcase(NAME) = "TEENHOME" then ROLE="REJECTED";
+if upcase(NAME) = "YEAR_BIRTH" then ROLE="REJECTED";

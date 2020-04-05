@@ -1,0 +1,9 @@
+if
+not (
+( ClaimsRate eq . or (-8.008118962<=ClaimsRate) and (ClaimsRate<=9.4936628622))
+and ( CustMonVal eq . or (-1500<=CustMonVal) and (CustMonVal<=1500))
+and ( IMP_MonthSal eq . or (-959.6235869<=IMP_MonthSal) and (IMP_MonthSal<=5972.9215667))
+and ( age eq . or (-11.08735957<=age) and (age<=107.07181955))
+and ( policy_time eq . or (-1506.61543<=policy_time) and (policy_time<=1556.5196643))
+)
+;

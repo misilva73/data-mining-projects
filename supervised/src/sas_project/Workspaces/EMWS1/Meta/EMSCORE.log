@@ -1,0 +1,221 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "17:18:56 o'clock" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Score Log
+Date:                02 June 2018
+Time:                17:18:56 o'clock
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O3PDUR5R "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Meta\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O3PDUR5R new;
+MPRINT(EM_DIAGRAM):   run;
+48574      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+48575      * Meta: Scoring DATA data;
+MPRINT(EM_DIAGRAM):   * Meta: Scoring DATA data;
+48576      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+48577      data EMWS1.Meta_TRAIN
+48578      / view=EMWS1.Meta_TRAIN
+48579      ;
+MPRINT(EM_DIAGRAM):   data EMWS1.Meta_TRAIN / view=EMWS1.Meta_TRAIN ;
+48580      set EMWS1.Trans_TRAIN
+48581      ;
+MPRINT(EM_DIAGRAM):   set EMWS1.Trans_TRAIN ;
+48582      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA STEP view saved on file EMWS1.META_TRAIN.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS1.TRANS_TRAIN.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+NOTE: DATA statement used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+48583      quit;
+
+48584      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+48585      * Meta: Computing metadata for TRAIN data;
+MPRINT(EM_DIAGRAM):   * Meta: Computing metadata for TRAIN data;
+48586      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+
+48587      data _TEMP;
+MPRINT(EM_DIAGRAM):    data _TEMP;
+48588      set EMWS1.Trans_CMeta_TRAIN;
+MPRINT(EM_DIAGRAM):   set EMWS1.Trans_CMeta_TRAIN;
+48589      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+48590      * Metadata Changes;
+MPRINT(EM_DIAGRAM):   * Metadata Changes;
+48591      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+48592      if upcase(NAME) = "CHILDHOME" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "CHILDHOME" then ROLE="REJECTED";
+48593      if upcase(NAME) = "COMPLAIN" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "COMPLAIN" then ROLE="REJECTED";
+48594      if upcase(NAME) = "EDUCATION" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "EDUCATION" then ROLE="REJECTED";
+48595      if upcase(NAME) = "IMP_MNTBRANDA__MATERIAL" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "IMP_MNTBRANDA__MATERIAL" then ROLE="REJECTED";
+48596      if upcase(NAME) = "IMP_MNTSCENARIO" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "IMP_MNTSCENARIO" then ROLE="REJECTED";
+48597      if upcase(NAME) = "MNTMINIATURES" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "MNTMINIATURES" then ROLE="REJECTED";
+48598      if upcase(NAME) = "MNTPAINTING_MATERIAL" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "MNTPAINTING_MATERIAL" then ROLE="REJECTED";
+48599      if upcase(NAME) = "NUMSTOREPURCHASES" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "NUMSTOREPURCHASES" then ROLE="REJECTED";
+48600      if upcase(NAME) = "RANGE_IMP_INCOME" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "RANGE_IMP_INCOME" then ROLE="REJECTED";
+48601      if upcase(NAME) = "RANGE_MNT" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "RANGE_MNT" then ROLE="REJECTED";
+48602      if upcase(NAME) = "RANGE_NUMWEBVISITSMONTH" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "RANGE_NUMWEBVISITSMONTH" then ROLE="REJECTED";
+48603      if upcase(NAME) = "RANGE_AGE" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "RANGE_AGE" then ROLE="REJECTED";
+48604      if upcase(NAME) = "RANGE_LOYALTY" then ROLE="REJECTED";
+MPRINT(EM_DIAGRAM):   if upcase(NAME) = "RANGE_LOYALTY" then ROLE="REJECTED";
+48605      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+48606      * Dropping REJECTED variables
+48607      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Dropping REJECTED variables *------------------------------------------------------------*;
+48608      if NAME="AcceptedCmp1" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="AcceptedCmp1" then delete;
+48609      if NAME="AcceptedCmp2" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="AcceptedCmp2" then delete;
+48610      if NAME="AcceptedCmp3" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="AcceptedCmp3" then delete;
+48611      if NAME="AcceptedCmp4" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="AcceptedCmp4" then delete;
+48612      if NAME="AcceptedCmp5" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="AcceptedCmp5" then delete;
+48613      if NAME="Childhome" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Childhome" then delete;
+48614      if NAME="Complain" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Complain" then delete;
+48615      if NAME="Dt_Customer" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Dt_Customer" then delete;
+48616      if NAME="Education" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Education" then delete;
+48617      if NAME="Element1" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Element1" then delete;
+48618      if NAME="Element2" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Element2" then delete;
+48619      if NAME="Element3" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Element3" then delete;
+48620      if NAME="Element4" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Element4" then delete;
+48621      if NAME="Element5" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Element5" then delete;
+48622      if NAME="Frq" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Frq" then delete;
+48623      if NAME="Group" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Group" then delete;
+48624      if NAME="IMP_Income" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="IMP_Income" then delete;
+48625      if NAME="IMP_MntBrandA__Material" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="IMP_MntBrandA__Material" then delete;
+48626      if NAME="IMP_MntScenario" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="IMP_MntScenario" then delete;
+48627      if NAME="Kidhome" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Kidhome" then delete;
+48628      if NAME="Mnt" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Mnt" then delete;
+48629      if NAME="MntMiniatures" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="MntMiniatures" then delete;
+48630      if NAME="MntPainting_Material" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="MntPainting_Material" then delete;
+48631      if NAME="NumStorePurchases" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="NumStorePurchases" then delete;
+48632      if NAME="NumWebVisitsMonth" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="NumWebVisitsMonth" then delete;
+48633      if NAME="RANGE_IMP_Income" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="RANGE_IMP_Income" then delete;
+48634      if NAME="RANGE_Mnt" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="RANGE_Mnt" then delete;
+48635      if NAME="RANGE_NumWebVisitsMonth" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="RANGE_NumWebVisitsMonth" then delete;
+48636      if NAME="RANGE_age" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="RANGE_age" then delete;
+48637      if NAME="RANGE_loyalty" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="RANGE_loyalty" then delete;
+48638      if NAME="Recency" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Recency" then delete;
+48639      if NAME="Teenhome" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Teenhome" then delete;
+48640      if NAME="Year_Birth" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Year_Birth" then delete;
+48641      if NAME="Z_CostContact" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Z_CostContact" then delete;
+48642      if NAME="Z_Revenue" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="Z_Revenue" then delete;
+48643      if NAME="age" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="age" then delete;
+48644      if NAME="average_purchase" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="average_purchase" then delete;
+48645      if NAME="campaign_acceptance" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="campaign_acceptance" then delete;
+48646      if NAME="loyalty" then delete;
+MPRINT(EM_DIAGRAM):   if NAME="loyalty" then delete;
+48647      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 52 observations read from the data set EMWS1.TRANS_CMETA_TRAIN.
+NOTE: The data set WORK._TEMP has 13 observations and 20 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+48648      proc sort data=_TEMP;
+MPRINT(EM_DIAGRAM):    proc sort data=_TEMP;
+48649      by NAME;
+MPRINT(EM_DIAGRAM):   by NAME;
+48650      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 13 observations read from the data set WORK._TEMP.
+NOTE: The data set WORK._TEMP has 13 observations and 20 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+48651      data EMWS1.Meta_CMeta_TRAIN;
+MPRINT(EM_DIAGRAM):    data EMWS1.Meta_CMeta_TRAIN;
+48652      set _TEMP;
+MPRINT(EM_DIAGRAM):   set _TEMP;
+48653      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 13 observations read from the data set WORK._TEMP.
+NOTE: The data set EMWS1.META_CMETA_TRAIN has 13 observations and 20 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: View EMWS1.META_TRAIN.VIEW used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.04 seconds
+      
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

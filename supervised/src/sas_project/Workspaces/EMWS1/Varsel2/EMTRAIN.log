@@ -1,0 +1,577 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "25 May 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "21:49:18 o'clock" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Training Log
+Date:                25 May 2018
+Time:                21:49:18 o'clock
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O3Q7AMOG "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O3Q7AMOG new;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOG "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMLOG.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "25 May 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "21:49:18 o'clock" );
+MPRINT(EM_DIAGRAM):   file _LOG;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                misil";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "Site:                70107571";
+MPRINT(EM_DIAGRAM):   put "Platform:            X64_10PRO";
+MPRINT(EM_DIAGRAM):   put "Maintenance Release: 9.04.01M4P110916";
+MPRINT(EM_DIAGRAM):   put "EM Version:          14.2";
+MPRINT(EM_DIAGRAM):   put "* ";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMTRAIN.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _LOG MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_LOGIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _LOGIN "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMSCORE.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMREPORT.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    filename _LOG;
+MPRINT(EM_DIAGRAM):    filename _OUT "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMOUTPUT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "25 May 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "21:49:18 o'clock" );
+MPRINT(EM_DIAGRAM):   file _OUT;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                misil";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _OUT MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_OUTIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Report Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMREPORT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    filename _OUT;
+MPRINT(EM_DIAGRAM):    filename _emtool_ 'C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMRUNSTATUS.xml' encoding="UTF-8" NOBOM;
+88841      proc freq data=EMWS1.Varsel2_VariableSet noprint;
+MPRINT(EM_DIAGRAM):    proc freq data=EMWS1.Varsel2_VariableSet noprint;
+88842      table ROLE*LEVEL/out=WORK.Varsel2META;
+MPRINT(EM_DIAGRAM):   table ROLE*LEVEL/out=WORK.Varsel2META;
+88843      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 50 observations read from the data set EMWS1.VARSEL2_VARIABLESET.
+NOTE: The data set WORK.VARSEL2META has 7 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.01 seconds
+      
+
+88844      proc print data=WORK.Varsel2META label noobs;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.Varsel2META label noobs;
+88845      var ROLE LEVEL COUNT;
+MPRINT(EM_DIAGRAM):   var ROLE LEVEL COUNT;
+88846      label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL = "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label ROLE = "Role" LEVEL = "Measurement Level" COUNT = "Frequency Count";
+88847      title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+88848      title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Variable Summary";
+MPRINT(EM_DIAGRAM):   run;
+88849      run;
+
+NOTE: There were 7 observations read from the data set WORK.VARSEL2META.
+NOTE: The PROCEDURE PRINT printed page 43.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+88850      title10;
+MPRINT(EM_DIAGRAM):   title10;
+88851      data WORK.M3SSX5CD;
+MPRINT(EM_DIAGRAM):    data WORK.M3SSX5CD;
+88852      set WORK.M3SSX5CD;
+MPRINT(EM_DIAGRAM):   set WORK.M3SSX5CD;
+88853      if role = 'TARGET' and use = 'Y' then do;
+MPRINT(EM_DIAGRAM):   if role = 'TARGET' and use = 'Y' then do;
+88854      role = 'TARGET';
+MPRINT(EM_DIAGRAM):   role = 'TARGET';
+88855      output;
+MPRINT(EM_DIAGRAM):   output;
+88856      end;
+MPRINT(EM_DIAGRAM):   end;
+88857      if role = 'INPUT' and use in ('Y','D','N') then do;
+MPRINT(EM_DIAGRAM):   if role = 'INPUT' and use in ('Y','D','N') then do;
+88858      role = 'INPUT';
+MPRINT(EM_DIAGRAM):   role = 'INPUT';
+88859      output;
+MPRINT(EM_DIAGRAM):   output;
+88860      end;
+MPRINT(EM_DIAGRAM):   end;
+88861      if role = 'REJECTED' and use = 'Y' then do;
+MPRINT(EM_DIAGRAM):   if role = 'REJECTED' and use = 'Y' then do;
+88862      role = 'INPUT';
+MPRINT(EM_DIAGRAM):   role = 'INPUT';
+88863      output;
+MPRINT(EM_DIAGRAM):   output;
+88864      end;
+MPRINT(EM_DIAGRAM):   end;
+88865      if role = 'FREQ' and use in ('Y', 'D') then do;
+MPRINT(EM_DIAGRAM):   if role = 'FREQ' and use in ('Y', 'D') then do;
+88866      role = 'FREQ';
+MPRINT(EM_DIAGRAM):   role = 'FREQ';
+88867      output;
+MPRINT(EM_DIAGRAM):   output;
+88868      end;
+MPRINT(EM_DIAGRAM):   end;
+88869      if role = 'REJECTED' and use in ('N', 'D') then do;
+MPRINT(EM_DIAGRAM):   if role = 'REJECTED' and use in ('N', 'D') then do;
+88870      role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   role = 'REJECTED';
+88871      output;
+MPRINT(EM_DIAGRAM):   output;
+88872      end;
+MPRINT(EM_DIAGRAM):   end;
+88873      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 50 observations read from the data set WORK.M3SSX5CD.
+NOTE: The data set WORK.M3SSX5CD has 50 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+88874      /*by pass cmeta */
+88875      data WORK.M3SSX5CD;
+MPRINT(EM_DIAGRAM):    data WORK.M3SSX5CD;
+88876      set WORK.M3SSX5CD;
+MPRINT(EM_DIAGRAM):   set WORK.M3SSX5CD;
+88877      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 50 observations read from the data set WORK.M3SSX5CD.
+NOTE: The data set WORK.M3SSX5CD has 50 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+88878      data WORK.M1XDW4E0;
+MPRINT(EM_DIAGRAM):    data WORK.M1XDW4E0;
+88879      set WORK.M1XDW4E0;
+MPRINT(EM_DIAGRAM):   set WORK.M1XDW4E0;
+88880      if role = 'INPUT' and use in ('N') then delete;
+MPRINT(EM_DIAGRAM):   if role = 'INPUT' and use in ('N') then delete;
+88881      if role = 'REJECTED' and use in ('N', 'D') then delete;
+MPRINT(EM_DIAGRAM):   if role = 'REJECTED' and use in ('N', 'D') then delete;
+88882      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 50 observations read from the data set WORK.M1XDW4E0.
+NOTE: The data set WORK.M1XDW4E0 has 24 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+NOTE: Run proc dmdb with the specified maxlevel criterion. 
+88883      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------* ;
+88884      * EM: DMDBClass Macro ;
+MPRINT(EM_DIAGRAM):   * EM: DMDBClass Macro ;
+88885      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+88886      %macro DMDBClass;
+88887          Childhome(ASC) Complain(ASC) DepVar(DESC) Education(ASC) Marital_Status(ASC)
+88888      %mend DMDBClass;
+88889      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+88890      * EM: DMDBVar Macro ;
+MPRINT(EM_DIAGRAM):   * EM: DMDBVar Macro ;
+88891      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+88892      %macro DMDBVar;
+88893          IMP_MntBrandA__Material IMP_MntScenario MntCard_Games MntMagazines
+88894         MntMiniatures MntPainting_Material NumCatalogPurchases NumDealsPurchases
+88895         NumStorePurchases NumWebPurchases RANGE_Frq RANGE_IMP_Income RANGE_Mnt
+88896         RANGE_NumWebVisitsMonth RANGE_Recency RANGE_age RANGE_average_purchase
+88897         RANGE_campaign_acceptance RANGE_loyalty
+88898      %mend DMDBVar;
+88899      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+88900      * EM: Create DMDB;
+MPRINT(EM_DIAGRAM):   * EM: Create DMDB;
+88901      *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+88902      libname _spdslib SPDE "C:\Users\misil\AppData\Local\Temp\SAS Temporary Files\_TD15048_DESKTOP-61HCQ9U_\Prc2";
+MPRINT(EM_DIAGRAM):   libname _spdslib SPDE "C:\Users\misil\AppData\Local\Temp\SAS Temporary Files\_TD15048_DESKTOP-61HCQ9U_\Prc2";
+NOTE: Libref _SPDSLIB was successfully assigned as follows: 
+      Engine:        SPDE 
+      Physical Name: C:\Users\misil\AppData\Local\Temp\SAS Temporary Files\_TD15048_DESKTOP-61HCQ9U_\Prc2\
+88903      proc dmdb batch data=EMWS1.Part_TRAIN
+88904      dmdbcat=WORK.EM_DMDB
+88905      maxlevel = 101
+88906      out=_spdslib.EM_DMDB
+88907      ;
+MPRINT(EM_DIAGRAM):   proc dmdb batch data=EMWS1.Part_TRAIN dmdbcat=WORK.EM_DMDB maxlevel = 101 out=_spdslib.EM_DMDB ;
+MPRINT(EM_DIAGRAM):   class
+88908      class %DMDBClass;
+MPRINT(DMDBCLASS):   Childhome(ASC) Complain(ASC) DepVar(DESC) Education(ASC) Marital_Status(ASC)
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   var
+88909      var %DMDBVar;
+MPRINT(DMDBVAR):   IMP_MntBrandA__Material IMP_MntScenario MntCard_Games MntMagazines MntMiniatures MntPainting_Material NumCatalogPurchases NumDealsPurchases NumStorePurchases NumWebPurchases RANGE_Frq RANGE_IMP_Income RANGE_Mnt RANGE_NumWebVisitsMonth 
+RANGE_Recency RANGE_age RANGE_average_purchase RANGE_campaign_acceptance RANGE_loyalty
+MPRINT(EM_DIAGRAM):  ;
+88910      target
+88911      DepVar
+88912      ;
+MPRINT(EM_DIAGRAM):   target DepVar ;
+88913      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Records processed = 1704   Memory used = 511K.
+NOTE: There were 1704 observations read from the data set EMWS1.PART_TRAIN.
+NOTE: The data set _SPDSLIB.EM_DMDB has 1704 observations and 24 variables.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.03 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+88914      quit;
+
+88915      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------* ;
+88916      * Varsel2: Input Variables Macro ;
+MPRINT(EM_DIAGRAM):   * Varsel2: Input Variables Macro ;
+88917      *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+88918      %macro INPUTS;
+88919                     CHILDHOME COMPLAIN EDUCATION IMP_MNTBRANDA__MATERIAL IMP_MNTSCENARIO
+88920                    Marital_Status MNTCARD_GAMES MNTMAGAZINES MNTMINIATURES MNTPAINTING_MATERIAL
+88921                    NumCatalogPurchases NUMDEALSPURCHASES NUMSTOREPURCHASES NUMWEBPURCHASES
+88922                    RANGE_Frq RANGE_IMP_INCOME RANGE_MNT RANGE_NUMWEBVISITSMONTH RANGE_RECENCY
+88923         RANGE_age RANGE_AVERAGE_PURCHASE RANGE_CAMPAIGN_ACCEPTANCE RANGE_LOYALTY
+88924      %mend INPUTS;
+88925      proc dmine data=_spdslib.EM_DMDB dmdbcat=WORK.EM_DMDB
+88926      minr2=0.005 maxrows=3000 stopr2=0.0005 NOAOV16 NOINTER USEGROUPS OUTGROUP=EMWS1.Varsel2_OUTGROUP outest=EMWS1.Varsel2_OUTESTDMINE outeffect=EMWS1.Varsel2_OUTEFFECT outrsquare =EMWS1.Varsel2_OUTRSQUARE
+88927      NOMONITOR
+88928      PSHORT
+88929      ;
+MPRINT(EM_DIAGRAM):   proc dmine data=_spdslib.EM_DMDB dmdbcat=WORK.EM_DMDB minr2=0.005 maxrows=3000 stopr2=0.0005 NOAOV16 NOINTER USEGROUPS OUTGROUP=EMWS1.Varsel2_OUTGROUP outest=EMWS1.Varsel2_OUTESTDMINE outeffect=EMWS1.Varsel2_OUTEFFECT outrsquare 
+=EMWS1.Varsel2_OUTRSQUARE NOMONITOR PSHORT ;
+MPRINT(EM_DIAGRAM):   var
+88930      var %INPUTS;
+MPRINT(INPUTS):   CHILDHOME COMPLAIN EDUCATION IMP_MNTBRANDA__MATERIAL IMP_MNTSCENARIO Marital_Status MNTCARD_GAMES MNTMAGAZINES MNTMINIATURES MNTPAINTING_MATERIAL NumCatalogPurchases NUMDEALSPURCHASES NUMSTOREPURCHASES NUMWEBPURCHASES RANGE_Frq 
+RANGE_IMP_INCOME RANGE_MNT RANGE_NUMWEBVISITSMONTH RANGE_RECENCY RANGE_age RANGE_AVERAGE_PURCHASE RANGE_CAMPAIGN_ACCEPTANCE RANGE_LOYALTY
+MPRINT(EM_DIAGRAM):  ;
+88931      target DepVar;
+MPRINT(EM_DIAGRAM):   target DepVar;
+88932      code file="C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMFLOWSCORE.sas";
+MPRINT(EM_DIAGRAM):   code file="C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMFLOWSCORE.sas";
+88933      code file="C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMPUBLISHSCORE.sas";
+MPRINT(EM_DIAGRAM):   code file="C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMPUBLISHSCORE.sas";
+88934      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Checking database engine with sqluse...
+NOTE: Number of threads reset to 1 because of fewer partitions.
+
+Initial pass to compute R2s for all targets
+1704 records read
+NOTE: The full X'X matrix has 23 rows and columns.
+
+Building X'X  for target: DepVar rows=24 memory=0.00 meg.
+1704 records read
+1704 records read
+NOTE: External file C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMFLOWSCORE.sas opened.
+NOTE: External file C:\Users\misil\Desktop\DM 2\Project\WarGameStore_sasProject\Workspaces\EMWS1\Varsel2\EMPUBLISHSCORE.sas opened.
+NOTE: There were 1704 observations read from the data set _SPDSLIB.EM_DMDB.
+NOTE: The data set EMWS1.VARSEL2_OUTGROUP has 5 observations and 8 variables.
+NOTE: The data set EMWS1.VARSEL2_OUTESTDMINE has 15 observations and 23 variables.
+NOTE: The data set EMWS1.VARSEL2_OUTEFFECT has 12 observations and 6 variables.
+NOTE: The data set EMWS1.VARSEL2_OUTRSQUARE has 56 observations and 4 variables.
+NOTE: The PROCEDURE DMINE printed pages 44-49.
+NOTE: PROCEDURE DMINE used (Total process time):
+      real time           0.14 seconds
+      cpu time            0.04 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+MPRINT(EM_DIAGRAM):   run;
+88935      quit;
+88936      /*      proc print data =EMWS1.Varsel2_OUTEFFECT;      proc print data =EMWS1.Varsel2_OUTRSQUARE;      */
+88937      run;
+
+88938      data EMWS1.Varsel2_OUTESTDMINE;
+MPRINT(EM_DIAGRAM):    data EMWS1.Varsel2_OUTESTDMINE;
+88939      set EMWS1.Varsel2_OUTESTDMINE;
+MPRINT(EM_DIAGRAM):   set EMWS1.Varsel2_OUTESTDMINE;
+88940      _uname_=upcase(_name_);
+MPRINT(EM_DIAGRAM):   _uname_=upcase(_name_);
+88941      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 15 observations read from the data set EMWS1.VARSEL2_OUTESTDMINE.
+NOTE: The data set EMWS1.VARSEL2_OUTESTDMINE has 15 observations and 24 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+88942      proc sql;
+MPRINT(EM_DIAGRAM):    proc sql;
+88943      create table _tmpoutgroup as select distinct VARIABLE from EMWS1.Varsel2_OUTGROUP where VARTYPE='GROUP';
+MPRINT(EM_DIAGRAM):   create table _tmpoutgroup as select distinct VARIABLE from EMWS1.Varsel2_OUTGROUP where VARTYPE='GROUP';
+NOTE: Table WORK._TMPOUTGROUP created, with 1 rows and 1 columns.
+
+88944      quit;
+MPRINT(EM_DIAGRAM):   quit;
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   run;
+88945      run;
+
+88946      data EMWS1.Varsel2_OUTAOV16;
+MPRINT(EM_DIAGRAM):    data EMWS1.Varsel2_OUTAOV16;
+88947      set EMWS1.Varsel2_OUTGROUP;
+MPRINT(EM_DIAGRAM):   set EMWS1.Varsel2_OUTGROUP;
+88948      if STRIP(VARTYPE) eq 'AOV16' then output;
+MPRINT(EM_DIAGRAM):   if STRIP(VARTYPE) eq 'AOV16' then output;
+88949      DROP VARTYPE LEVEL LEVEL2 VARIABLE2;
+MPRINT(EM_DIAGRAM):   DROP VARTYPE LEVEL LEVEL2 VARIABLE2;
+88950      label NAME= "Name";
+MPRINT(EM_DIAGRAM):   label NAME= "Name";
+88951      label GROUP = "Group";
+MPRINT(EM_DIAGRAM):   label GROUP = "Group";
+88952      label VARIABLE = "Variable";
+MPRINT(EM_DIAGRAM):   label VARIABLE = "Variable";
+88953      label BIN = "Bin Cutoff";
+MPRINT(EM_DIAGRAM):   label BIN = "Bin Cutoff";
+88954      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 5 observations read from the data set EMWS1.VARSEL2_OUTGROUP.
+NOTE: The data set EMWS1.VARSEL2_OUTAOV16 has 0 observations and 4 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+88955      data EMWS1.Varsel2_OUTGINT;
+MPRINT(EM_DIAGRAM):   data EMWS1.Varsel2_OUTGINT;
+88956      set EMWS1.Varsel2_OUTGROUP;
+MPRINT(EM_DIAGRAM):   set EMWS1.Varsel2_OUTGROUP;
+88957      if STRIP(VARTYPE) eq 'GINTER' then output;
+MPRINT(EM_DIAGRAM):   if STRIP(VARTYPE) eq 'GINTER' then output;
+88958      DROP VARTYPE BIN;
+MPRINT(EM_DIAGRAM):   DROP VARTYPE BIN;
+88959      label NAME= "Name";
+MPRINT(EM_DIAGRAM):   label NAME= "Name";
+88960      label GROUP = "Group";
+MPRINT(EM_DIAGRAM):   label GROUP = "Group";
+88961      label VARIABLE = "Variable 1";
+MPRINT(EM_DIAGRAM):   label VARIABLE = "Variable 1";
+88962      label VARIABLE2 = "Variable 2";
+MPRINT(EM_DIAGRAM):   label VARIABLE2 = "Variable 2";
+88963      label LEVEL = "Level 1";
+MPRINT(EM_DIAGRAM):   label LEVEL = "Level 1";
+88964      label LEVEL2 = "Level 2";
+MPRINT(EM_DIAGRAM):   label LEVEL2 = "Level 2";
+88965      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 5 observations read from the data set EMWS1.VARSEL2_OUTGROUP.
+NOTE: The data set EMWS1.VARSEL2_OUTGINT has 0 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+88966      data EMWS1.Varsel2_OUTGVAR;
+MPRINT(EM_DIAGRAM):   data EMWS1.Varsel2_OUTGVAR;
+88967      set EMWS1.Varsel2_OUTGROUP;
+MPRINT(EM_DIAGRAM):   set EMWS1.Varsel2_OUTGROUP;
+88968      if STRIP(VARTYPE) eq 'GROUP' then output;
+MPRINT(EM_DIAGRAM):   if STRIP(VARTYPE) eq 'GROUP' then output;
+88969      DROP VARTYPE BIN VARIABLE2 LEVEL2;
+MPRINT(EM_DIAGRAM):   DROP VARTYPE BIN VARIABLE2 LEVEL2;
+88970      label NAME= "Name";
+MPRINT(EM_DIAGRAM):   label NAME= "Name";
+88971      label GROUP = "Group";
+MPRINT(EM_DIAGRAM):   label GROUP = "Group";
+88972      label VARIABLE = "Variable";
+MPRINT(EM_DIAGRAM):   label VARIABLE = "Variable";
+88973      label LEVEL = "Level";
+MPRINT(EM_DIAGRAM):   label LEVEL = "Level";
+88974      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 5 observations read from the data set EMWS1.VARSEL2_OUTGROUP.
+NOTE: The data set EMWS1.VARSEL2_OUTGVAR has 5 observations and 4 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+88975      quit;
+
+88976      options nonotes nosource;
+MPRINT(EM_DIAGRAM):    options nonotes nosource;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   file print;
+MPRINT(EM_DIAGRAM):   put ' ';
+MPRINT(EM_DIAGRAM):   put '-------------------------------------------------------------------';
+MPRINT(EM_DIAGRAM):   put "Summary of Variable Selection from Training";
+MPRINT(EM_DIAGRAM):   put '-------------------------------------------------------------------';
+MPRINT(EM_DIAGRAM):   put ' ';
+MPRINT(EM_DIAGRAM):   put ' ';
+MPRINT(EM_DIAGRAM):   put "Target Name : DepVar";
+MPRINT(EM_DIAGRAM):   put "Target Level : BINARY";
+MPRINT(EM_DIAGRAM):   put "Variable Selection Model : R-Square";
+MPRINT(EM_DIAGRAM):   put '  ';
+MPRINT(EM_DIAGRAM):   put "Total number of inputs : 23";
+MPRINT(EM_DIAGRAM):   put "Total number of used inputs : 23";
+MPRINT(EM_DIAGRAM):   put "Total number of unused inputs : 0";
+MPRINT(EM_DIAGRAM):   put "Total number of rejected inputs : 12";
+MPRINT(EM_DIAGRAM):   put ' ';
+MPRINT(EM_DIAGRAM):   put "Maximum missing percentage : 50";
+MPRINT(EM_DIAGRAM):   put "NOTE: There is no rejected variable by maximum missing percentage";
+MPRINT(EM_DIAGRAM):   put ' ';
+MPRINT(EM_DIAGRAM):   put "Maximum class level : 100";
+MPRINT(EM_DIAGRAM):   put "NOTE:There is no rejected variable by maximum class level";
+MPRINT(EM_DIAGRAM):   put ' ';
+MPRINT(EM_DIAGRAM):   put "NOTE: 1 group variable has been created";
+MPRINT(EM_DIAGRAM):   options notes source;
+MPRINT(EM_DIAGRAM):   run;
+89002      run;
+
+NOTE: 15 lines were written to file PRINT.
+NOTE: The DATA step printed page 50.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+89003      data EMWS1.Varsel2_RESULTEDVARS;
+MPRINT(EM_DIAGRAM):    data EMWS1.Varsel2_RESULTEDVARS;
+89004      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The data set EMWS1.VARSEL2_RESULTEDVARS has 1 observations and 0 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+89005      libname _spdslib;
+MPRINT(EM_DIAGRAM):    libname _spdslib;
+NOTE: Libref _SPDSLIB has been deassigned.
+89006      *;
+MPRINT(EM_DIAGRAM):    *;
+89007      data EMWS1.Varsel2_EMSCOREVAR;
+MPRINT(EM_DIAGRAM):   data EMWS1.Varsel2_EMSCOREVAR;
+89008      length Name $32 formula $70 file $200;
+MPRINT(EM_DIAGRAM):   length Name $32 formula $70 file $200;
+89009      keep NAME Formula file;
+MPRINT(EM_DIAGRAM):   keep NAME Formula file;
+89010      name = "G_Marital_Status";
+MPRINT(EM_DIAGRAM):   name = "G_Marital_Status";
+89011      file="VARSELCODE\G_Marital_Status.sas";
+MPRINT(EM_DIAGRAM):   file="VARSELCODE\G_Marital_Status.sas";
+89012      output;
+MPRINT(EM_DIAGRAM):   output;
+89013      run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Variable formula is uninitialized.
+NOTE: The data set EMWS1.VARSEL2_EMSCOREVAR has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

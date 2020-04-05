@@ -1,0 +1,1523 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "17:11:09 o'clock" 
+);
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Training Log
+Date:                02 June 2018
+Time:                17:11:09 o'clock
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O2HDBUL7 "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlImp11\EMTRAIN.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O2HDBUL7 new;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOG "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlImp11\EMLOG.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "17:11:09 o'clock" 
+);
+MPRINT(EM_DIAGRAM):   file _LOG;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                misil";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "Site:                70107571";
+MPRINT(EM_DIAGRAM):   put "Platform:            X64_10PRO";
+MPRINT(EM_DIAGRAM):   put "Maintenance Release: 9.04.01M4P110916";
+MPRINT(EM_DIAGRAM):   put "EM Version:          14.2";
+MPRINT(EM_DIAGRAM):   put "* ";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlImp11\EMTRAIN.log" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _LOG MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_LOGIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _LOGIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlImp11\EMSCORE.log" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlImp11\EMREPORT.log" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    filename _LOG;
+MPRINT(EM_DIAGRAM):    filename _OUT "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlImp11\EMOUTPUT.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "02 June 2018" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "17:11:09 o'clock" 
+);
+MPRINT(EM_DIAGRAM):   file _OUT;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                misil";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlImp11\EMTRAIN.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _OUT MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_OUTIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlImp11\EMSCORE.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Report Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN "C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlImp11\EMREPORT.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    filename _OUT;
+MPRINT(EM_DIAGRAM):    filename _emtool_ 'C:\Users\misil\Desktop\DM 
+2\Project\WarGameStore_sasProject\Workspaces\EMWS1\MdlImp11\EMRUNSTATUS.xml' encoding="UTF-8" 
+NOBOM;
+3850112    proc freq data=EMWS1.MdlImp11_VariableSet noprint;
+MPRINT(EM_DIAGRAM):    proc freq data=EMWS1.MdlImp11_VariableSet noprint;
+3850113    table ROLE*LEVEL/out=WORK.MdlImp11META;
+MPRINT(EM_DIAGRAM):   table ROLE*LEVEL/out=WORK.MdlImp11META;
+3850114    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 22 observations read from the data set EMWS1.MDLIMP11_VARIABLESET.
+NOTE: The data set WORK.MDLIMP11META has 9 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.01 seconds
+      
+
+3850115    proc print data=WORK.MdlImp11META label noobs;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.MdlImp11META label noobs;
+3850116    var ROLE LEVEL COUNT;
+MPRINT(EM_DIAGRAM):   var ROLE LEVEL COUNT;
+3850117    label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL =
+3850117  ! "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT =
+3850117  ! "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label ROLE = "Role" LEVEL = "Measurement Level" COUNT = "Frequency 
+Count";
+3850118    title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+3850119    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Variable Summary";
+MPRINT(EM_DIAGRAM):   run;
+3850120    run;
+
+NOTE: There were 9 observations read from the data set WORK.MDLIMP11META.
+NOTE: The PROCEDURE PRINT printed page 2506.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+3850121    title10;
+MPRINT(EM_DIAGRAM):   title10;
+3850122    %let EMNORLEN = %DMNORLEN;
+MPRINT(EM_DIAGRAM):   
+EMWS1.EndGrp11_TRAIN EMWS1.EndGrp11_TRAIN 
+EMWS1.EndGrp11_TRAIN EMWS1.EndGrp11_TRAIN EMWS1 EndGrp11_TRAIN 
+EMWS1.EndGrp11_TRAIN EMWS1.EndGrp11_TRAIN 
+EMWS1.EndGrp11_TRAIN EMWS1.EndGrp11_TRAIN EMWS1 EndGrp11_TRAIN 
+MPRINT(EM_DIAGRAM):    proc dmdb data=EMWS1.EndGrp11_TRAIN 
+classout=WORK._DMDBCLASSTARGET(keep=NAME NRAW CRAW LEVEL FREQUENCY NMISSPERCENT);
+MPRINT(EM_DIAGRAM):   class DepVar(DESC) ;
+MPRINT(EM_DIAGRAM):   run;
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   set WORK._DMDBCLASSTARGET;
+MPRINT(EM_DIAGRAM):   where ^(NRAW eq . and CRAW eq '') and NAME="DepVar";
+MPRINT(EM_DIAGRAM):   if _N_=1 then call symput('_newevent', strip(LEVEL));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=WORK._DMDBCLASSTARGET out=_TEMPCLASS(keep=LEVEL FREQUENCY 
+NMISSPERCENT rename=(LEVEL=DepVar));
+MPRINT(EM_DIAGRAM):   by LEVEL;
+MPRINT(EM_DIAGRAM):   where ^(NRAW eq . and CRAW eq '') and NAME="DepVar";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _TEMPCLASS;
+MPRINT(EM_DIAGRAM):   set _TEMPCLASS;
+MPRINT(EM_DIAGRAM):   NMISSPERCENT= NMISSPERCENT/100;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    proc sort data=EMWS1.Neural3_DepVar_DD out=_sortedDecdata;
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   merge _TEMPCLASS(in=_a) _sortedDecdata(in=_b);
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   if (_a and ^_b) or (^_a and _b) then call symput('_emresetDec', '1');
+MPRINT(EM_DIAGRAM):   run;
+3850151    data WORK.MdlImp11_EVENT(KEEP=VARIABLE LABEL LEVEL EVENT NUMLEVELS ORDER);
+MPRINT(EM_DIAGRAM):    data WORK.MdlImp11_EVENT(KEEP=VARIABLE LABEL LEVEL EVENT NUMLEVELS 
+ORDER);
+3850152    length ORDER $20;
+MPRINT(EM_DIAGRAM):   length ORDER $20;
+3850153    label VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,  NOQUOTE))"
+3850153  ! EVENT = "%sysfunc(sasmsg(sashelp.dmine, assmt_event_vlabel, NOQUOTE))" NUMLEVELS =
+3850153  ! "%sysfunc(sasmsg(sashelp.dmine, rpt_numcat_vlabel, NOQUOTE))" LEVEL =
+3850154       "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" ORDER =
+3850154  ! "%sysfunc(sasmsg(sashelp.dmine, meta_order_vlabel, NOQUOTE))" LABEL =
+3850154  ! "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label VARIABLE = "Target" EVENT = "Event" NUMLEVELS = "Number of Levels" 
+LEVEL = "Measurement Level" ORDER = "Order" LABEL = "Label";
+3850155    set EMWS1.NEURAL3_DEPVAR_DM( where=(_TYPE_="TARGET"));
+MPRINT(EM_DIAGRAM):   set EMWS1.NEURAL3_DEPVAR_DM( where=(_TYPE_="TARGET"));
+3850156    NumLevels=2;
+MPRINT(EM_DIAGRAM):   NumLevels=2;
+3850157    select(upcase(ORDER));
+MPRINT(EM_DIAGRAM):   select(upcase(ORDER));
+3850158    when('DESC') ORDER = 'Descending';
+MPRINT(EM_DIAGRAM):   when('DESC') ORDER = 'Descending';
+3850159    when('ASC') ORDER = 'Ascending';
+MPRINT(EM_DIAGRAM):   when('ASC') ORDER = 'Ascending';
+3850160    when('FMTDESC') ORDER = 'Formatted Descending';
+MPRINT(EM_DIAGRAM):   when('FMTDESC') ORDER = 'Formatted Descending';
+3850161    when('FMTASC') ORDER = 'Formatted Ascending';
+MPRINT(EM_DIAGRAM):   when('FMTASC') ORDER = 'Formatted Ascending';
+3850162    otherwise ORDER = 'Descending';
+MPRINT(EM_DIAGRAM):   otherwise ORDER = 'Descending';
+3850163    end;
+MPRINT(EM_DIAGRAM):   end;
+3850164    output;
+MPRINT(EM_DIAGRAM):   output;
+3850165    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.NEURAL3_DEPVAR_DM.
+      WHERE _TYPE_='TARGET';
+NOTE: The data set WORK.MDLIMP11_EVENT has 1 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+3850166    title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+3850167    proc print data=WORK.MdlImp11_EVENT noobs label;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.MdlImp11_EVENT noobs label;
+3850168    var VARIABLE EVENT LEVEL NUMLEVELS ORDER LABEL;
+MPRINT(EM_DIAGRAM):   var VARIABLE EVENT LEVEL NUMLEVELS ORDER LABEL;
+3850169    title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+3850170    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_modelEvent_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Model Events";
+MPRINT(EM_DIAGRAM):   run;
+3850171    run;
+
+NOTE: There were 1 observations read from the data set WORK.MDLIMP11_EVENT.
+NOTE: The PROCEDURE PRINT printed page 2507.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+3850172    title10;
+MPRINT(EM_DIAGRAM):   title10;
+"No decisions defined for target "DepVar"." 
+3850173    proc print data = EMWS1.Neural3_DepVar_DM noobs label;
+MPRINT(EM_DIAGRAM):    proc print data = EMWS1.Neural3_DepVar_DM noobs label;
+3850174    var _type_ variable label;
+MPRINT(EM_DIAGRAM):   var _type_ variable label;
+3850175    where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 'DECPRIOR');
+MPRINT(EM_DIAGRAM):   where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 
+'DECPRIOR');
+3850176    label _TYPE_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_type_vlabel,     NOQUOTE))"
+3850176  ! VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel, NOQUOTE))" LABEL =
+3850176  ! "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _TYPE_ = "Type" VARIABLE = "Variable" LABEL = "Label";
+3850177    title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+3850178    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_predDecVars_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Predicted and decision variables";
+MPRINT(EM_DIAGRAM):   run;
+3850179    run;
+
+NOTE: There were 7 observations read from the data set EMWS1.NEURAL3_DEPVAR_DM.
+      WHERE _type_ not in ('DATAPRIOR', 'DECISION', 'DECPRIOR', 'MATRIX', 'TRAINPRIOR');
+NOTE: The PROCEDURE PRINT printed page 2508.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.03 seconds
+      
+
+3850180    title10;
+MPRINT(EM_DIAGRAM):   title10;
+3850181    %let EMEXCEPTIONSTRING=;
+MPRINT(EM_DIAGRAM):     proc datasets lib=work nolist;
+MPRINT(EM_DIAGRAM):   modify DepVar(type=PROFIT label= DepVar);
+MPRINT(EM_DIAGRAM):   label DECISION1= "1";
+MPRINT(EM_DIAGRAM):   label DECISION2= "0";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   quit;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * MdlImp11: Generation of macros and macro variables;
+MPRINT(EM_DIAGRAM):   * To see the code generated, set the EM_DEBUG macro variable to SOURCE 
+or _ALL_;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * MdlImp11: EM Macro Variables and Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   * System Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   length string $2000;
+MPRINT(EM_DIAGRAM):   string = 'WarGameStore_sasProject';
+MPRINT(EM_DIAGRAM):   call symput('EM_PROJECTNAME', trim(string));
+MPRINT(EM_DIAGRAM):   string = 'WarGame classification';
+MPRINT(EM_DIAGRAM):   call symput('EM_WSNAME', trim(string));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   * Properties Macro Variables ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Files Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Import Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Export Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Decision Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   filename temp catalog 'sashelp.emutil.em_decdata.source';
+MPRINT(EM_DIAGRAM):   filename temp;
+MPRINT(EM_DECDATA):   proc display cat=sashelp.emutil.makedecdata.scl;
+MPRINT(EM_DECDATA):   run;
+MPRINT(EM_DECDATA):   *------------------------------------------------------------*;
+MPRINT(EM_DECDATA):   * MdlImp11: Create decision matrix;
+MPRINT(EM_DECDATA):   *------------------------------------------------------------*;
+MPRINT(EM_DECDATA):   data WORK.DepVar;
+MPRINT(EM_DECDATA):   length DepVar $ 32 COUNT 8 DATAPRIOR 8 TRAINPRIOR 8 DECPRIOR 8 DECISION1 
+8 DECISION2 8 ;
+MPRINT(EM_DECDATA):   label COUNT= "Level Counts" DATAPRIOR= "Data Proportions" TRAINPRIOR= 
+"Training Proportions" DECPRIOR= "Decision Priors" DECISION1= "1" DECISION2= "0" ;
+MPRINT(EM_DECDATA):   format COUNT 10. ;
+MPRINT(EM_DECDATA):   DepVar="1";
+MPRINT(EM_DECDATA):   COUNT=334;
+MPRINT(EM_DECDATA):   DATAPRIOR=0.13673708920187;
+MPRINT(EM_DECDATA):   TRAINPRIOR=0.13705375461633;
+MPRINT(EM_DECDATA):   DECPRIOR=.;
+MPRINT(EM_DECDATA):   DECISION1=1;
+MPRINT(EM_DECDATA):   DECISION2=0;
+MPRINT(EM_DECDATA):   output;
+MPRINT(EM_DECDATA):   DepVar="0";
+MPRINT(EM_DECDATA):   COUNT=2103;
+MPRINT(EM_DECDATA):   DATAPRIOR=0.86326291079812;
+MPRINT(EM_DECDATA):   TRAINPRIOR=0.86294624538366;
+MPRINT(EM_DECDATA):   DECPRIOR=.;
+MPRINT(EM_DECDATA):   DECISION1=0;
+MPRINT(EM_DECDATA):   DECISION2=1;
+MPRINT(EM_DECDATA):   output;
+MPRINT(EM_DECDATA):   ;
+MPRINT(EM_DECDATA):   run;
+MPRINT(EM_DECDATA):   proc datasets lib=work nolist;
+MPRINT(EM_DECDATA):   modify DepVar(type=PROFIT label= DepVar);
+MPRINT(EM_DECDATA):   label DECISION1= '1';
+MPRINT(EM_DECDATA):   label DECISION2= '0';
+MPRINT(EM_DECDATA):   run;
+MPRINT(EM_DECDATA):   quit;
+MPRINT(EM_DECDATA):   
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   proc datasets lib=work nolist;
+MPRINT(EM_DIAGRAM):   modify DepVar(type=PROFIT label= DepVar);
+MPRINT(EM_DIAGRAM):   label DECISION1= "1";
+MPRINT(EM_DIAGRAM):   label DECISION2= "0";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   quit;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Statement Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   set EMWS1.EndGrp11_EMINFO;
+MPRINT(EM_DIAGRAM):   where key in('HPDMSAMPLE', 'IDSTABLE');
+MPRINT(EM_DIAGRAM):   if key = 'HPDMSAMPLE' then call symput('_ForceGrid', '1');
+MPRINT(EM_DIAGRAM):   else call symput('_IDS_TABLE', DATA);
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(HPDM_PERFORMANCE):  ;
+PERFORMANCE  DETAILS
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * General Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Target Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Input Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Rejected Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Misc Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * End Create EM Macro Variables and Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   data EM_TARGETDECINFO;
+MPRINT(EM_DIAGRAM):   length TARGET $32 DECDATA DECMETA $43;
+MPRINT(EM_DIAGRAM):   TARGET="DepVar";
+MPRINT(EM_DIAGRAM):   DECDATA="EMWS1.Neural3_DepVar_DD";
+MPRINT(EM_DIAGRAM):   DECMETA="EMWS1.Neural3_DepVar_DM";
+MPRINT(EM_DIAGRAM):   output;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data EM_TARGETDECINFO;
+MPRINT(EM_DIAGRAM):   length TARGET $32 DECDATA DECMETA $43;
+MPRINT(EM_DIAGRAM):   TARGET="DepVar";
+MPRINT(EM_DIAGRAM):   DECDATA="EMWS1.Neural3_DepVar_DD";
+MPRINT(EM_DIAGRAM):   DECMETA="EMWS1.Neural3_DepVar_DM";
+MPRINT(EM_DIAGRAM):   output;
+MPRINT(EM_DIAGRAM):   run;
+3850652    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+3850653    * MdlImp11: Generation of macros and macro variables;
+MPRINT(EM_DIAGRAM):   * MdlImp11: Generation of macros and macro variables;
+3850654    * To see the code generated, set the EM_DEBUG macro variable to SOURCE or _ALL_;
+MPRINT(EM_DIAGRAM):   * To see the code generated, set the EM_DEBUG macro variable to SOURCE 
+or _ALL_;
+3850655    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+
+3850656    %let EMEXCEPTIONSTRING=;
+3850657    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+3850658    * TRAIN: MdlImp11;
+MPRINT(EM_DIAGRAM):   * TRAIN: MdlImp11;
+3850659    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+3850660    %let EM_ACTION = TRAIN;
+3850661    %let syscc = 0;
+3850662    %macro main;
+3850663    
+3850664       %if %upcase(&EM_ACTION) = CREATE %then %do;
+3850665    
+3850666           filename temp catalog 'sashelp.emmodl.modelimport_create.source';
+3850667           %include temp;
+3850668           filename temp;
+3850669           %create;
+3850670       %end;
+3850671       %else
+3850672       %if %upcase(&EM_ACTION) = TRAIN %then %do;
+3850673    
+3850674           filename temp catalog 'sashelp.emmodl.modelimport_train.source';
+3850675           %include temp;
+3850676           filename temp;
+3850677           %train;
+3850678       %end;
+3850679       %else
+3850680       %if %upcase(&EM_ACTION) = SCORE %then %do;
+3850681    
+3850682           filename temp catalog 'sashelp.emmodl.modelimport_score.source';
+3850683           %include temp;
+3850684           filename temp;
+3850685           %score;
+3850686       %end;
+3850687       %else
+3850688       %if %upcase(&EM_ACTION) = OPENMAPPINGTABLE %then %do;
+3850689    
+3850690           filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+3850691           %include temp;
+3850692           filename temp;
+3850693           %openMappingTable;
+3850694       %end;
+3850695       %else
+3850696       %if %upcase(&EM_ACTION) = CLOSEMAPPINGTABLE %then %do;
+3850697    
+3850698           filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+3850699           %include temp;
+3850700           filename temp;
+3850701           %closeMappingTable;
+3850702       %end;
+3850703    %mend main;
+3850704    
+3850705    %main;
+MPRINT(EM_DIAGRAM):    
+MPRINT(MAIN):   filename temp catalog 'sashelp.emmodl.modelimport_train.source';
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMMODL.MODELIMPORT_TRAIN.SOURCE.
+3850706   +%macro em_mdlimp_checkScoreInputs;
+3850707   +     %EM_GETNAME(key=MODELINPUT,  type=DATA);
+3850708   +     %EM_REGISTER(key=INPUTEXCEPTION, type=DATA);
+3850709   +     %let newNum=0;
+3850710   +     %if %sysfunc(exist(work.mdlimp_meta)) %then %do;
+3850711   +         %let dsid = %sysfunc(open(work.mdlimp_meta));
+3850712   +         %if &dsid %then %do;
+3850713   +             %let newNum     = %sysfunc(varnum(&dsid, NewName));
+3850714   +             %let dsid = %sysfunc(close(&dsid));
+3850715   +         %end;
+3850716   +
+3850717   +         %if &newNum %then %do;
+3850718   +             proc sort data=work.mdlimp_meta(keep=Name NewName rename=(Name=VVName
+3850718  !+Newname=Name));
+3850719   +                by VVName;
+3850720   +             run;
+3850721   +             proc sort data=&em_user_modelinput
+3850721  !+out=work.modelInput(rename=(NAME=VVName));
+3850722   +                by Name;
+3850723   +             run;
+3850724   +             data work.modelinput;
+3850725   +                merge work.mdlimp_meta(in=_a) work.modelinput(in=_b);
+3850726   +                by VVName;
+3850727   +               if _a and ^_b then delete;
+3850728   +             run;
+3850729   +             proc sort data=work.modelinput;
+3850730   +                by Name;
+3850731   +             run;
+3850732   +         %end;
+3850733   +         %else %do;
+3850734   +             proc sort data=work.mdlimp_meta(keep=Name);
+3850735   +                by Name;
+3850736   +             run;
+3850737   +             proc sort data=&em_user_modelinput out=work.modelInput;
+3850738   +                by Name;
+3850739   +             run;
+3850740   +             data work.modelinput;
+3850741   +                merge work.mdlimp_meta(in=_a) work.modelinput(in=_b);
+3850742   +                by Name;
+3850743   +               if _a and ^_b then delete;
+3850744   +             run;
+3850745   +         %end;
+3850746   +      %end;
+3850747   +      %else %do;
+3850748   +          proc sort data=&em_user_modelinput out=work.modelInput;
+3850749   +             by Name;
+3850750   +          run;
+3850751   +      %end;
+3850752   +
+3850753   +
+3850754   +     proc sort data=&em_data_variableset out=_temp(keep=NAME type length format
+3850754  !+rename=(type=NewType format=NewFormat length=NewLength));
+3850755   +        by NAME;
+3850756   +     run;
+3850757   +     %let numMissing = 0;
+3850758   +     %let numType    = 0;
+3850759   +     %let numLength  = 0;
+3850760   +     %let numFormat  = 0;
+3850761   +
+3850762   +     data &em_user_inputexception(keep=NAME ATTRIBUTE VALUE NEWVALUE);
+3850763   +        length Name $32 Attribute $8 Value NewValue $32;
+3850764   +        retain numMissing numLength numType numFormat 0;
+3850765   +        label Name      = "%sysfunc(sasmsg(sashelp.dmine, meta_name_vlabel,
+3850765  !+NOQUOTE))"
+3850766   +              Attribute = "%sysfunc(sasmsg(sashelp.dmine, rpt_attribute_vlabel,
+3850766  !+NOQUOTE))"
+3850767   +              Value     = "%sysfunc(sasmsg(sashelp.dmine, rpt_value_vlabel,
+3850767  !+NOQUOTE))"
+3850768   +              NewValue  = "%sysfunc(sasmsg(sashelp.dmine, rpt_newvalue_vlabel,
+3850768  !+NOQUOTE))";
+3850769   +              merge work.modelinput(in=_a) _temp(in=_b) end=eof;
+3850770   +        by NAME;
+3850771   +        %if %sysfunc(exist(work.mdlimp_meta)) and &newNum %then %do;
+3850772   +           if Name='' and VVname ne '' then do;
+3850773   +              Name = VVName;
+3850774   +           end;
+3850775   +        %end;
+3850776   +
+3850777   +        if _a and ^_b then do;
+3850778   +
+3850779   +           attribute='MISSING';
+3850780   +           numMissing + 1;
+3850781   +           output;
+3850782   +        end;
+3850783   +        if _a and _b then do;
+3850784   +           if type ne newtype then do;
+3850785   +              attribute = 'TYPE';
+3850786   +              value     = type;
+3850787   +              newvalue  = newtype;
+3850788   +              numType + 1;
+3850789   +              output;
+3850790   +           end;
+3850791   +           if length ne newlength then do;
+3850792   +              attribute = 'LENGTH';
+3850793   +              value     = length;
+3850794   +              newvalue  = newlength;
+3850795   +              numLength + 1;
+3850796   +              output;
+3850797   +           end;
+3850798   +           if format ne newformat then do;
+3850799   +              attribute = 'FORMAT';
+3850800   +              value     = format;
+3850801   +              newvalue  = newformat;
+3850802   +              numFormat + 1;
+3850803   +              output;
+3850804   +           end;
+3850805   +        end;
+3850806   +        if eof then do;
+3850807   +           call symput('numMissing',strip(put(numMissing, best.)));
+3850808   +           call symput('numType',   strip(put(numType, best.)));
+3850809   +           call symput('numLength', strip(put(numLength, best.)));
+3850810   +           call symput('numFormat', strip(put(numFormat, best.)));
+3850811   +        end;
+3850812   +      run;
+3850813   +      %if &numMissing or &numType or &numLength or &numFormat %then %do;
+3850814   +          %em_report(key=INPUTEXCEPTION, viewType=DATA, autoDisplay=Y,
+3850814  !+description=InputException, block=MODEL);
+3850815   +          %put &em_codebar;
+3850816   +          %put * %sysfunc(sasmsg(sashelp.dmine, warning_inputscorevars_note,
+3850816  !+NOQUOTE));
+3850817   +          %put * %sysfunc(sasmsg(sashelp.dmine, warning_inputscorevars2_note,
+3850817  !+NOQUOTE));
+3850818   +          %put * %sysfunc(sasmsg(sashelp.dmine, warning_inputscorevars3_note,
+3850818  !+NOQUOTE));
+3850819   +
+3850820   +          %if &numMissing %then
+3850821   +              %put * %sysfunc(sasmsg(sashelp.dmine, warning_missingvars_note ,
+3850821  !+NOQUOTE, &numMissing));
+3850822   +          %if &numType %then
+3850823   +              %put * %sysfunc(sasmsg(sashelp.dmine, warning_type_note , NOQUOTE,
+3850823  !+&numType));
+3850824   +          %if &numlength %then
+3850825   +              %put * %sysfunc(sasmsg(sashelp.dmine, warning_length_note , NOQUOTE,
+3850825  !+&numLength));
+3850826   +          %if &numFormat %then
+3850827   +              %put * %sysfunc(sasmsg(sashelp.dmine, warning_format_note , NOQUOTE,
+3850827  !+&numFormat));
+3850828   +          %put &em_codebar;
+3850829   +          proc print data=&em_user_inputexception(obs=500) label noobs;
+3850830   +             title9  "%sysfunc(sasmsg(sashelp.dmine, rpt_inputexception_title,
+3850830  !+NOQUOTE))";
+3850831   +             title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_maxObsPrinted_title,
+3850831  !+NOQUOTE))";
+3850832   +          run;
+3850833   +          title9;
+3850834   +          title10;
+3850835   +     %end;
+3850836   +     %else %do;
+3850837   +         proc datasets lib=&em_lib nolist;
+3850838   +            delete &em_nodeid._INPUTEXCEPTION;
+3850839   +         run;
+3850840   +     %end;
+3850841   +
+3850842   +     proc datasets lib=work nolist;
+3850843   +        delete _temp modelInput;
+3850844   +     quit;
+3850845   +
+3850846   +
+3850847   +%mend em_mdlimp_checkScoreInputs;
+3850848   +
+3850849   +%macro em_mdlimp_modifyModelDs;
+3850850   +     %EM_GETNAME(key=MODELINPUT,  type=DATA);
+3850851   +     %EM_GETNAME(key=MODELOUTPUT, type=DATA);
+3850852   +     %EM_GETNAME(key=MODELSTAT,   type=DATA);
+3850853   +     %EM_GETNAME(key=MODELREPORT, type=DATA);
+3850854   +
+3850855   +     %if %sysfunc(exist(&em_user_modelinput)) %then %do;
+3850856   +         proc sort data=&em_user_modelinput(keep=columnName columnLength
+3850856  !+SASColumnType
+3850857   +            SASFormat Description Order Level Role Creator
+3850858   +            rename=(columnName=Name ColumnLength=Length Description=Label
+3850858  !+SASColumnType=Type SASFormat=Format)) out=_temp;
+3850859   +            by NAME;
+3850860   +         run;
+3850861   +         data &em_user_modelinput;
+3850862   +            set _temp;
+3850863   +            label  Name   = "%sysfunc(sasmsg(sashelp.dmine, meta_name_vlabel,
+3850863  !+NOQUOTE))"
+3850864   +                   Length = "%sysfunc(sasmsg(sashelp.dmine, meta_length_vlabel,
+3850864  !+NOQUOTE))"
+3850865   +                   Type   = "%sysfunc(sasmsg(sashelp.dmine, meta_type_vlabel,
+3850865  !+NOQUOTE))"
+3850866   +                   Order  = "%sysfunc(sasmsg(sashelp.dmine, meta_order_vlabel,
+3850866  !+NOQUOTE))"
+3850867   +                   Role   = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel,
+3850867  !+NOQUOTE))"
+3850868   +                   Level  = "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel,
+3850868  !+NOQUOTE))"
+3850869   +                   Format = "%sysfunc(sasmsg(sashelp.dmine, meta_format_vlabel,
+3850869  !+NOQUOTE))"
+3850870   +                   Label  = "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel,
+3850870  !+NOQUOTE))"
+3850871   +                   Creator = "%sysfunc(sasmsg(sashelp.dmine, meta_creator_vlabel,
+3850871  !+NOQUOTE))";
+3850872   +         run;
+3850873   +     %end;
+3850874   +
+3850875   +     %if %sysfunc(exist(&em_user_modeloutput)) %then %do;
+3850876   +         data &em_user_modeloutput;
+3850877   +            set &em_user_modeloutput(keep=columnName columnLength SASColumnType Role
+3850878   +             SASFormat Description Order Level Creator
+3850879   +            rename=(columnName=Name ColumnLength=Length Description=Label
+3850879  !+SASColumnType=Type SASFormat=Format));
+3850880   +            label Name   = "%sysfunc(sasmsg(sashelp.dmine, meta_name_vlabel,
+3850880  !+NOQUOTE))"
+3850881   +                  Length = "%sysfunc(sasmsg(sashelp.dmine, meta_length_vlabel,
+3850881  !+NOQUOTE))"
+3850882   +                  Type   = "%sysfunc(sasmsg(sashelp.dmine, meta_type_vlabel,
+3850882  !+NOQUOTE))"
+3850883   +                  Role  = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel,
+3850883  !+NOQUOTE))"
+3850884   +                  Order  = "%sysfunc(sasmsg(sashelp.dmine, meta_order_vlabel,
+3850884  !+NOQUOTE))"
+3850885   +                  Level  = "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel,
+3850885  !+NOQUOTE))"
+3850886   +                  Format = "%sysfunc(sasmsg(sashelp.dmine, meta_format_vlabel,
+3850886  !+NOQUOTE))"
+3850887   +                  Label  = "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel,
+3850887  !+NOQUOTE))"
+3850888   +                  Creator = "%sysfunc(sasmsg(sashelp.dmine, meta_creator_vlabel,
+3850888  !+NOQUOTE))";
+3850889   +         run;
+3850890   +     %end;
+3850891   +
+3850892   +     %if %sysfunc(exist(&em_user_modelstat)) %then %do;
+3850893   +         data tempmodelstat;
+3850894   +         length TARGET $32 STAT $32 LABEL $200 TRAIN VALIDATE TEST 8;
+3850895   +         label TARGET   = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,
+3850895  !+NOQUOTE))"
+3850896   +               STAT     = "%sysfunc(sasmsg(sashelp.dmine, rpt_fitstat_vlabel,
+3850896  !+NOQUOTE))"
+3850897   +               LABEL    = "%sysfunc(sasmsg(sashelp.dmine, rpt_statlabel_vlabel,
+3850897  !+NOQUOTE))"
+3850898   +               TRAIN    = "%sysfunc(sasmsg(sashelp.dmine, rpt_train_vlabel,
+3850898  !+NOQUOTE))"
+3850899   +               VALIDATE = "%sysfunc(sasmsg(sashelp.dmine, rpt_validate_vlabel,
+3850899  !+NOQUOTE))"
+3850900   +               TEST     = "%sysfunc(sasmsg(sashelp.dmine, rpt_test_vlabel,
+3850900  !+NOQUOTE))";
+3850901   +         keep TARGET STAT LABEL TRAIN VALIDATE TEST;
+3850902   +         length vstat tstat $32;
+3850903   +         dsid = open("&em_user_modelstat");
+3850904   +         nvars = attrn(dsid, 'NVARS');
+3850905   +         do while(^fetch(dsid));
+3850906   +            target = getvarc(dsid, 1);
+3850907   +            do i=2 to nvars;
+3850908   +               stat = varname(dsid, i);
+3850909   +               label = varlabel(dsid, i);
+3850910   +
+3850911   +               if (substr(stat, 1, 1) ne '_')
+3850912   +                   or (substr(stat, 1, 2) in( '_V', '_T')) then continue;
+3850913   +
+3850914   +               train = getvarn(dsid, i);
+3850915   +               vstat = '_V'!!substr(stat,2);
+3850916   +               vnum  = varnum(dsid, vstat) ;
+3850917   +               if vnum then
+3850918   +                  validate = getvarn(dsid, vnum);
+3850919   +               else
+3850920   +                  validate = .;
+3850921   +               tstat = '_T'!!substr(stat,2);
+3850922   +               tnum  = varnum(dsid, tstat) ;
+3850923   +               if tnum then
+3850924   +                  test = getvarn(dsid, tnum);
+3850925   +               else
+3850926   +                  test = .;
+3850927   +               output;
+3850928   +            end;
+3850929   +         end;
+3850930   +         dsid = close(dsid);
+3850931   +      run;
+3850932   +      data &em_user_modelstat;
+3850933   +         set tempmodelstat;
+3850934   +      run;
+3850935   +      proc datasets lib=work nolist;
+3850936   +         delete tempmodelstat;
+3850937   +      quit;
+3850938   +      %end;
+3850939   +
+3850940   +     %EM_GETNAME(key=MODELINFO,   type=DATA);
+3850941   +     %EM_GETNAME(key=MODELTARGET, type=DATA);
+3850942   +     %EM_GETNAME(key=MODELTRAINING,   type=DATA);
+3850943   +
+3850944   +     data &em_user_modelreport;
+3850945   +        length Attribute $32 Value $64;
+3850946   +        label Attribute = "%sysfunc(sasmsg(sashelp.dmine, rpt_attribute_vlabel,
+3850946  !+NOQUOTE))"
+3850947   +              Value     = "%sysfunc(sasmsg(sashelp.dmine, rpt_value_vlabel,
+3850947  !+NOQUOTE))";
+3850948   +        if _n_=1 then do;
+3850949   +           Attribute="%sysfunc(sasmsg(sashelp.dmine, modelinfo_modelname_text,
+3850949  !+NOQUOTE))";  Value=strip("&em_property_ModelName"); output;
+3850950   +        end;
+3850951   +
+3850952   +        %if %sysfunc(exist(&em_user_modelinfo)) %then %do;
+3850953   +            set &em_user_modelinfo;
+3850954   +            Attribute="%sysfunc(sasmsg(sashelp.dmine, modelinfo_userid_text,
+3850954  !+NOQUOTE))";          Value=strip(UserId);                   output;
+3850955   +            Attribute="%sysfunc(sasmsg(sashelp.dmine, modelinfo_miningfunction_text,
+3850955  !+ NOQUOTE))";  Value=strip(MiningFunction);           output;
+3850956   +            Attribute="%sysfunc(sasmsg(sashelp.dmine,
+3850956  !+modelinfo_miningalgorithm_text, NOQUOTE))"; Value=strip(MiningAlgorithm);
+3850956  !+output;
+3850957   +            Attribute="%sysfunc(sasmsg(sashelp.dmine, modelinfo_scorecodefmt_text,
+3850957  !+NOQUOTE))";    Value=strip(ScoreCodeType);           output;
+3850958   +        %end;
+3850959   +        %if %sysfunc(exist(&em_user_modeltarget)) %then %do;
+3850960   +            set &em_user_modeltarget;
+3850961   +            Attribute="%sysfunc(sasmsg(sashelp.dmine, modelinfo_targetname_text,
+3850961  !+NOQUOTE))";      Value=strip(ColumnName);               output;
+3850962   +            Attribute="%sysfunc(sasmsg(sashelp.dmine, modelinfo_targetlevel_text,
+3850962  !+NOQUOTE))";     Value=strip(level);                    output;
+3850963   +        %end;
+3850964   +        %if %sysfunc(exist(&em_user_modelTraining)) %then %do;
+3850965   +            set &em_user_modelTraining;
+3850966   +            Attribute="%sysfunc(sasmsg(sashelp.dmine, modelinfo_tablename_text,
+3850966  !+NOQUOTE))";        Value=strip(libname)!!'.'!!strip(SASTableName);  output;
+3850967   +            Attribute="%sysfunc(sasmsg(sashelp.dmine, modelinfo_numbercols_text,
+3850967  !+NOQUOTE))";       Value=strip(put(NumberColumns, best.));               output;
+3850968   +            Attribute="%sysfunc(sasmsg(sashelp.dmine, modelinfo_numberrows_text,
+3850968  !+NOQUOTE))";       Value=strip(put(NumberRows, best.));                  output;
+3850969   +        %end;
+3850970   +
+3850971   +        keep Attribute Value;
+3850972   +    run;
+3850973   +
+3850974   +%mend em_mdlimp_modifyModelDs;
+3850975   +
+3850976   +%macro em_mdlimp_makePredictedVar(file=);
+3850977   +   filename temp "&file" mod;
+3850978   +   data _null_;
+3850979   +      file temp;
+3850980   +      %if &missingNum %then %do;
+3850981   +          length SumVar $3200 deqLabel $200;
+3850982   +          retain SumVar;
+3850983   +      %end;
+3850984   +      set &em_user_mapping end=eof;
+3850985   +      if _N_=1 then do;
+3850986   +         put "&em_codebar;";
+3850987   +         put "* Computing Predicted Vars: &em_dec_target;";
+3850988   +         put "&em_codebar;";
+3850989   +      end;
+3850990   +
+3850991   +      if PredictedVar ne ModelVar then do;
+3850992   +         deqLabel = tranwrd(PredictedLabel, '"', '""');
+3850993   +         put 'Label ' predictedVar '=' '"' deqLabel '";';
+3850994   +         if ModelVar ne '' then
+3850995   +            put PredictedVar '=' ModelVar ';';
+3850996   +      end;
+3850997   +      %if &missingNum %then %do;
+3850998   +          if sumVar eq '' then sumvar = ModelVar;
+3850999   +          else
+3851000   +             if ModelVar ne '' then
+3851001   +                sumVar = strip(sumVar)!! '+'!! ModelVar;
+3851002   +
+3851003   +          if eof then
+3851004   +             put "&missingVar = 1 - "  sumVar ";";
+3851005   +      %end;
+3851006   +   run;
+3851007   +   filename temp;
+3851008   +%mend em_mdlimp_makePredictedVar;
+3851009   +
+3851010   +%macro em_mdlimp_checkModelPrior;
+3851011   +   %EM_GETNAME(key=MAPPING, type=DATA) ;
+3851012   +   data _null_;
+3851013   +      length missingVar $32;
+3851014   +      retain missing sum 0 missingVar;
+3851015   +      set &em_user_mapping end=eof;
+3851016   +      if Prior eq . then do;
+3851017   +         missing +1;
+3851018   +         missingVar = PredictedVar;
+3851019   +      end;
+3851020   +      else sum + Prior;
+3851021   +      if eof then do;
+3851022   +         call symput('missingNum', strip(put(missing, best.)));
+3851023   +         call symput('sum',        strip(put(sum, best.)));
+3851024   +         call symput('missingVar', strip(missingVar));
+3851025   +      end;
+3851026   +   run;
+3851027   +   %if &missingNum>1 %then %goto doendc;
+3851028   +
+3851029   +    %let decdata=;
+3851030   +    %if %sysfunc(exist(&em_dec_decdata)) and ("&em_dec_decdata" ne "") %then %let
+3851030  !+decmdata = &em_dec_decdata;
+3851031   +    %else
+3851032   +        %if %symexist(EM_IMPORT_DATA_EMINFO) %then %do;
+3851033   +            %if %sysfunc(exist(&EM_IMPORT_DATA_EMINFO)) and
+3851033  !+("&EM_IMPORT_DATA_EMINFO" ne "") %then %do;
+3851034   +                data _null_;
+3851035   +                   set &EM_IMPORT_DATA_EMINFO(where=(KEY='DECMETA' and
+3851035  !+TARGET="&EM_DEC_TARGET"));
+3851036   +                   if TARGET="&EM_DEC_TARGET" then do;
+3851037   +                      if key='DECMETA' then call symput('decmeta', data);
+3851038   +                      if key='DECDATA' then call symput('decdata', data);
+3851039   +                   end;
+3851040   +                run;
+3851041   +            %end;
+3851042   +        %end;
+3851043   +
+3851044   +     data _null_;
+3851045   +        set em_targetdecinfo;
+3851046   +        where target ="&EM_DEC_TARGET";
+3851047   +        call symput('mdl_decmeta', DECMETA);
+3851048   +        call symput('mdl_decdata', DECDATA);
+3851049   +     run;
+3851050   +
+3851051   +   %doendc:
+3851052   +%mend;
+3851053   +
+3851054   +%macro em_mdlimp_scoreVNN(import=, export=, codeRef=);
+3851055   +
+3851056   +     %if &import ne and (%sysfunc(exist(&import)) or %sysfunc(exist(&import, VIEW
+3851056  !+))) %then %do;
+3851057   +         data &export;
+3851058   +            set &import;
+3851059   +            %inc &codeRef;
+3851060   +         run;
+3851061   +     %end;
+3851062   +%mend;
+3851063   +
+3851064   +
+3851065   +%macro train;
+3851066   +    filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+3851067   +    %include temp;
+3851068   +    filename temp;
+3851069   +
+3851070   +    %if "&em_property_importtype" eq "REGISTEREDMODEL" %then %do;
+3851071   +        %EM_REGISTER(key=MODELINPUT,  type=DATA, property=Y, autodelete=N);
+3851072   +        %EM_REGISTER(key=MODELOUTPUT, type=DATA, property=Y, autodelete=N);
+3851073   +        %EM_REGISTER(key=MODELSTAT,   type=DATA, property=Y, autodelete=N);
+3851074   +        %EM_REGISTER(key=MODELTRAINING,  type=DATA, property=Y, autodelete=N);
+3851075   +        %EM_REGISTER(key=MODELTARGET, type=DATA, property=Y, autodelete=N);
+3851076   +        %EM_REGISTER(key=MODELSCORE,  type=FILE, extension=sas, property=Y,
+3851076  !+autodelete=N);
+3851077   +        %EM_REGISTER(key=MODELINFO,   type=DATA, property=Y, autodelete=N);
+3851078   +        %EM_REGISTER(key=MODELREPORT, type=DATA,             autodelete=N);
+3851079   +   %end;
+3851080   +
+3851081   +   %em_getname(key=MAPPING, type=DATA);
+3851082   +   %em_getname(key=CHOICE,  type=DATA);
+3851083   +
+3851084   +   %if "&em_dec_target" eq "" %then %do;
+3851085   +       %let emexceptionString = exception.server.METADATA.USE1TARGET;
+3851086   +       %goto doendt;
+3851087   +   %end;
+3851088   +
+3851089   +
+3851090   +   /* Check the type of score code */;
+3851091   +   %if ("&em_property_importtype" eq "REGISTEREDMODEL") %then %do;
+3851092   +        %if %sysfunc(exist(&em_user_modelinfo)) %then %do;
+3851093   +            %let ScoreCodeType = ;
+3851094   +            data _null_;
+3851095   +               set &em_user_modelinfo;
+3851096   +               call symput('ScoreCodeType', strip(ScoreCodeType));
+3851097   +            run;
+3851098   +            %if "&ScoreCodeType" eq "SAS Program" %then %do;
+3851099   +                %let emexceptionString = exception.server.EMTOOL.NONDATASTEPCODE;
+3851100   +                %goto doendt;
+3851101   +            %end;
+3851102   +        %end;
+3851103   +   %end;
+3851104   +
+3851105   +   /* Check if the specified target has already been modeled in the flow */;
+3851106   +   %let modelFlag = 0;
+3851107   +   %if %symexist(EM_IMPORT_DATA_EMINFO) and ("&em_property_importtype" ne
+3851107  !+"REGISTEREDMODEL") %then %do;
+3851108   +       %if %sysfunc(exist(&EM_IMPORT_DATA_EMINFO)) and ("&EM_IMPORT_DATA_EMINFO" ne
+3851108  !+"") %then %do;
+3851109   +           data _null_;
+3851110   +              set &EM_IMPORT_DATA_EMINFO(where=(KEY='MODEL' and
+3851110  !+TARGET="&EM_DEC_TARGET" and DATA ne ''));
+3851111   +              call symput('modelFlag', '1');
+3851112   +           run;
+3851113   +        %end;
+3851114   +    %end;
+3851115   +    %if &modelFlag %then %do;
+3851116   +        %goto dorslt;
+3851117   +    %end;
+3851118   +
+3851119   +     %EM_GETNAME(key=MODELINPUT,  type=DATA);
+3851120   +
+3851121   +    /* Registered Model */
+3851122   +    %if "&em_property_importtype" eq "REGISTEREDMODEL" %then %do;
+3851123   +        %EM_GETNAME(key=MODELSCORE, type=FILE, extension=sas);
+3851124   +        filename temp  "&em_user_modelscore";
+3851125   +        filename temp3 "&EM_FILE_EMPUBLISHSCORECODE";
+3851126   +        %em_copyfile(infref=temp, outfref=temp3);
+3851127   +        filename temp;
+3851128   +        filename temp3;
+3851129   +    %end;
+3851130   +
+3851131   +    /* Refresh or Create the Mapping Table */
+3851132   +    %openMappingTable;
+3851133   +
+3851134   +
+3851135   +   /* Check if the Predicted Variables have been Specified */
+3851136   +   %let missingNum = 0;
+3851137   +   %let missingVar =;
+3851138   +   data _null_;
+3851139   +      length missingVar $32;
+3851140   +      retain missing 0 missingVar;
+3851141   +      set &em_user_mapping end=eof;
+3851142   +      if ModelVar eq '' then do;
+3851143   +         missing +1;
+3851144   +         missingVar = PredictedVar;
+3851145   +      end;
+3851146   +      if eof then do;
+3851147   +         call symput('missingNum', strip(put(missing, best.)));
+3851148   +         call symput('missingVar', strip(missingVar));
+3851149   +      end;
+3851150   +    run;
+3851151   +
+3851152   +    %if ("&em_dec_level"="INTERVAL" and &missingNum) or ("&em_dec_level" ne
+3851152  !+"INTERVAL" and &missingNum>1) %then %do;
+3851153   +         %let EMEXCEPTIONSTRING=exception.server.EMTOOL.MISSINGPREDICTED;
+3851154   +        %goto doendt;
+3851155   +    %end;
+3851156   +
+3851157   +    %if "&em_property_importtype" eq "REGISTEREDMODEL" %then %do;
+3851158   +
+3851159   +        %em_mdlimp_checkScoreInputs;
+3851160   +
+3851161   +        %em_report(key=MODELINPUT,  viewtype=DATA, autodisplay=N, block=MODEL,
+3851161  !+Description=METASCOREINPUTVARS);
+3851162   +        %em_report(key=MODELOUTPUT, viewtype=DATA, autodisplay=N, block=MODEL,
+3851162  !+Description=METASCOREOUTPUTVARS);
+3851163   +        %em_report(key=MODELSTAT,   viewtype=DATA, autodisplay=N, block=MODEL,
+3851163  !+Description=METAREPORTFITSTAT);
+3851164   +        %em_report(key=MODELREPORT, viewtype=DATA, autodisplay=Y, block=MODEL,
+3851164  !+Description=MODELMETAINFO);
+3851165   +
+3851166   +        %if %sysfunc(exist(&em_user_modelreport)) %then %do;
+3851167   +            proc print data=&em_user_modelreport noobs label;
+3851168   +               title9 ' ';
+3851169   +               title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_modelmetainfo_title,
+3851169  !+NOQUOTE))";
+3851170   +            run;
+3851171   +            title9;
+3851172   +            title10;
+3851173   +        %end;
+3851174   +    %end;
+3851175   +
+3851176   +    %dorslt:
+3851177   +
+3851178   +    %if ^&modelFlag %then %do;
+3851179   +
+3851180   +        %em_mdlimp_makePredictedVar(file= &EM_FILE_EMFLOWSCORECODE);
+3851181   +        %em_mdlimp_makePredictedVar(file= &EM_FILE_EMPUBLISHSCORECODE);
+3851182   +
+3851183   +        /* Check if any Modeling Priors have been specified*/
+3851184   +        %if "&em_dec_level" ne "INTERVAL" %then %em_mdlimp_checkModelPrior;
+3851185   +
+3851186   +        %let deccode=N;
+3851187   +        %if &EM_PROPERTY_APPLYDECISIONS=Y %then %let deccode=Y;
+3851188   +
+3851189   +        %em_model(TARGET=&em_dec_target , ASSESS=Y, DECSCORECODE=&deccode,
+3851189  !+FITSTATISTICS=Y, CLASSIFICATION=Y, RESIDUALS=Y, PREDICTED=Y);
+3851190   +    %end;
+3851191   +    %else %do;
+3851192   +        %em_model(TARGET=&em_dec_target , ASSESS=Y, DECSCORECODE=N, FITSTATISTICS=Y,
+3851192  !+ CLASSIFICATION=N, RESIDUALS=N, PREDICTED=Y);
+3851193   +    %end;
+3851194   +
+3851195   +%doendt:
+The SAS System
+
+3851196   +%mend train;
+3851197   +
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(MAIN):   filename temp;
+NOTE: Fileref TEMP has been deassigned.
+MPRINT(TRAIN):   filename temp catalog 'sashelp.emmodl.modelimport_actions.source';
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMMODL.MODELIMPORT_ACTIONS.SOURCE.
+3851198   +
+3851199   +%macro em_mdlimp_makeDecInfo;
+3851200   +   %let decmeta =;
+3851201   +   %let decdata =;
+3851202   +
+3851203   +    %if "&EM_DEC_TARGET" eq "" %then
+3851204   +        %let EM_DEC_TARGET = %scan(%EM_TARGET, 1, %str());
+3851205   +
+3851206   +    %if %sysfunc(exist(&em_dec_decmeta)) and ("&em_dec_decmeta" ne "") %then %let
+3851206  !+decmeta = &em_dec_decmeta;
+3851207   +    %else
+3851208   +        %if %symexist(EM_IMPORT_DATA_EMINFO) %then %do;
+3851209   +            %if %sysfunc(exist(&EM_IMPORT_DATA_EMINFO)) and
+3851209  !+("&em_import_data_eminfo" ne "") %then %do;
+3851210   +                data _null_;
+3851211   +                   set &EM_IMPORT_DATA_EMINFO(where=(KEY='DECMETA' and
+3851211  !+TARGET="&EM_DEC_TARGET"));
+3851212   +                   if TARGET="&EM_DEC_TARGET" then do;
+3851213   +                      if key='DECMETA' then call symput('decmeta', data);
+3851214   +                      if key='DECDATA' then call symput('decdata', data);
+3851215   +                   end;
+3851216   +                run;
+3851217   +            %end;
+3851218   +        %end;
+3851219   +
+3851220   +    %if "&decmeta" eq "" %then %do;
+3851221   +        data _null_;
+3851222   +             set em_targetdecinfo;
+3851223   +             where target ="&EM_DEC_TARGET";
+3851224   +             call symput('decmeta', DECMETA);
+3851225   +             call symput('decdata', DECDATA);
+3851226   +          run;
+3851227   +          %emtp(data=&em_import_data, target=&em_dec_target,
+3851227  !+columnsmeta=&em_data_variableset,
+3851228   +                         decdata=&decdata, decmeta=&decmeta);
+3851229   +    %end;
+3851230   +
+3851231   +%mend em_mdlimp_makeDecInfo;
+3851232   +
+3851233   +
+3851234   +%macro em_mdlimp_checkVVNCode;
+3851235   +    %em_getName(key=MODELINPUT,  type=DATA);
+3851236   +
+3851237   +    %if ^%sysfunc(exist(&em_user_modelinput)) %then %do;
+3851238   +        %goto endvvn;
+3851239   +    %end;
+3851240   +
+3851241   +    %let nameNum=0;
+3851242   +    %let colnameNum=0;
+3851243   +    %let dsid = %sysfunc(open(&em_user_modelinput));
+3851244   +    %if &dsid %then %do;
+3851245   +        %let nameNum    = %sysfunc(varnum(&dsid, name));
+3851246   +        %let colnameNum = %sysfunc(varnum(&dsid, ColumnName));
+3851247   +        %let dsid = %sysfunc(close(&dsid));
+3851248   +    %end;
+3851249   +
+3851250   +    /* Is the score code based on any VVN variables? */
+3851251   +    %let vvnFlag = 0;
+3851252   +    %if &nameNum %then %do;
+3851253   +        data _null_;
+3851254   +           set &em_user_modelinput;
+3851255   +           %if &colnameNum %then %do;
+3851256   +              if notname(trim(ColumnName)) then
+3851257   +           %end;
+3851258   +           %else %do;
+3851259   +            if notname(trim(Name)) then
+3851260   +           %end;
+3851261   +
+3851262   +           call symput('vvnFlag', '1');
+3851263   +        run;
+3851264   +    %end;
+3851265   +
+3851266   +     %EM_GETNAME(key=MODELSCORE, type=FILE, extension=sas);
+3851267   +    filename temp  "&em_user_modelscore";
+3851268   +    filename temp2 "&EM_FILE_EMFLOWSCORECODE";
+3851269   +    %em_copyfile(infref=temp, outfref=temp2);
+3851270   +    filename temp;
+3851271   +    filename temp2;
+3851272   +
+3851273   +    %if ^&vvnFlag %then %do;
+3851274   +       %goto endvvn;
+3851275   +    %end;
+3851276   +
+3851277   +    /* Find the Mapping for the input variables */
+3851278   +    %let rootTable=;
+3851279   +    data _null_;
+3851280   +       set &em_import_data_eminfo;
+3851281   +       where upcase(key)='IDSTABLE';
+3851282   +       call symput('rootTable', trim(DATA));
+3851283   +    run;
+3851284   +
+3851285   +
+3851286   +    %if (^%sysfunc(exist(&rootTable)) and  ^%sysfunc(exist(&rootTable, VIEW))) or
+3851286  !+&rootTable eq  %then
+3851287   +        %goto endvvn;
+3851288   +
+3851289   +    options validvarname=ANY;
+3851290   +    %emadviseColumns(&rootTable, adviseMode=BASIC, outdata=work.mdlimp_meta);
+3851291   +    options validvarname=V7;
+3851292   +
+3851293   +    filename _mdlvvn catalog 'WORK.MODELIMPRT.VVNMAP.SOURCE' mod;
+3851294   +    filename _flow "&EM_FILE_EMFLOWSCORECODE";
+3851295   +    data _null_;
+3851296   +       retain inputFlag 0;
+3851297   +       file _mdlvvn;
+3851298   +       infile _flow length=linelen;
+3851299   +       input;
+3851300   +       if index(_infile_,'* TOOL:') then do;
+3851301   +          if index(_infile_,'* TOOL: Input Data Source') then
+3851302   +             inputFlag=1;
+3851303   +          else
+3851304   +             inputFlag=0;
+3851305   +       end;
+3851306   +       if ^inputFlag then do;
+3851307   +          put _infile_;
+3851308   +       end;
+3851309   +    run;
+3851310   +
+3851311   +    %em_copyfile(infref=_mdlvvn, outfref=_flow);
+3851312   +
+3851313   +    filename _mdlvvn;
+3851314   +    filename _flow;
+3851315   +
+3851316   +    %endvvn:
+3851317   +%mend;
+3851318   +
+3851319   +%macro em_mdlimp_findpredvars(out=);
+3851320   +
+3851321   +   %if %sysfunc(exist(&out)) %then %do;
+3851322   +      proc delete data=&out;
+3851323   +      run;
+3851324   +      quit;
+3851325   +   %end;
+3851326   +
+3851327   +   options validvarname=ANY;
+3851328   +   filename _flow "&EM_FILE_EMFLOWSCORECODE";
+3851329   +   data work.mdlimp_train;
+3851330   +      set &em_import_data(obs=1);
+3851331   +      %inc _flow;
+3851332   +   run;
+3851333   +   %emadviseColumns( work.mdlimp_train, adviseMode=BASIC, outdata=&out);
+3851334   +   options validvarname=V7;
+3851335   +   proc delete data=work.mdlimp_train;
+3851336   +   run;
+3851337   +   quit;
+3851338   +
+3851339   +   data &out(keep=NAME rename=(NAME=CHOICE));
+3851340   +      set &out(keep=NAME ROLE);
+3851341   +      where ROLE='PREDICT' and ^(NAME=: 'EM_');
+3851342   +   run;
+3851343   +
+3851344   +%mend;
+3851345   +
+3851346   +
+3851347   +%macro openMappingtable;
+3851348   +    %EM_GETNAME(key=MAPPING,     type=DATA) ;
+3851349   +    %EM_GETNAME(key=CHOICE,      type=DATA) ;
+3851350   +    %EM_GETNAME(key=MODELOUTPUT, type=DATA);
+3851351   +    %EM_GETNAME(key=MODELINPUT, type=DATA);
+3851352   +
+3851353   +    %if ^%sysfunc(exist(&em_import_data)) and ^%sysfunc(exist(&em_import_data,
+3851353  !+VIEW)) %then %do;
+3851354   +        %let emexceptionString = exception.server.EMTOOL.PATHNEEDSTORUN;
+3851355   +        %goto doendm;
+3851356   +    %end;
+3851357   +
+3851358   +    %if "&em_dec_target" eq "" %then %do;
+3851359   +        %let emexceptionString = exception.server.METADATA.USE1TARGET;
+3851360   +        %goto doendm;
+3851361   +    %end;
+3851362   +
+3851363   +     /* Registered Model */
+3851364   +     %if "&em_property_importtype" eq "REGISTEREDMODEL" %then %do;
+3851365   +        %let dsid = %sysfunc(open(&em_user_modelinput));
+3851366   +        %if &dsid %then %do;
+3851367   +            %let nameNum = %sysfunc(varnum(&dsid, Name));
+3851368   +            %let dsid = %sysfunc(close(&dsid));
+3851369   +
+3851370   +            %if ^&namenum %then %do;
+3851371   +                %em_mdlimp_modifyModelDs;
+3851372   +            %end;
+3851373   +        %end;
+3851374   +
+3851375   +        %if %sysfunc(exist(&em_user_modeloutput)) %then %do;
+3851376   +            %em_mdlimp_checkVVNCode;
+3851377   +
+3851378   +
+3851379   +            %em_mdlimp_findPredVars(out=WORK.MDLIMP_PREDICTVARS);
+3851380   +
+3851381   +             %let em_predict=%str();
+3851382   +             data &em_user_choice(KEEP=Variable Choice);
+3851383   +                length Variable $32 Choice $32;
+3851384   +                set WORK.MDLIMP_PREDICTVARS end=eof;
+3851385   +                drop ROLE;
+3851386   +                Variable = "ModelVar";
+3851387   +                call symput('em_predict', strip(symget('em_predict'))!!' '!!choice);
+3851388   +                output;
+3851389   +                if eof then do;
+3851390   +                   Variable="ModelVar"; Choice="";output;
+3851391   +                end;
+3851392   +             run;
+3851393   +             proc delete data=WORK.MDLIMP_PREDICTVARS;
+3851394   +             run;
+3851395   +         %end;
+3851396   +         %else %do;
+3851397   +             %let EMEXCEPTIONSTRING=exception.server.EMTOOL.NOREGISTEREDMODEL;
+3851398   +             %goto doendm;
+3851399   +         %end;
+3851400   +     %end;
+3851401   +     %else %do;
+3851402   +         %if %sysfunc(exist(&em_data_variableset)) %then %do;
+3851403   +             data &em_user_choice(KEEP=Variable Choice);
+3851404   +                length Variable $32 Choice $32;
+3851405   +                set &em_data_variableset(where=(ROLE='PREDICT') rename=(NAME=CHOICE)
+3851405  !+ keep=NAME ROLE) end=eof;
+3851406   +                Variable = "ModelVar";
+3851407   +                output;
+3851408   +                if eof then do;
+3851409   +                   Variable="ModelVar"; Choice="";output;
+3851410   +                end;
+3851411   +             run;
+3851412   +        %end;
+3851413   +    %end;
+3851414   +
+3851415   +    %let decmeta = ;
+3851416   +    %em_mdlimp_makeDecInfo;
+3851417   +    %if %sysfunc(exist(&em_dec_decmeta)) and ("&em_dec_decmeta" ne "") %then %let
+3851417  !+decmeta = &em_dec_decmeta;
+3851418   +    %else %do;
+3851419   +        %if %symexist(EM_IMPORT_DATA_EMINFO) %then %do;
+3851420   +            %if %sysfunc(exist(&EM_IMPORT_DATA_EMINFO)) and
+3851420  !+("&em_import_data_eminfo" ne "") %then %do;
+3851421   +                data _null_;
+3851422   +                   set &EM_IMPORT_DATA_EMINFO(where=(KEY='DECMETA' and
+3851422  !+TARGET="&EM_DEC_TARGET"));
+3851423   +                   if _N_=1 then call symput('decmeta', data);
+3851424   +                run;
+3851425   +            %end;
+3851426   +        %end;
+3851427   +    %end;
+3851428   +
+3851429   +    %if "&decmeta" ne "" %then %do;
+3851430   +        data temp;
+3851431   +           set &em_user_mapping;
+3851432   +           upred = upcase(Predictedvar);
+3851433   +        run;
+3851434   +        proc sort data=temp;
+3851435   +           by PredictedVar;
+3851436   +        run;
+3851437   +        data temp2;
+3851438   +           set &decmeta(where=(_TYPE_='PREDICTED')
+3851439   +               keep=_TYPE_ LEVEL VARIABLE LABEL rename=(Variable=PredictedVar
+3851439  !+LABEL=PredictedLabel));
+3851440   +               upred = upcase(Predictedvar);
+3851441   +        run;
+3851442   +        proc sort data=temp2;
+3851443   +           by upred;
+3851444   +        run;
+3851445   +
+3851446   +        data temp;
+3851447   +           length level $32 PredictedVar ModelVar $32 Prior 8 PredictedLabel $40;
+3851448   +           merge temp temp2(in=a);
+3851449   +           by upred;
+3851450   +           %if "&em_property_importtype" eq "REGISTEREDMODEL" %then %do;
+3851451   +               if ^indexw(upcase("&EM_PREDICT"), upcase(ModelVar)) then ModelVar='';
+3851452   +               if ModelVar='' and indexw(upcase("&EM_PREDICT"),
+3851452  !+upcase(PredictedVar)) then ModelVar=PredictedVar;
+3851453   +           %end;
+3851454   +           %else %do;
+3851455   +               if ^indexw(upcase("%EM_PREDICT"), upcase(ModelVar)) then ModelVar='';
+3851456   +               if ModelVar='' and indexw(upcase("%EM_PREDICT"),
+3851456  !+upcase(PredictedVar)) then ModelVar=PredictedVar;
+3851457   +           %end;
+3851458   +
+3851459   +           if a then output;
+3851460   +           drop upred _type_;
+3851461   +        run;
+3851462   +
+3851463   +        /* Check if a difference exists */
+3851464   +        %let _nobs1=0;
+3851465   +        data _null_;
+3851466   +           set &em_user_mapping end=eof;
+3851467   +           if eof then
+3851468   +           call symput('_nobs1', put(_N_, best.));
+3851469   +        run;
+3851470   +        %let _nobs2=0;
+3851471   +        data _null_;
+3851472   +           set temp end=eof;
+3851473   +           if eof then
+3851474   +           call symput('_nobs2', put(_N_, best.));
+3851475   +        run;
+3851476   +        %let diff_nobs=0;
+3851477   +        %if &_nobs1 and &_nobs2 %then %do;
+3851478   +            proc compare base=&em_user_mapping compare=temp out=diff outdiff
+3851478  !+outnoequal noprint;
+3851479   +            run;
+3851480   +           data diff;
+3851481   +              set diff end=eof;
+3851482   +              if eof then call symput('diff_nobs', put(_N_, best.));
+3851483   +           run;
+3851484   +        %end;
+3851485   +        %if &diff_nobs or (&_nobs1 ne &_nobs2) %then %do;
+3851486   +            data &em_user_mapping;
+3851487   +               set temp;
+3851488   +            run;
+3851489   +        %end;
+3851490   +        proc datasets lib=work nolist;
+3851491   +          delete diff temp temp2;
+3851492   +        run;
+3851493   +    %end;
+3851494   +
+3851495   +    %doendm:
+3851496   +
+3851497   +%mend openMappingTable;
+3851498   +
+3851499   +%macro closeMappingtable;
+3851500   +
+3851501   +    %let badsum=0;
+3851502   +    %let userprior=0;
+3851503   +    data _null_;
+3851504   +       length userprior $1;
+3851505   +       retain sumprior 0 userprior '0';
+3851506   +       set &em_temptable end=eof;
+3851507   +        if prior ne . then do;
+3851508   +           sumprior=sumprior + prior;
+3851509   +           userprior='1';
+3851510   +        end;
+3851511   +        if eof and ^(0.999<=sumprior<=1.00) then do;
+3851512   +           call symput('badsum',    '1');
+3851513   +           call symput('userprior', userprior);
+3851514   +       end;
+3851515   +    run;
+3851516   +    %if &badsum and ("&userprior" eq "1") %then
+3851517   +        %let EMEXCEPTIONSTRING= exception.server.EMTOOL.BADPRIORSUM;
+3851518   +
+3851519   +%mend closeMappingTable;
+3851520   +
+3851521   +
+3851522   +
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(TRAIN):   filename temp;
+NOTE: Fileref TEMP has been deassigned.
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):   ;
+MPRINT(TRAIN):   ;
+MPRINT(TRAIN):   data _null_;
+MPRINT(TRAIN):   set EMWS1.EndGrp11_EMINFO(where=(KEY='MODEL' and TARGET="DepVar" and DATA ne 
+''));
+MPRINT(TRAIN):   call symput('modelFlag', '1');
+MPRINT(TRAIN):   run;
+
+NOTE: There were 1 observations read from the data set EMWS1.ENDGRP11_EMINFO.
+      WHERE (KEY='MODEL') and (TARGET='DepVar') and (DATA not = ' ');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_MODEL):   data WORK.EM_USER_MODEL;
+MPRINT(EM_MODEL):   length DATA $65 TARGET $32 PREDICTED ASSESS DECSCORECODE FITSTATISTICS 
+CLASSIFICATION RESIDUALS $1;
+MPRINT(EM_MODEL):   data = "";
+MPRINT(EM_MODEL):   target = "DepVar";
+MPRINT(EM_MODEL):   predicted = "Y";
+MPRINT(EM_MODEL):   assess = "Y";
+MPRINT(EM_MODEL):   decscorecode = "N";
+MPRINT(EM_MODEL):   fitstatistics = "Y";
+MPRINT(EM_MODEL):   classification = "N";
+MPRINT(EM_MODEL):   residuals = "N";
+MPRINT(EM_MODEL):   run;
+
+NOTE: The data set WORK.EM_USER_MODEL has 1 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(TRAIN):  ;
+MPRINT(MAIN):  ;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * End TRAIN: MdlImp11;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+3851523    *------------------------------------------------------------*;
+3851524    * End TRAIN: MdlImp11;
+3851525    *------------------------------------------------------------*;
+3851526    
+
+3851527    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+3851528    * Close any missing semi colons;
+MPRINT(EM_DIAGRAM):   * Close any missing semi colons;
+3851529    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+3851530    ;
+MPRINT(EM_DIAGRAM):   ;
+3851531    ;
+MPRINT(EM_DIAGRAM):   ;
+3851532    ;
+MPRINT(EM_DIAGRAM):   ;
+3851533    ;
+MPRINT(EM_DIAGRAM):   ;
+3851534    quit;
+MPRINT(EM_DIAGRAM):   quit;
+3851535    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+3851536    * Close any unbalanced quotes;
+MPRINT(EM_DIAGRAM):   * Close any unbalanced quotes;
+3851537    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+3851538    /*; *"; *'; */
+3851539    ;
+MPRINT(EM_DIAGRAM):   ;
+3851540    run;
+MPRINT(EM_DIAGRAM):   run;
+3851541    quit;
+MPRINT(EM_DIAGRAM):   quit;
+3851542    /* Reset EM Options */
+3851543    options formchar="|----|+|---+=|-/\<>*";
+MPRINT(EM_DIAGRAM):   options formchar="|----|+|---+=|-/\<>*";
+3851544    options nocenter ls=256 ps=10000;
+MPRINT(EM_DIAGRAM):   options nocenter ls=256 ps=10000;
+3851545    goptions reset=all device=GIF NODISPLAY;
+MPRINT(EM_DIAGRAM):   goptions reset=all device=GIF NODISPLAY;
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

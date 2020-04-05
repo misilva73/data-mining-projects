@@ -1,0 +1,463 @@
+---
+title: "DM2 project - WarGames report plots"
+author: "Maria Ines Silva"
+date: "2 June 2018"
+output: 
+  html_document: 
+    theme: cosmo
+    toc: yes
+---
+
+<style>
+
+table, td, th {
+  border: none;
+  padding-left: 1em;
+  padding-right: 1em;
+  min-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+</style>
+
+***
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(warning=FALSE,
+                      message=FALSE,
+                      echo=FALSE,
+                      fig.align="center",
+                      fig.path="./Output/")
+
+## Importing packadges
+packages <- c("dplyr", "ggplot2", "tidyr", "xlsx", "lubridate", "stringr",
+              "scales","kableExtra", "corrplot", "robustbase", "moments")
+lapply(packages, library, character.only = TRUE)
+
+# NOVA-IMS grey : #5C666C
+# NOVA-IMS green : #BED62F
+
+```
+
+
+# Data exploration and pre-processing
+
+```{r input dataset}
+
+raw_data <- read.xlsx2(file = "./Input/Group_14_WarGames_campaign.xlsx",
+                       sheetIndex = 1,
+                       colIndex = c(1:26,29),
+                       colClasses = c("character", "integer", rep("character",2),
+                                      "numeric", rep("integer",2), "Date",
+                                      "integer", rep("numeric",6), 
+                                      rep("integer",5), rep("character",7)),
+                       stringsAsFactors=FALSE) %>% 
+          mutate(DepVar=factor(DepVar)) %>% 
+          select(-Custid)
+
+raw_data$DepVar <- factor(raw_data$DepVar,levels = rev(levels(raw_data$DepVar)))
+
+campaign_specs <- read.xlsx2(file = "./Input/Group_14_WarGames_campaign.xlsx",
+                   sheetIndex = 1,
+                   colIndex = c(27:28),
+                   endRow = 2,
+                   colClasses = rep("numeric",2))
+
+```
+
+
+
+## Summary statistics
+
+### Target variable
+
+The target variable for this analysis is `DepVar`. It is a binary variable, identifying whether or not the customer accepted the campaign's offer. In this dataset, `r percent(nrow(filter(raw_data, DepVar==1))/nrow(raw_data))` of the customers accepted the offer and there are no missing values. Bellow is the frequency plot of this variable:
+
+```{r DepVar overview, fig.height=1.5, fig.width=1.5}
+
+raw_data %>%
+          select(DepVar) %>% 
+          ggplot(mapping = aes(x=DepVar)) +
+          geom_bar(fill="#5C666C")+
+          labs(y="Frequency")+
+          theme_minimal(base_size = 9) +
+          theme(panel.grid=element_blank(),
+                axis.title.x =element_blank())
+```
+
+
+
+### Categorical predictors
+
+```{r cat overview plot 1, fig.height=3, fig.width=4.5}
+raw_data %>% 
+          select(AcceptedCmp2:DepVar) %>% 
+          gather(key=variable,value=level,-DepVar) %>% 
+          ggplot(mapping = aes(x=level,fill=DepVar)) +
+          geom_bar()+
+          theme_minimal(base_size = 9) +
+          theme(panel.grid=element_blank(),
+                axis.title = element_blank())+
+          scale_fill_manual(values = c("0"="#5C666C", 
+                                        "1"="#BED62F"))+
+          facet_wrap(~variable,ncol=3, scales = "free_x")
+```
+
+
+```{r cat overview plot 2, fig.height=3, fig.width=2.6}
+raw_data %>% 
+          select(Education, Marital_Status, DepVar) %>% 
+          gather(key=variable,value=level,-DepVar) %>% 
+          ggplot(mapping = aes(x=level,fill=DepVar)) +
+          geom_bar()+
+          theme_minimal(base_size = 9) +
+          theme(panel.grid=element_blank(),
+                axis.title = element_blank())+
+          guides(fill=FALSE)+
+          scale_fill_manual(values = c("0"="#5C666C", 
+                                        "1"="#BED62F"))+
+          facet_wrap(~variable,ncol=1, scales = "free_x")
+```
+
+
+
+### Numeric predictors
+
+```{r num overview table}
+temp <- raw_data %>% 
+          select(Year_Birth, Income:NumWebVisitsMonth,-Dt_Customer, DepVar) %>% 
+          gather(key=variable,value=value,-DepVar) %>% 
+          group_by(variable) %>% 
+          summarise(mean=round(mean(value,na.rm=TRUE),2),
+                    coef_var=round(sd(value,na.rm=TRUE)/mean(value,na.rm=TRUE),2),
+                    skewness=round(skewness(value,na.rm=TRUE),2),
+                    min=round(min(value,na.rm=TRUE),1),
+                    max=round(max(value,na.rm=TRUE),1)) %>% 
+          ungroup()
+
+write.xlsx(temp,"./Output/explore - num stats.xlsx")
+
+knitr::kable(temp,
+             format="html",
+             align="c",
+             col.names = c("Product","Mean","Coef. of variation",
+                           "Skewness",  "Minimum","Maximum")) %>%
+          kable_styling(bootstrap_options = "striped",
+                        full_width = F)
+```
+
+For the Dt_Customer variables, it does not make sense to compute the mean or the standard deviation. Therefore, we computed:
+
+* Mean- `r mean(raw_data$Dt_Customer)`
+* Minimum - `r min(raw_data$Dt_Customer)`
+* Maximum - `r max(raw_data$Dt_Customer)`
+* Median - `r median(raw_data$Dt_Customer)`
+
+And here are the histograms for the annex:
+
+```{r num overview plot 1, fig.height=7, fig.width=8}
+raw_data %>% 
+          select(Year_Birth, Income:NumWebVisitsMonth, DepVar, -Teenhome, -Kidhome) %>% 
+          gather(key=variable,value=level,-DepVar) %>% 
+          ggplot(mapping = aes(x=level,fill=DepVar)) +
+          geom_histogram()+
+          theme_minimal(base_size = 9) +
+          theme(panel.grid=element_blank(),
+                axis.title = element_blank(),
+                legend.position = "none")+
+          scale_fill_manual(values = c("0"="#5C666C", 
+                                        "1"="#BED62F"))+
+          facet_wrap(~variable,ncol=3, scales = "free")
+```
+
+
+```{r num overview plot 2, fig.height=1.5, fig.width=5}
+raw_data %>% 
+          select(Teenhome, Kidhome, DepVar) %>% 
+          gather(key=variable,value=level,-DepVar) %>% 
+          ggplot(mapping = aes(x=level,fill=DepVar)) +
+          geom_bar()+
+          theme_minimal(base_size = 9) +
+          theme(panel.grid=element_blank(),
+                axis.title = element_blank())+
+          scale_fill_manual(values = c("0"="#5C666C", 
+                                        "1"="#BED62F"))+
+          facet_wrap(~variable,ncol=2, scales = "free")
+```
+
+
+## Outliers
+
+```{r outliers threshold - Tukey modified}
+temp <- raw_data %>% 
+        select(Year_Birth, Income:NumWebVisitsMonth,-Dt_Customer,-Kidhome,-Teenhome) %>% 
+        gather(key=variable,value=value) %>% 
+        group_by(variable) %>% 
+        summarise(medcouple=round(mc(value, na.rm=TRUE),2),
+                  q1=quantile(value,probs=0.25,na.rm=TRUE),
+                  q3=quantile(value,probs=0.75,na.rm=TRUE),
+                  left_threshold_1=round(q1-1.5*exp(-4*medcouple)*(q3-q1),2),
+                  left_outliers_1=percent(sum(value<left_threshold_1,na.rm=TRUE)/2500),
+                  right_threshold_1=round(q3+1.5*exp(3*medcouple)*(q3-q1),2),
+                  right_outliers_1=percent(sum(value>right_threshold_1,na.rm=TRUE)/2500)
+        ) %>% 
+        ungroup()
+
+write.xlsx(temp,"./Output/outliers - Tukey Modified.xlsx")
+
+knitr::kable(temp,
+             format="html",
+             align="c",
+             col.names = c("Variable", "Medcouple","Q1", "Q3", "Left threshold",
+                           "% of outliers", "Right threshold","% of outliers")) %>%
+        kable_styling(bootstrap_options = "striped",
+                      full_width = F)
+```
+
+```{r outliers plot 1, fig.height=2, fig.width=4}
+temp <- raw_data %>% 
+          mutate(Mnt=MntMiniatures+MntCard_Games+MntMagazines+
+                              MntScenario+MntPainting_Material,
+                 Frq=NumCatalogPurchases+NumStorePurchases+NumWebPurchases)
+
+temp %>% 
+        ggplot(mapping = aes(x=Income,fill=DepVar)) +
+        geom_histogram() +
+        geom_vline(xintercept=147000)+
+        theme_minimal(base_size = 9) +
+        theme(axis.title.y = element_blank())+
+        scale_fill_manual(values = c("0"="#5C666C", 
+                                      "1"="#BED62F"))
+```
+
+```{r outliers plot 2, fig.height=2, fig.width=2.5}
+temp <- raw_data %>% 
+          mutate(Mnt=MntMiniatures+MntCard_Games+MntMagazines+
+                              MntScenario+MntPainting_Material,
+                 Frq=NumCatalogPurchases+NumStorePurchases+NumWebPurchases)
+
+temp %>% 
+        ggplot(mapping = aes(x=MntCard_Games, y=Mnt, color=DepVar)) +
+        geom_point(alpha=0.8, size=1)+
+        geom_vline(xintercept=1500)+
+        theme_minimal(base_size = 9) +
+        labs(y="Total amount spent")+
+        theme(legend.position = "none")+
+        scale_color_manual(values = c("0"="#5C666C", 
+                                      "1"="#BED62F"))
+
+temp %>% 
+        ggplot(mapping = aes(x=NumDealsPurchases, y=Frq, color=DepVar)) +
+        geom_point(alpha=0.8, size=1)+
+        geom_vline(xintercept=14)+
+        theme_minimal(base_size = 9) +
+        labs(y="Total no. purchases")+
+        theme(legend.position = "none")+
+        scale_color_manual(values = c("0"="#5C666C", 
+                                      "1"="#BED62F"))
+
+temp %>% 
+        ggplot(mapping = aes(x=NumCatalogPurchases, y=Frq, color=DepVar)) +
+        geom_point(alpha=0.8, size=1)+
+        geom_vline(xintercept=20)+
+        theme_minimal(base_size = 9) +
+        labs(y="Total no. purchases")+
+        theme(legend.position = "none")+
+        scale_color_manual(values = c("0"="#5C666C", 
+                                      "1"="#BED62F"))
+
+temp %>% 
+        ggplot(mapping = aes(x=NumWebVisitsMonth, y=Frq, color=DepVar)) +
+        geom_point(alpha=0.8, size=1)+
+        geom_vline(xintercept=13)+
+        theme_minimal(base_size = 9) +
+        labs(y="Total no. purchases")+
+        theme(legend.position = "none")+
+        scale_color_manual(values = c("0"="#5C666C", 
+                                      "1"="#BED62F"))
+```
+
+
+## Missing values
+
+```{r missing values}
+
+missings <- raw_data %>% 
+        filter((is.na(Income) | is.na(MntBrandA._Material) | is.na(MntScenario)))
+```
+
+There are 3 variables with missing values - `Income`, `MntBrandA._Material` and `MntScenario`. There are `r nrow(missings)` customers with a missing values in at least on of these variables, which represents `r percent(nrow(missings)/2500)` of the raw dataset.
+
+
+# Variable selection
+
+```{r clean data import}
+clean_data2 <- read.csv(file = "./Input/clean_data2_TRAIN.csv",stringsAsFactors=FALSE) %>% 
+          mutate_at(vars(DepVar), funs(factor(.)))
+
+colnames(clean_data2)[17:25] <- str_sub(colnames(clean_data2)[17:25],7)
+
+clean_data2$DepVar <- factor(clean_data2$DepVar,levels = rev(levels(clean_data2$DepVar)))        
+          
+clean_data2 <- clean_data2 %>% 
+          rename(MntBrandA_Material=IMP_MntBrandA__Material,
+                 MntScenario=IMP_MntScenario,
+                 Income=IMP_Income) %>% 
+          select(-X_WARN_)
+```
+
+
+## Redundancy
+
+```{r person corrplot, fig.height=2.5, fig.width=2.5}
+clean_data2 %>% 
+          select(Mnt, Frq, Income, average_purchase) %>% 
+          cor(method="pearson") %>% 
+          corrplot(method = "color",
+                   type="upper",
+                   addCoef.col = "black",
+                   tl.col = "black",
+                   tl.cex = 0.7,
+                   cl.pos = "n",
+                   number.cex = 0.7,
+                   col=colorRampPalette(c("black", "black", "white","#5C666C"))(1000))
+```
+
+```{r spearman corrplot, fig.height=2.5, fig.width=2.5}
+clean_data2 %>% 
+          select(Mnt, Frq, Income, average_purchase) %>% 
+          cor(method="spearman") %>% 
+          corrplot(method = "color",
+                   type="upper",
+                   addCoef.col = "black",
+                   tl.col = "black",
+                   tl.cex = 0.7,
+                   cl.pos = "n",
+                   number.cex = 0.7,
+                   col=colorRampPalette(c("black", "black", "white","#5C666C"))(1000))
+```
+
+
+The folllowing scatter plots shows a strange relation between `average_purchase` and `Frq`:
+
+```{r relation frq-av_pur, fig.height=2.8, fig.width=3.5}
+clean_data2  %>% 
+          ggplot(mapping = aes(y=Frq, x=average_purchase, color=DepVar)) +
+          geom_point(alpha=0.8, size=1)+
+          theme_minimal(base_size = 9) +
+          scale_color_manual(values = c("0"="#5C666C", 
+                                        "1"="#BED62F"))
+```
+
+
+## Relevancy
+
+```{r variable worth, fig.height=2.5, fig.width=6}
+var_worth <- read.csv(file = "./Input/variable_worth.csv",stringsAsFactors=FALSE)
+
+var_worth$Variable <- factor(var_worth$Variable,
+                             levels = var_worth$Variable[order(var_worth$Worth, decreasing = TRUE)])
+
+var_worth %>% 
+        ggplot(mapping = aes(x=Variable,y=Worth)) +
+        geom_bar(stat="identity",fill="#5C666C")+
+        #coord_flip()+
+        theme_minimal(base_size = 9) +
+        theme(panel.grid=element_blank(),
+              axis.title.x = element_blank(),
+              axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+
+## Final Variables
+
+```{r final vars 1, fig.height=3, fig.width=7.5}
+clean_data2 %>% 
+          select(average_purchase, Frq, Recency, MntCard_Games,
+                 NumCatalogPurchases, NumStorePurchases,
+                 NumDealsPurchases, NumWebPurchases, DepVar) %>% 
+          gather(key=variable,value=level,-DepVar) %>% 
+          ggplot(mapping = aes(x=level,fill=DepVar)) +
+          geom_histogram()+
+          theme_minimal(base_size = 9) +
+          theme(panel.grid=element_blank(),
+                axis.title = element_blank(),
+                legend.position = "none")+
+          scale_fill_manual(values = c("0"="#5C666C", 
+                                        "1"="#BED62F"))+
+          facet_wrap(~variable,ncol=4, scales = "free")
+```
+
+```{r final vars 2, fig.height=1.5, fig.width=6}
+clean_data2 %>% 
+        select(campaign_acceptance, Marital_Status, DepVar) %>% 
+        gather(key=variable,value=level,-DepVar) %>% 
+        ggplot(mapping = aes(x=level,fill=DepVar)) +
+        geom_bar()+
+        theme_minimal(base_size = 9) +
+        theme(panel.grid=element_blank(),
+              axis.title = element_blank())+
+        scale_fill_manual(values = c("0"="#5C666C", 
+                                     "1"="#BED62F"))+
+        facet_wrap(~variable,ncol=3, scales = "free")
+```
+
+
+## Cross-validation results
+
+```{r roc curve, fig.height=2.5, fig.width=5.5}
+roc_stats <- read.csv(file = "./Input/Cross-validation results - roc curve.csv",
+                      stringsAsFactors=FALSE) %>% 
+        rename(Model=Model.Description)
+
+roc_stats %>% 
+        ggplot(mapping = aes(x=X1...Specificity,y=Sensitivity, color=Model)) +
+        geom_line() +
+        theme_minimal(base_size = 9)  +
+        guides(color=guide_legend(ncol=2))+
+        labs(x="1-Specificity",y="Sensitivity",color="Model:")+
+          theme(panel.grid=element_blank())
+```
+
+
+```{r profit curve 1, fig.height=2.5, fig.width=3}
+
+profit_curve <- read.xlsx2(file = "./Input/WarGame classification_ProfitCurves.xlsx",
+                       sheetIndex = 1,
+                       colClasses = c(rep("character",3), rep("numeric",9)),
+                       stringsAsFactors=FALSE) %>% 
+        transmute(model=MODELDESCRIPTION,
+                  decile=DECILE/100,
+                  profit=Profit,
+                  response_rate=RESPC/100)
+
+
+profit_curve %>% 
+        ggplot(mapping = aes(x=decile, y=profit, color=model)) +
+        geom_line()+
+        geom_vline(xintercept=0.15,size=0.2)+
+        labs(x="Customers' percentile",y="Profit",color="Model:")+
+        scale_x_continuous(labels = scales::percent)+
+        theme_minimal(base_size = 9) +
+        guides(color=guide_legend(ncol=2))+
+        theme(panel.grid=element_blank(),
+              legend.position = "none")
+```
+
+
+```{r profit curve 2, fig.height=2.5, fig.width=6}
+profit_curve %>% 
+        ggplot(mapping = aes(x=decile, y=response_rate, color=model)) +
+        geom_line()+
+        geom_vline(xintercept=0.15,size=0.2)+
+        labs(x="Customers' percentile",y="Response rate",color="Model:")+
+        scale_x_continuous(labels = scales::percent)+
+        scale_y_continuous(labels = scales::percent)+
+        theme_minimal(base_size = 9) +
+        guides(color=guide_legend(ncol=2))+
+        theme(panel.grid=element_blank())
+```
